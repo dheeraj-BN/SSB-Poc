@@ -7,5 +7,7 @@ import com.SecureSeat.Booking.entity.FloorDetails;
 
 @Repository
 public interface FloorDetailsRepo extends JpaRepository<FloorDetails ,Integer>{
+	
+	
 
 }
