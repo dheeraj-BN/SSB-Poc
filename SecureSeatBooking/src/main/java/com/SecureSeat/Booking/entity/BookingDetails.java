@@ -19,16 +19,15 @@ public class BookingDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookingId;
-	private int seatNo;
+	private String seatNo;
 	private boolean foodStatus;
 	private LocalDate Date;
 	private LocalTime bookedTimings;
 	private LocalTime loginTime;
-	private boolean bookingStatus;
+	private String bookingStatus;
 	private String token;
 	
-	@ManyToOne(targetEntity = UserDeatils.class, cascade = { CascadeType.MERGE,
-			CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = UserDeatils.class,  fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId")
 	private UserDeatils userDeatils;
 	
@@ -42,8 +41,8 @@ public class BookingDetails {
 	public BookingDetails() {
 	}
 
-	public BookingDetails(int seatNo, boolean foodStatus, LocalDate date, LocalTime bookedTimings, LocalTime loginTime,
-			boolean bookingStatus, String token, UserDeatils userDeatils, ShiftDetails shiftDetails) {
+	public BookingDetails(String seatNo, boolean foodStatus, LocalDate date, LocalTime bookedTimings, LocalTime loginTime,
+			String bookingStatus, String token, UserDeatils userDeatils, ShiftDetails shiftDetails) {
 		super();
 		this.seatNo = seatNo;
 		this.foodStatus = foodStatus;
@@ -56,8 +55,8 @@ public class BookingDetails {
 		this.shiftDetails = shiftDetails;
 	}
 
-	public BookingDetails(int bookingId, int seatNo, boolean foodStatus, LocalDate date, LocalTime bookedTimings,
-			LocalTime loginTime, boolean bookingStatus, String token, UserDeatils userDeatils,
+	public BookingDetails(int bookingId, String seatNo, boolean foodStatus, LocalDate date, LocalTime bookedTimings,
+			LocalTime loginTime, String bookingStatus, String token, UserDeatils userDeatils,
 			ShiftDetails shiftDetails) {
 		super();
 		this.bookingId = bookingId;
@@ -80,13 +79,7 @@ public class BookingDetails {
 		this.bookingId = bookingId;
 	}
 
-	public int getSeatNo() {
-		return seatNo;
-	}
-
-	public void setSeatNo(int seatNo) {
-		this.seatNo = seatNo;
-	}
+	
 
 	public boolean isFoodStatus() {
 		return foodStatus;
@@ -120,14 +113,7 @@ public class BookingDetails {
 		this.loginTime = loginTime;
 	}
 
-	public boolean isBookingStatus() {
-		return bookingStatus;
-	}
-
-	public void setBookingStatus(boolean bookingStatus) {
-		this.bookingStatus = bookingStatus;
-	}
-
+	
 	public String getToken() {
 		return token;
 	}
@@ -152,6 +138,22 @@ public class BookingDetails {
 		this.shiftDetails = shiftDetails;
 	}
 
+	public String getSeatNo() {
+		return seatNo;
+	}
+
+	public void setSeatNo(String seatNo) {
+		this.seatNo = seatNo;
+	}
+
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "BookingDetails [bookingId=" + bookingId + ", seatNo=" + seatNo + ", foodStatus=" + foodStatus
@@ -159,6 +161,8 @@ public class BookingDetails {
 				+ ", bookingStatus=" + bookingStatus + ", token=" + token + ", userDeatils=" + userDeatils
 				+ ", shiftDetails=" + shiftDetails + "]";
 	}
+
+	
 	
 	
 
