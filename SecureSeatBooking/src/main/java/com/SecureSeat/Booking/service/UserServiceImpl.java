@@ -27,7 +27,10 @@ public class UserServiceImpl {
 	@Autowired
 	private RoleRepo roleRepo;
 	
-	public void addUser(int employeeId) {
+	@Autowired
+	private MailTemplatesImpl mailTemplatesImpl;
+	
+	public String addUser(int employeeId) {
 		
 		Employee employee= employeeRepo.findById(employeeId).get();
 		
@@ -38,7 +41,9 @@ public class UserServiceImpl {
 		UserDeatils user = new UserDeatils("Alpha@2022",employee);		
 		user.setRoles(roles);
 		
-		userDetailsRepo.save(user);
+//		userDetailsRepo.save(user);
+		
+		return mailTemplatesImpl.registrationMail(userDetailsRepo.save(user));
 		
 		
 		

@@ -8,4 +8,5 @@ import com.SecureSeat.Booking.entity.Role;
 @Repository
 public interface RoleRepo extends JpaRepository<Role, Integer>{
 
+	
 }
