@@ -32,7 +32,7 @@ public class UserServiceImpl {
 	
 	public String addUser(int employeeId) {
 		
-		Employee employee= employeeRepo.findById(employeeId).get();
+		Employee employee= employeeRepo.findById(employeeId);
 		
 		Role role= roleRepo.findById(2).get();
 		Set<Role> roles =new HashSet<Role>();
