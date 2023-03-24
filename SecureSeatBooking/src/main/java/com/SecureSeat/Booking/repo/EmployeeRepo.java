@@ -7,5 +7,7 @@ import com.SecureSeat.Booking.entity.Employee;
 
 @Repository
 public interface EmployeeRepo  extends JpaRepository<Employee, Integer>{
+	
+	Employee findById(int id);
 
 }
