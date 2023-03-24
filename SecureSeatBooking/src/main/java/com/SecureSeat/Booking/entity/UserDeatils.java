@@ -32,11 +32,11 @@ public class UserDeatils {
 	public UserDeatils() {
 	}
 
-	public UserDeatils(String password, Employee employee, Set<Role> roles) {
+	public UserDeatils(String password, Employee employee) {
 		super();
 		this.password = password;
 		this.employee = employee;
-		this.roles = roles;
+		//this.roles = roles;
 	}
 
 	public UserDeatils(int userId, String password, Employee employee, Set<Role> roles) {
@@ -69,6 +69,16 @@ public class UserDeatils {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	
+	
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override
