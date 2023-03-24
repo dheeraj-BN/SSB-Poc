@@ -12,14 +12,14 @@ public class Employee {
 	private String employeeEmail;
 	private String employeeDesignation;
 	private String employeePhoneNo;
-	private boolean employeeGender;
+	private String employeeGender;
 	private String employeePersonalEmail;
 
 	public Employee() {
 	}
 
 	public Employee(int employeeId, String employeeName, String employeeEmail, String employeeDesignation,
-			String employeePhoneNo, boolean employeeGender, String employeePersonalEmail) {
+			String employeePhoneNo, String employeeGender, String employeePersonalEmail) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
@@ -70,11 +70,11 @@ public class Employee {
 		this.employeePhoneNo = employeePhoneNo;
 	}
 
-	public boolean isEmployeeGender() {
+	public String isEmployeeGender() {
 		return employeeGender;
 	}
 
-	public void setEmployeeGender(boolean employeeGender) {
+	public void setEmployeeGender(String employeeGender) {
 		this.employeeGender = employeeGender;
 	}
 
