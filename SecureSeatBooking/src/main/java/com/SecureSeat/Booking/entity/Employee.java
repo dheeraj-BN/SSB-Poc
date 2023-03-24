@@ -45,6 +45,16 @@ public class Employee {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
+	
+	
+
+	public String getEmployeeGender() {
+		return employeeGender;
+	}
+
+	public void setEmployeeGender(String employeeGender) {
+		this.employeeGender = employeeGender;
+	}
 
 	public String getEmployeeEmail() {
 		return employeeEmail;
@@ -70,13 +80,7 @@ public class Employee {
 		this.employeePhoneNo = employeePhoneNo;
 	}
 
-	public String isEmployeeGender() {
-		return employeeGender;
-	}
-
-	public void setEmployeeGender(String employeeGender) {
-		this.employeeGender = employeeGender;
-	}
+	
 
 	public String getEmployeePersonalEmail() {
 		return employeePersonalEmail;
@@ -93,5 +97,8 @@ public class Employee {
 				+ employeePhoneNo + ", employeeGender=" + employeeGender + ", employeePersonalEmail="
 				+ employeePersonalEmail + "]";
 	}
+	
+	
 
+	
 }
