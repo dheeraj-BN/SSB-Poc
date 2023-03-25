@@ -9,6 +9,6 @@ public interface SeatBook {
 
 
 
-	String saveBookedDetails(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+	String saveBookedDetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) ;
 
 }
