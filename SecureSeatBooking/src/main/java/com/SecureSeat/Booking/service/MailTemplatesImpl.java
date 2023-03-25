@@ -41,7 +41,7 @@ public class MailTemplatesImpl implements MailTemplates {
 		
 	}
 	
-	
+	@Override
 	public void dailyBookedSeatReminder(BookingDetails bookingDetails) {
 		
 		Employee emp=bookingDetails.getUserDeatils().getEmployee();
@@ -64,6 +64,6 @@ public class MailTemplatesImpl implements MailTemplates {
 	}
 
 	
-//	 @Scheduled(cron = "0 0 12 * * ?") // runs every day at 12:00 PM
+//	 @Scheduled(cron = "0 0 12 * * ?") // runs every day at 12:00 PM  //0 0 10 * * ?
 	
 }

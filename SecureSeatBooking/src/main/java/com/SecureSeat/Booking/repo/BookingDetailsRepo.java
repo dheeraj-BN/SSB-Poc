@@ -14,4 +14,6 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 	
 	List<BookingDetails> findByUserDeatils(UserDeatils user);
 
+	List<BookingDetails> findAllByDateAndLoginTimeIsNull(String date1);
+
 }
