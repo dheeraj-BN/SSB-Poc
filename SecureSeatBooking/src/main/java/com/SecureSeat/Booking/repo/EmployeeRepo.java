@@ -1,5 +1,7 @@
 package com.SecureSeat.Booking.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +11,10 @@ import com.SecureSeat.Booking.entity.Employee;
 public interface EmployeeRepo  extends JpaRepository<Employee, Integer>{
 	
 	Employee findById(int id);
+	
+	Employee findByEmployeeEmail(String email);
+	
+	List<Employee> findAll();
+
 
 }
