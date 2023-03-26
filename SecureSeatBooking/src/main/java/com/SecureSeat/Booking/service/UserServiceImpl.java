@@ -32,7 +32,7 @@ public class UserServiceImpl {
 	
 	public String addUser(int employeeId) {
 		
-		Employee employee= employeeRepo.findById(employeeId).get();
+		Employee employee= employeeRepo.findById(employeeId);
 		
 		Role role= roleRepo.findById(2).get();
 		Set<Role> roles =new HashSet<Role>();
@@ -41,9 +41,9 @@ public class UserServiceImpl {
 		UserDeatils user = new UserDeatils("Alpha@2022",employee);		
 		user.setRoles(roles);
 		
-//		userDetailsRepo.save(user);
+	userDetailsRepo.save(user);
 		
-		return mailTemplatesImpl.registrationMail(userDetailsRepo.save(user));
+		return mailTemplatesImpl.registrationMail(user);
 		
 		
 		
