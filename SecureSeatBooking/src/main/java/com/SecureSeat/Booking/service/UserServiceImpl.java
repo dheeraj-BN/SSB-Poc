@@ -43,8 +43,9 @@ public class UserServiceImpl {
 		
 	userDetailsRepo.save(user);
 		
-		return mailTemplatesImpl.registrationMail(user);
+		//return mailTemplatesImpl.registrationMail(user);
 		
+	return "SUCCESS";
 		
 		
 	}
