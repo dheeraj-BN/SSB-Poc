@@ -18,28 +18,32 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
-	
-	
-	
+
 	@GetMapping("/user/{id}")
 	public Optional<UserDeatils> findById(@PathVariable int id) {
 		return loginService.findUserByUsername(id);
 	}
-	
+
 	@GetMapping("/employee")
 	public Employee findEmployeeByName(@RequestParam String email) {
 		return loginService.findEmployeeByName(email);
 	}
-	
+
 	@GetMapping("/login")
-	public String loginres(@RequestParam String username,@RequestParam  String password,String role) {
+	public String loginres(@RequestParam("email") String email, @RequestParam String password, String role) {
 		System.out.println(role);
-		return loginService.loginResponse(username, password,role);
-		
+		System.out.println(email);
+		if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".")) {
+			return "Enter valid Email id";
+		} else {
+
+			return loginService.loginResponse(email, password, role);
+		}
+
 	}
-	
+
 	@GetMapping("/allEmps")
-	public List<Employee> findAllEmps(){
+	public List<Employee> findAllEmps() {
 		return loginService.findAllEmployees();
 	}
 }
