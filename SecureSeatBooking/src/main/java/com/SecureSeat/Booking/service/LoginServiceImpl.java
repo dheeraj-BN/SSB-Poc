@@ -1,6 +1,5 @@
 package com.SecureSeat.Booking.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -8,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.Role;
 import com.SecureSeat.Booking.entity.UserDeatils;
@@ -22,6 +22,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private EmployeeRepo empRepo;
+	
+	@Autowired
+	private SecurityConfig cofig;
 
 	@Override
 	public Optional<UserDeatils> findUserByUsername(int id) {

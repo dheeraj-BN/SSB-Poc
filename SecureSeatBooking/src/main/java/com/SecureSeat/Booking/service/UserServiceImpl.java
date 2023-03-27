@@ -30,21 +30,33 @@ public class UserServiceImpl {
 	@Autowired
 	private MailTemplatesImpl mailTemplatesImpl;
 	
-	public String addUser(int employeeId) {
+public String addUser(int employeeId) {
 		
 		Employee employee= employeeRepo.findById(employeeId);
 		
-		Role role= roleRepo.findById(2).get();
-		Set<Role> roles =new HashSet<Role>();
-		roles.add(role);
 		
-		UserDeatils user = new UserDeatils("Alpha@2022",employee);		
-		user.setRoles(roles);
 		
-//		userDetailsRepo.save(user);
+		if(userDetailsRepo.findByEmployee(employee).isPresent()) {
+			return "USER ALREDY EXIST";
 		
-		return mailTemplatesImpl.registrationMail(userDetailsRepo.save(user));
+		}
+		else {
+			System.out.println(employee);
+			
+			Role role= roleRepo.findById(2).get();
+			Set<Role> roles =new HashSet<Role>();
+			roles.add(role);
+			
+			UserDeatils user = new UserDeatils("Alpha@2022",employee);		
+			user.setRoles(roles);
+			
+		userDetailsRepo.save(user);
+			
+		}
 		
+		//return mailTemplatesImpl.registrationMail(user);
+		
+	return "SUCCESS";
 		
 		
 	}
