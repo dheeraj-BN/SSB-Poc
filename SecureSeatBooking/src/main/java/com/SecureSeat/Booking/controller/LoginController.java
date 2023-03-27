@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,4 +50,11 @@ public class LoginController {
 	public List<Employee> findAllEmps() {
 		return loginService.findAllEmployees();
 	}
+	
+	 @ExceptionHandler(Exception.class)
+	    public ResponseEntity<String> handleMyException(Exception ex) {
+	        return ResponseEntity
+	                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("An error occurred: " + ex.getMessage());
+	    }
 }
