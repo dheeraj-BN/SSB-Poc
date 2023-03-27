@@ -12,8 +12,12 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 @Repository
 public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Integer> {
 	
-	List<BookingDetails> findByUserDeatils(UserDeatils user);
+	List<BookingDetails> findAllByUserDeatils(UserDeatils user);
 
 	List<BookingDetails> findAllByLoginTimeIsNullAndBookedDateEquals(LocalDate date1);
+	 
+	List<BookingDetails> findBySeatNo(String seatNo);
+	
+	BookingDetails findByUserDeatilsAndBookedDate(UserDeatils user,LocalDate date);
 
 }
