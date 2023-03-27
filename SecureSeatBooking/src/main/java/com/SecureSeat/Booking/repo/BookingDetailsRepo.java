@@ -18,4 +18,7 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 	 
 	List<BookingDetails> findBySeatNo(String seatNo);
 
+	BookingDetails  findByToken(String token);
+
+
 }

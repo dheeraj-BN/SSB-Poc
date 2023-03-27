@@ -12,7 +12,7 @@ public interface LoginService {
 
 	Employee findEmployeeByName(String name);
 
-	String loginResponse(String userName, String password,String role);
+	String loginResponse(String userName, String password);
 
 	List<Employee> findAllEmployees();
 
