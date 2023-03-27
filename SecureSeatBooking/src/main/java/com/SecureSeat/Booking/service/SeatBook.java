@@ -9,8 +9,16 @@ public interface SeatBook {
 
 
 
-	String saveBookedDetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) ;
+	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from, LocalDate to) ;
 
 	String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+
+	String savebookeddetails(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+
+	String checkseatalreadybooked(String seatNo, LocalDate date1);
+
+	int checkbookingdetails(LocalDate date, BookingDetails bookingDetails1);
+
+	int checkholiday(LocalDate date);
 
 }
