@@ -9,7 +9,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -19,6 +21,10 @@ public class MailServiceImpl implements MailService {
 	
 	@Autowired
 	private MailTemplates mailTemplates;
+	
+	@Autowired
+	private UserDetailsRepo userDetailsRepo;
+	
 	
 	
 	 @Override
@@ -35,6 +41,17 @@ public class MailServiceImpl implements MailService {
 		 
 	 }
 	 
-	 
+	 @Override
+	 public void passwordChangeConfrimMail(int id) {
+		 
+		 
+		UserDeatils usr=userDetailsRepo.findByUserId(id).get();
+		mailTemplates.passwordChangeMail(usr);
+		
+		
+		
+		 
+		 
+	 }
 
 }
