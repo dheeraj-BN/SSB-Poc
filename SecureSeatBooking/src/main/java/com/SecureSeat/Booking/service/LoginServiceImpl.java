@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.Role;
 import com.SecureSeat.Booking.entity.UserDeatils;
@@ -23,8 +22,6 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private EmployeeRepo empRepo;
 	
-	@Autowired
-	private SecurityConfig cofig;
 
 	@Override
 	public Optional<UserDeatils> findUserByUsername(int id) {
@@ -53,13 +50,14 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public String loginResponse(String userName, String password, String role) {
+	public String loginResponse(String userName, String password) {
 
 		List<Employee> emps = empRepo.findAll();
 		// System.out.println(emps);
 		// String userNameStatus = null;
 		boolean found = false;
 		boolean passwordStatus = false;
+		String role=null;
 
 		for (Employee name : emps) {
 			// System.out.println(name);
@@ -67,9 +65,10 @@ public class LoginServiceImpl implements LoginService {
 				found = true;
 				// System.out.println("there");
 				Employee employee = empRepo.findByEmployeeEmail(userName);
-				// System.out.println(employee);
-				UserDeatils user = userRepo.findByUserId(employee.getEmployeeId()).get();
-				// System.out.println(user);
+				System.out.println(employee);
+				System.out.println(employee.getEmployeeId());
+				UserDeatils user = userRepo.findByEmployee(employee).get();
+				 System.out.println(user);
 				if (user.getPassword().equals(password)) {
 					// System.out.println(user.getPassword());
 					// System.out.println(password);
@@ -98,7 +97,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 
 		if (found && passwordStatus) {
-			return "VALID USER " + role;
+			return  role;
 		} else if (found && !passwordStatus) {
 			return "VALID USERNAME AND INVALID PASSWORD";
 		} else {
