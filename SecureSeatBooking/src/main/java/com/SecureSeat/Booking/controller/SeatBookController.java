@@ -1,11 +1,13 @@
 package com.SecureSeat.Booking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
@@ -40,10 +42,9 @@ public class SeatBookController {
 	
 	
 	@PostMapping("/savebookdetails")
-	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails) {
-	BookingDetails b=seatBook.saveBookedDetails(bookingDetails);
-	String tokenvalue = b.getToken();
-		return tokenvalue;
+	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam LocalDate from,@RequestParam LocalDate to) {
+	String b=seatBook.saveBookedDetails(bookingDetails,from,to);
+		return b;
 	}
 
 }
