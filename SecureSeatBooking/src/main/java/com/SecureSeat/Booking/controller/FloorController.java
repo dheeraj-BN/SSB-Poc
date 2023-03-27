@@ -26,5 +26,11 @@ public class FloorController {
 	        List<FloorDetails> floors = floorService.getAllFloors();
 	        return new ResponseEntity<>(floors, HttpStatus.OK);
 	    }
+	    
+	    
+	    
+	    
+	    
+	    
 
 }

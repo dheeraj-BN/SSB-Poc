@@ -43,8 +43,15 @@ public class SeatBookController {
 	
 	@PostMapping("/savebookdetails")
 	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam LocalDate from,@RequestParam LocalDate to) {
-	String b=seatBook.saveBookedDetails(bookingDetails,from,to);
-		return b;
+		if(from.equals(to)) {
+			String b=seatBook.saveBookedDetails(bookingDetails,from,to);
+			return b;
+		}
+	
+		else {
+			String b=seatBook.seatbookingforweek(bookingDetails,from,to);
+			return b;
+		}
 	}
 
 }

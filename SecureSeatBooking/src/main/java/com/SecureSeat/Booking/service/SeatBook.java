@@ -11,4 +11,6 @@ public interface SeatBook {
 
 	String saveBookedDetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) ;
 
+	String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+
 }
