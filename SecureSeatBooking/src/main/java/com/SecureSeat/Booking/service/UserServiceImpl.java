@@ -75,18 +75,22 @@ public class UserServiceImpl {
 	}
 
 	
-	public String validateTocken(int user_id,String token) throws Exception {
+	public String validateTocken(String token) throws Exception {
 		
-		UserDeatils user =userDetailsRepo.findByUserId(user_id).get();
-		
+		//UserDeatils user =userDetailsRepo.findByUserId(user_id).get();
+		try {
 		
 		LocalDate l = LocalDate.now();
-		BookingDetails bookingDetails= bookingDetailsRepo.findByUserDeatilsAndBookedDate(user, l);
+		BookingDetails bookingDetails= bookingDetailsRepo.findByToken(token);
 		
 		if(bookingDetails.getToken().equals(token)) {
 		
 		userDetailDao.updateBookingDetails(LocalTime.now(), "LOGGED-IN", bookingDetails.getBookingId());
 		return "valid";
+		}
+		}
+		catch (NullPointerException e) {
+			return "Invalid";
 		}
 		return "Invalid";
 		

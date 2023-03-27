@@ -32,9 +32,9 @@ public class AdminController {
 	
 	
 	@GetMapping("api/validateToken/")
-	public String validateTocken(@RequestParam int user_id ,@RequestParam String token) throws Exception {
+	public String validateTocken(@RequestParam String token) throws Exception {
 		
-		return userServiceImpl.validateTocken(user_id,token);
+		return userServiceImpl.validateTocken(token);
 	}
 	
 	
