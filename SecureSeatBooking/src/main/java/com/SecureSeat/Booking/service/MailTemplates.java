@@ -9,4 +9,6 @@ public interface MailTemplates {
 
 	void dailyBookedSeatReminder(BookingDetails bookingDetails);
 
+	void passwordChangeMail(UserDeatils userInfo);
+
 }
