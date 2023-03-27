@@ -27,7 +27,7 @@ public class SeatBookImpl implements SeatBook {
 
 	@Override
 	public String saveBookedDetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
-
+       
 		String seatNo = bookingDetails.getSeatNo();
 		System.out.println(from.equals(to));
 		if (from.equals(to)) {
@@ -94,8 +94,8 @@ public class SeatBookImpl implements SeatBook {
 			List<HolidayDetails> holiday = holidayDetailsRepo.findAll();
 			List<BookingDetails> userdetails = bookingDetailsRepo.findByUserDeatils(bookingDetails.getUserDeatils());
 			if (userdetails.isEmpty()) {
-
-				for (LocalDate i = from; i.isBefore(to); i = i.plusDays(1)) {
+                  LocalDate to1= to.plusDays(1);
+				for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
 					int flag4 = 0;
 					int flag5 = 0;
 					for (HolidayDetails holi : holiday) {
@@ -127,7 +127,8 @@ public class SeatBookImpl implements SeatBook {
 
 				}
 			} else {
-				for (LocalDate i = from; i.isBefore(to); i = i.plusDays(1)) {
+				LocalDate to1 = to.plusDays(1);
+				for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
 					int flag = 0;
 					for (HolidayDetails holi : holiday) {
 						System.out.println(!(i.equals(holi.getHolidayDate())));
