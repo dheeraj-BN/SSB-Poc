@@ -25,7 +25,7 @@ public class MailServiceImpl implements MailService {
 	@Scheduled(cron = "0 0 10 * * ?") // runs every day at 12:00 PM  //0 0 10 * * ?
 	 public void schecludedMailForDailyBooking() {
 		 
-		 String date1=LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));//need to change after ching format
+		 LocalDate date1=LocalDate.now();//need to change after ching format
 		 List<BookingDetails> bookingDL=bookingDetailsRepo.findAllByDateAndLoginTimeIsNull(date1);
 		 for (BookingDetails bookingDetails : bookingDL) {
 			mailTemplates.dailyBookedSeatReminder(bookingDetails);
