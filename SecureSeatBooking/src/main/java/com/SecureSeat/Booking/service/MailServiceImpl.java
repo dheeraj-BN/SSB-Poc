@@ -26,7 +26,7 @@ public class MailServiceImpl implements MailService {
 	 public void schecludedMailForDailyBooking() {
 		 
 		 LocalDate date1=LocalDate.now();//need to change after ching format
-		 List<BookingDetails> bookingDL=bookingDetailsRepo.findAllByDateAndLoginTimeIsNull(date1);
+		 List<BookingDetails> bookingDL=bookingDetailsRepo.findAllByLoginTimeIsNullAndBookedDateEquals(date1);
 		 for (BookingDetails bookingDetails : bookingDL) {
 			mailTemplates.dailyBookedSeatReminder(bookingDetails);
 		}

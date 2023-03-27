@@ -21,7 +21,7 @@ public class BookingDetails {
 	private int bookingId;
 	private String seatNo;
 	private boolean foodStatus;
-	private LocalDate Date;
+	private LocalDate bookedDate;
 	private LocalTime bookedTimings;
 	private LocalTime loginTime;
 	private String bookingStatus;
@@ -46,7 +46,7 @@ public class BookingDetails {
 		super();
 		this.seatNo = seatNo;
 		this.foodStatus = foodStatus;
-		Date = date;
+		bookedDate = date;
 		this.bookedTimings = bookedTimings;
 		this.loginTime = loginTime;
 		this.bookingStatus = bookingStatus;
@@ -62,7 +62,7 @@ public class BookingDetails {
 		this.bookingId = bookingId;
 		this.seatNo = seatNo;
 		this.foodStatus = foodStatus;
-		Date = date;
+		bookedDate = date;
 		this.bookedTimings = bookedTimings;
 		this.loginTime = loginTime;
 		this.bookingStatus = bookingStatus;
@@ -90,11 +90,11 @@ public class BookingDetails {
 	}
 
 	public LocalDate getDate() {
-		return Date;
+		return bookedDate;
 	}
 
 	public void setDate(LocalDate date) {
-		Date = date;
+		bookedDate = date;
 	}
 
 	public LocalTime getBookedTimings() {
@@ -157,7 +157,7 @@ public class BookingDetails {
 	@Override
 	public String toString() {
 		return "BookingDetails [bookingId=" + bookingId + ", seatNo=" + seatNo + ", foodStatus=" + foodStatus
-				+ ", Date=" + Date + ", bookedTimings=" + bookedTimings + ", loginTime=" + loginTime
+				+ ", Date=" + bookedDate + ", bookedTimings=" + bookedTimings + ", loginTime=" + loginTime
 				+ ", bookingStatus=" + bookingStatus + ", token=" + token + ", userDeatils=" + userDeatils
 				+ ", shiftDetails=" + shiftDetails + "]";
 	}
