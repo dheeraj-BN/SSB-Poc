@@ -25,4 +25,6 @@ public interface SeatBook {
 
 	List<String> getSeatNoByDate(LocalDate bookeddate);
 
+	List<BookingDetails> getbookingdetails(LocalDate bookeddate);
+
 }

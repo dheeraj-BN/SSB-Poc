@@ -176,5 +176,12 @@ public class SeatBookImpl implements SeatBook {
 		List<String> seatNos=seatBookDAO.getseatNoByBookedDate(bookeddate);
 		return seatNos;
 	}
+	
+	@Override
+	public List<BookingDetails> getbookingdetails(LocalDate bookeddate){
+//		List<BookingDetails> bookingdetails = bookingDetailsRepo.findByBookedDate(bookeddate);
+		List<BookingDetails> bookingdetails = seatBookDAO.getbookingdetailsbydate(bookeddate);
+		return bookingdetails;
+	}
 
 }
