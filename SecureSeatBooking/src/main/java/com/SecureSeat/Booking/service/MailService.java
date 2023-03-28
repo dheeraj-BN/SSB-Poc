@@ -6,4 +6,6 @@ public interface MailService {
 
 	void schecludedMailForDailyBooking();
 
+	void passwordChangeConfrimMail(int id);
+
 }
