@@ -29,7 +29,7 @@ public class LoginController {
 	}
 	
 	@GetMapping("/admin/test")
-	public String adminHome() {
+	public String adminHome(@RequestParam ("userId") int userId) {
 		return "ADMIN HOME";
 	}
 	
