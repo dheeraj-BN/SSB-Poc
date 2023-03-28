@@ -10,6 +10,6 @@ public interface SeatBookDAO {
 
 	List<String> getseatNoByBookedDate(LocalDate bookedDate);
 
-	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
+//	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
 
 }
