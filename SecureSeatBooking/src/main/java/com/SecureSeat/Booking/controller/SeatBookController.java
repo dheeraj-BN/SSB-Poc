@@ -2,6 +2,7 @@ package com.SecureSeat.Booking.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,12 @@ public class SeatBookController {
 	return message;
 		
 	}
+	
+	@GetMapping("/seatnumber/{date1}")
+	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+		List<String> seatNos = seatBook.getSeatNoByDate(date1);
+		return seatNos;
+		}
 	
 
 }

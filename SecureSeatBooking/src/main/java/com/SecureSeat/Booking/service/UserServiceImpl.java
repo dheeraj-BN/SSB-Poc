@@ -65,17 +65,18 @@ public class UserServiceImpl {
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);
+			 mailTemplatesImpl.registrationMail(user);
 
 		}
 		
-		// return mailTemplatesImpl.registrationMail(user);
+		 
 
 		return "SUCCESS";
 
 	}
 
 	
-	public String validateTocken(String token) throws Exception {
+	public Employee validateTocken(String token) throws Exception {
 		
 		//UserDeatils user =userDetailsRepo.findByUserId(user_id).get();
 		try {
@@ -86,13 +87,16 @@ public class UserServiceImpl {
 		if(bookingDetails.getToken().equals(token)) {
 		
 		userDetailDao.updateBookingDetails(LocalTime.now(), "LOGGED-IN", bookingDetails.getBookingId());
-		return "valid";
+		
+		
+		
+		return userDetailDao.getEmployeeDetailsAfterValidationSuccess(token);
 		}
 		}
 		catch (NullPointerException e) {
-			return "Invalid";
+			return null;
 		}
-		return "Invalid";
+		return null;
 		
 	}
 	
