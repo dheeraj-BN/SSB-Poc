@@ -18,7 +18,6 @@ public interface FloorService {
 	FloorDetails addFloor(FloorDetails floor);
 
 
-	//FloorDetails addSeat(int floorId);
 
 
 }
