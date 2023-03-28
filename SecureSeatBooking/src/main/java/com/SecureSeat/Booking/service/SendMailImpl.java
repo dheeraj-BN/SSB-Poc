@@ -19,20 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 @Service
 @Transactional(propagation = Propagation.SUPPORTS)
 public class SendMailImpl implements SendMail {
 
 	private static final Logger logger = LoggerFactory.getLogger(SendMailImpl.class);
 
-	// @Value("${sender.email.id}")
-	// private String fromId;
-	// @Value("${sender.email.password}")
-	// private String password;
-
 	@Override
-//	@RequestMapping("de")
 	public void sendMail(String email, String subject, String body) {
 		logger.info("Sending mail....");
 		Properties props = new Properties();
