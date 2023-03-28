@@ -15,8 +15,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
 
 
