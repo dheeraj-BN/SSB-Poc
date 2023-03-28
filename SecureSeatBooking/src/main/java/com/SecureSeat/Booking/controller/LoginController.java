@@ -33,7 +33,7 @@ public class LoginController {
 		return "ADMIN HOME";
 	}
 	
-	@GetMapping("/user/test")
+	@GetMapping("/employee/test")
 	public String userHome() {
 		return "USER HOME";
 	}

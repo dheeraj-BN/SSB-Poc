@@ -49,7 +49,7 @@ public class SSBUsernamePasswordAuthentication implements AuthenticationProvider
 		    		role=role1.getRoleName();
 		    		//System.out.println(role);
 		    	}
-	    		System.out.println(roles);
+	    		//System.out.println(roles);
 
 		    	//System.out.println(authorities);
 		    	return new UsernamePasswordAuthenticationToken(username, password,getGrantedAuthorities(roles));
