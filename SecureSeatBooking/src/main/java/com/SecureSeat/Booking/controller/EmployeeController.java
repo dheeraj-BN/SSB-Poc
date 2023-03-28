@@ -13,6 +13,7 @@ import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.service.EmployeeService;
+import com.SecureSeat.Booking.service.MailService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
@@ -22,10 +23,13 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	@Autowired
+	private MailService mailService;
+	
 	@PutMapping("/employee/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword) {
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
-		
+    	mailService.passwordChangeConfrimMail(id);
 		return message;
 		
 	}
