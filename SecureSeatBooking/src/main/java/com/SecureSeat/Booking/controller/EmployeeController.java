@@ -5,19 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
-import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 @RestController
+@RequestMapping("/api/employee")
 public class EmployeeController {
 	
 	@Autowired
@@ -26,7 +25,7 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
-	@PutMapping("/employee/change/password/{id}")
+	@PostMapping("/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword) {
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfrimMail(id);
