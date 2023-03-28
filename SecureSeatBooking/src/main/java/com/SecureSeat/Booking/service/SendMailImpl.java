@@ -32,7 +32,7 @@ public class SendMailImpl implements SendMail {
 	// private String password;
 
 	@Override
-	@RequestMapping("de")
+//	@RequestMapping("de")
 	public void sendMail(String email, String subject, String body) {
 		logger.info("Sending mail....");
 		Properties props = new Properties();
@@ -67,7 +67,6 @@ public class SendMailImpl implements SendMail {
 		});
 
 		try {
-			logger.info("Sending mail....");
 			Message message = new MimeMessage(session);
 			String username = prop.getProperty("mail.username");
 			message.setFrom(new InternetAddress(username));

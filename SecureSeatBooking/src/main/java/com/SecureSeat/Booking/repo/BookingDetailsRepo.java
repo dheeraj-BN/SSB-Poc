@@ -22,4 +22,7 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 	
 	List<BookingDetails> findByUserDeatilsAndBookedDateGreaterThan(UserDeatils user,LocalDate Ndate);
 
+	BookingDetails  findByToken(String token);
+
+
 }

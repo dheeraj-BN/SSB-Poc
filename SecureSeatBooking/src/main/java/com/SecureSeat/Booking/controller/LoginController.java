@@ -14,6 +14,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.service.LoginService;
 
 @RestController
+//@CrossOrigin("http://10.191.80.118:3001")
 public class LoginController {
 
 	@Autowired
@@ -30,14 +31,14 @@ public class LoginController {
 	}
 
 	@GetMapping("/login")
-	public String loginres(@RequestParam("email") String email, @RequestParam String password, String role) {
-		System.out.println(role);
-		System.out.println(email);
+	public String loginres(@RequestParam("email") String email, @RequestParam String password) {
+		//System.out.println(role);
+		//System.out.println(email);
 		if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".")) {
 			return "Enter valid Email id";
 		} else {
 
-			return loginService.loginResponse(email, password, role);
+			return loginService.loginResponse(email, password);
 		}
 
 	}
@@ -46,4 +47,5 @@ public class LoginController {
 	public List<Employee> findAllEmps() {
 		return loginService.findAllEmployees();
 	}
+	
 }
