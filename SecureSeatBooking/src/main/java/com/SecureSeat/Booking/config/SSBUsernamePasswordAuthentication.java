@@ -49,13 +49,10 @@ public class SSBUsernamePasswordAuthentication implements AuthenticationProvider
 		    		role=role1.getRoleName();
 		    		//System.out.println(role);
 		    	}
-	    		//System.out.println(roles);
+	    		System.out.println(roles);
 
-List<GrantedAuthority> authorities = new ArrayList<>();
-		    	authorities = new ArrayList<>();
-		    	authorities.add(new SimpleGrantedAuthority(role));
 		    	//System.out.println(authorities);
-		    	return new UsernamePasswordAuthenticationToken(username, password,authorities);
+		    	return new UsernamePasswordAuthenticationToken(username, password,getGrantedAuthorities(roles));
 		    	
 	    	}else {
 	        	throw new BadCredentialsException("Invalid password!");
@@ -67,13 +64,14 @@ List<GrantedAuthority> authorities = new ArrayList<>();
         
 		
 	}
-//	private List<GrantedAuthority> getGrantedAuthorities(String roless) {
-//		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        for (Role roles : roless) {
-//        	grantedAuthorities.add(new SimpleGrantedAuthority(roles.getRoleName()));
-//        }
-//        return grantedAuthorities;
-//    }
+	private List<GrantedAuthority> getGrantedAuthorities(Set<Role> authorities) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Role authority : authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+authority.getRoleName().toUpperCase()));
+        }
+        System.out.println(grantedAuthorities);
+        return grantedAuthorities;
+    }
 
 	@Override
 	public boolean supports(Class<?> authentication) {
