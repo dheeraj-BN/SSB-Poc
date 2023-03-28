@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
 @RestController
@@ -24,7 +25,7 @@ public class AdminController {
 	
 
 	
-	@PostMapping("api/addUser/{id}")
+	@PostMapping("api/admin/addUser/{id}")
 	public String addUser(@PathVariable int id) {
 		
 		return userServiceImpl.addUser(id);
@@ -32,7 +33,7 @@ public class AdminController {
 	
 	
 	@GetMapping("api/validateToken/")
-	public String validateTocken(@RequestParam String token) throws Exception {
+	public Employee validateTocken(@RequestParam String token) throws Exception {
 		
 		return userServiceImpl.validateTocken(token);
 	}
