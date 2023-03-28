@@ -9,7 +9,7 @@ public interface SeatBook {
 
 
 
-	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from, LocalDate to) ;
+	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from) ;
 
 	String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to);
 

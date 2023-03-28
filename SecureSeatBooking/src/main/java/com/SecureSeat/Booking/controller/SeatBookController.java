@@ -56,5 +56,10 @@ public class SeatBookController {
 		
 	}
 	
+//	@GetMapping("/seatnumber/{date1}")
+//	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+//		
+//	}
+	
 
 }
