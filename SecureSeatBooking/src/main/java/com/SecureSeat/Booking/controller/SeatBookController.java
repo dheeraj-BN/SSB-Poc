@@ -1,11 +1,15 @@
 package com.SecureSeat.Booking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
@@ -16,6 +20,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.SeatBook;
 
 @RestController
+
 public class SeatBookController {
 	
 	@Autowired
@@ -39,11 +44,31 @@ public class SeatBookController {
 	}
 	
 	
-	@PostMapping("/savebookdetails")
-	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails) {
-	BookingDetails b=seatBook.saveBookedDetails(bookingDetails);
-	String tokenvalue = b.getToken();
-		return tokenvalue;
+	@PostMapping("api/employee/seatbookdetails")
+	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
+		String message =seatBook.savebookeddetails(bookingDetails, from, to);
+		return message;
 	}
+	
+	@GetMapping("/seatnumber/{seatno}/{date1}")
+	public String seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
+
+	String message = seatBook.checkseatalreadybooked(seatno, date1);
+	return message;
+		
+	}
+	
+	@GetMapping("/seatnumber/{date1}")
+	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+		List<String> seatNos = seatBook.getSeatNoByDate(date1);
+		return seatNos;
+		}
+	
+	@GetMapping("/bookingdetails/{date1}")
+	public List<BookingDetails> seatbookingdetailsfordate(@PathVariable LocalDate date1){
+		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
+		return seatNos;
+		}
+	
 
 }

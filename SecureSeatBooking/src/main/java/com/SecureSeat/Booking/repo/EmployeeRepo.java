@@ -12,7 +12,7 @@ public interface EmployeeRepo  extends JpaRepository<Employee, Integer>{
 	
 	Employee findById(int id);
 	
-	Employee findByEmployeeEmail(String email);
+	List<Employee> findByEmployeeEmail(String email);
 	
 	List<Employee> findAll();
 

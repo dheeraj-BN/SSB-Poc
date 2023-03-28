@@ -1,9 +1,14 @@
 package com.SecureSeat.Booking.service;
 
+import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface MailTemplates {
 
-	String registrationMail(UserDeatils userInfo);
+	void registrationMail(UserDeatils userInfo,String pass);
+
+	void dailyBookedSeatReminder(BookingDetails bookingDetails);
+
+	void passwordChangeMail(UserDeatils userInfo);
 
 }
