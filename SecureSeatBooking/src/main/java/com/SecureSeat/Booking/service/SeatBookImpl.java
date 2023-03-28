@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SecureSeat.Booking.dao.SeatBookDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
@@ -24,6 +26,9 @@ public class SeatBookImpl implements SeatBook {
 
 	@Autowired
 	private HolidayDetailsRepo holidayDetailsRepo;
+	
+	@Autowired
+	private SeatBookDAO seatBookDAO;
 
 	@Override
 	public String savebookeddetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
@@ -46,10 +51,10 @@ public class SeatBookImpl implements SeatBook {
 		if (checkholiday == 0) {
 			int checkuser = checkbookingdetails(from, bookingDetails);
 			if (checkuser == 0) {
-				LocalDate bookeddate = from;
+				LocalDate d1 = from;
 				bookingDetails.setDate(from);
 				bookingDetails.setBookedTimings(LocalTime.now());
-				String date1 = bookeddate.format(DateTimeFormatter.ofPattern("ddMMYYYY"));
+				String date1 = d1.format(DateTimeFormatter.ofPattern("ddMMYYYY"));
 				UserDeatils user = bookingDetails.getUserDeatils();
 				Employee employee = user.getEmployee();
 				int employeeid = employee.getEmployeeId();
@@ -164,6 +169,12 @@ public class SeatBookImpl implements SeatBook {
 			return "seat not booked";
 		}
 
+	}
+	
+	@Override
+	public List<String> getSeatNoByDate(LocalDate bookeddate){
+		List<String> seatNos=seatBookDAO.getseatNoByBookedDate(bookeddate);
+		return seatNos;
 	}
 
 }

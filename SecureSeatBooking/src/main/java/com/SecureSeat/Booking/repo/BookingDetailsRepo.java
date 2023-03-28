@@ -24,5 +24,4 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 
 	BookingDetails  findByToken(String token);
 
-
 }
