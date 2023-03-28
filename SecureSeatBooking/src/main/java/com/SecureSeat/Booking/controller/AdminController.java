@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
 @RestController
+@RequestMapping("/api/admin")
 @CrossOrigin("http://10.191.80.120:3000")
 public class AdminController {
 	
@@ -25,14 +27,14 @@ public class AdminController {
 	
 
 	
-	@PostMapping("api/admin/addUser/{id}")
+	@PostMapping("/addUser/{id}")
 	public String addUser(@PathVariable int id) {
 		
 		return userServiceImpl.addUser(id);
 	}
 	
 	
-	@GetMapping("api/validateToken/")
+	@GetMapping("/validateToken/")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		
 		return userServiceImpl.validateTocken(token);

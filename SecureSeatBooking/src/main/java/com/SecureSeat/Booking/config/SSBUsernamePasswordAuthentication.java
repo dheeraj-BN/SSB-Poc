@@ -42,6 +42,7 @@ public class SSBUsernamePasswordAuthentication implements AuthenticationProvider
         if(employee.size() > 0 ) {
         	username=employee.get(0).getEmployeeEmail();
 	    	UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
+	    	System.out.println(user.getUserId());
 	    	if (passwordEncoder.matches(password,user.getPassword() )) {
 	    		
 	    		Set<Role> roles = user.getRoles();

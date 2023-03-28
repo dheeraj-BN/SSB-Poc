@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,33 +31,18 @@ public class SecurityConfig {
 		.and()
 		.httpBasic()
 		.and()
+		.formLogin()
+		.successHandler(customSuccessHandler)
+		.and()
 		.csrf().disable();
 		
-		return http.build();
-//		.requestMatchers("/api/allEmps").hasRole("ADMIN")
-//		.requestMatchers("/api/user/**").hasRole("EMPLOYEE")
-//		.requestMatchers("/api/admin/**").hasRole("ADMIN")
-//		.requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
-//		.requestMatchers("/api/developer/**").hasRole("DEVELOPER")
-//		.and()
-//		.formLogin()
-////		.successHandler(customSuccessHandler)
-////		.and()
-////		.logout()
-////		.logoutSuccessUrl("/")
-////		.and()
-//		
-//		.and().formLogin()
-//		.and().httpBasic();
-//		
-//		return http.build();
-//		
+		return http.build();	
 		
 		
 	}
 
 	@Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
