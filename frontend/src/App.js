@@ -22,6 +22,10 @@ import QRGenerator from "./components/qrgenerator";
 import UserDashBoard from "./components/UserDashboard";
 import DateSelection from "./components/timing";
 import SeatBookingForm from "./components/BookingForm";
+import FloorList from "./components/floorList";
+import UserDashboard from "./components/UserDashboard";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 function App() {
  
 
@@ -31,7 +35,15 @@ function App() {
     {/* <SeatBooking/> */}
     {/* <QRGenerator/> */}
    {/* <UserDashBoard/> */}
-     <SeatBookingForm/>
+     {/* <SeatBookingForm/> */}
+     {/* <FloorList/> */}
+    < UserDashboard/>
+    <Router>
+      <Routes>
+        <Route path="/"  element={<UserDashBoard/>} />
+        <Route path="/booking" element={<SeatBookingForm/>} />
+      </Routes>
+    </Router>
 
    </div>
   )

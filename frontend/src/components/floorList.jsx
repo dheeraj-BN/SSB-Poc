@@ -1,5 +1,5 @@
 import React from 'react';
-import './floorList.css';
+import '../components/floorList.css';
 
 function FloorList(){
     return(
