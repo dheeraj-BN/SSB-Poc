@@ -1,0 +1,54 @@
+/* Style for the navigation bar */
+nav {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav li button {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+  }
+  
+  nav li button:hover {
+    color: #ccc;
+  }
+  
+  /* Style for the dashboard content */
+  h1 {
+    font-size: 32px;
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    nav ul {
+      margin-top: 10px;
+    }
+  
+    nav li {
+      margin-bottom: 10px;
+    }
+  }
+  
