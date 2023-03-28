@@ -18,18 +18,6 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        // get the authenticated user's roles
-//        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-//        System.out.println(roles);
-//
-//        // redirect the user to the appropriate page based on their role
-//        if (roles.contains("ROLE_ADMIN")) {
-//            response.sendRedirect("/admin/home");
-//        } else if (roles.contains("ROLE_USER")) {
-//            response.sendRedirect("/user/home");
-//        } else {
-//            response.sendRedirect("/");
-//        }
     	Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
     	System.out.println(authorities);
     	for (GrantedAuthority authority : authorities) {
@@ -41,6 +29,7 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
                 return;
             }else if(authority.getAuthority().equals("ROLE_DEVELOPER")){
             	response.sendRedirect("/api/developer/test");
+            	 return;
             }
         }
     	throw new IllegalStateException("User has no valid roles.");
@@ -48,26 +37,4 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
 
 }
 
-/*public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
-
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
-        for (GrantedAuthority authority : authorities) {
-            if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                response.sendRedirect("/admin/home");
-                return;
-            } else if (authority.getAuthority().equals("ROLE_USER")) {
-                response.sendRedirect("/user/home");
-                return;
-            }
-        }
-
-        throw new IllegalStateException("User has no valid roles.");
-    }
-}
-*/
 
