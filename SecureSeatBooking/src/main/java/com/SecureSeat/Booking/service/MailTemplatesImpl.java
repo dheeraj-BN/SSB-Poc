@@ -9,7 +9,15 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 //import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
-//import org.springframework.scheduling.annotation.Scheduled;
+
+import java.io.IOException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -63,7 +71,40 @@ public class MailTemplatesImpl implements MailTemplates {
 		
 	}
 
+	@Override
+	public void passwordChangeMail(UserDeatils userInfo) {
+		
+		Employee emp=userInfo.getEmployee();
+		String subject="Password Change succesful";
+		String body="Dear "+emp.getEmployeeName()+",\r\n"
+				+ "\r\n"
+				+ "We are writing to confirm that your password has been successfully changed. Your account security is important to us, and we appreciate your effort to maintain it.\r\n"
+				+ "\r\n"
+				+ "If you did not make this change, please contact us immediately to ensure the security of your account.\r\n"
+				+ "\r\n"
+				+ "Thank you for your cooperation in keeping your account secure. If you have any questions or concerns, please do not hesitate to contact our customer support team.\r\n"
+				+ "\r\n"
+				+ "Best regards,\r\n"
+				+ "\r\n"
+				+ "Admin\r\n"
+				+ "Secure Seat Booking";
+		sendMail.sendMail(emp.getEmployeeEmail(), subject, body);
+		
+	}
 	
-//	 @Scheduled(cron = "0 0 12 * * ?") // runs every day at 12:00 PM  //0 0 10 * * ?
+//	 public void sendEmailWithAttachment(String toEmail, String subject, String body, MultipartFile attachment) throws MessagingException, IOException {
+//
+//	        MimeMessage message = javaMailSender.createMimeMessage();
+//	        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//
+//	        helper.setTo(toEmail);
+//	        helper.setSubject(subject);
+//	        helper.setText(body);
+//
+//	        InputStreamSource attachmentSource = new ByteArrayResource(attachment.getBytes());
+//	        helper.addAttachment(attachment.getOriginalFilename(), attachmentSource);
+//
+////	        javaMailSender.send(message);
+//	    }
 	
 }
