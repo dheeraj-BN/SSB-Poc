@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
@@ -43,6 +44,9 @@ public class UserServiceImpl {
 
 	@Autowired
 	private MailTemplatesImpl mailTemplatesImpl;
+	
+	@Autowired
+	private SecurityConfig securityConfig;
 
 	public String addUser(int employeeId) {
 
@@ -61,11 +65,11 @@ public class UserServiceImpl {
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(role);
 
-			UserDeatils user = new UserDeatils("Alpha@2022", employee);
+			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee);
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);
-			 mailTemplatesImpl.registrationMail(user);
+			 //mailTemplatesImpl.registrationMail(user);
 
 		}
 		

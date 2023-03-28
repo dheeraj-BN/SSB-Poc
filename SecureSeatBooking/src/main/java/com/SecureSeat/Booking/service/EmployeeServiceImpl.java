@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.dao.EmployeeDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
@@ -30,13 +31,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 	
+	@Autowired
+	private SecurityConfig config;
 	@Override
 	public String changePassword(int id,String oldPassword,String newPassword) {
+		System.out.println(id);
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
-		System.out.println(oldPassword.equals(user.getPassword()));
-		if(oldPassword.equals(user.getPassword())) {
+		System.out.println(user);
+		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
+		if(config.passwordEncoder().matches(oldPassword,user.getPassword())) {
 			
-			employeeDAO.changePasswor(newPassword,id);
+			employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),id);
 			return "Password changed";
 		}else {
 		return "Old Password doesn't matched";

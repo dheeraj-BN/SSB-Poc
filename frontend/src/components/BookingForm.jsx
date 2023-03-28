@@ -81,7 +81,7 @@ function SeatBookingForm() {
 
 
 
-      <button type="submit" className="form-button">Next</button>
+      <button  className="btn btn-primary"><a href="/seatSelection">Next</a></button>
     </form>
   );
 }

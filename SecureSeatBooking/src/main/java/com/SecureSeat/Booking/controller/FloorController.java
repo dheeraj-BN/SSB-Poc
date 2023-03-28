@@ -41,6 +41,14 @@ public class FloorController {
 	    }
 	    
 	    
+	   
+//	    @PostMapping("/addFloor")
+//	    public ResponseEntity<FloorDetails> addFloor(@RequestBody FloorDetails floorDetails) {
+//	        FloorDetails savedFloor = floorDetailsRepo.save(floorDetails);
+//	        return new ResponseEntity<>(savedFloor, HttpStatus.CREATED);
+//	    }
+
+	    
 	  
 
 	    
