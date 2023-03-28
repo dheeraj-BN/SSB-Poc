@@ -12,13 +12,15 @@ public interface EmployeeService {
 
 	List<Employee> getAllEmployee();
 
-//	BookingDetails getEmpBookedInfo(int id);
+	BookingDetails getEmpBookedInfo(int id);
 
-//	UserDetails getEmployeeBookedInfo(int id);
+	List<BookingDetails> getEmpBookedInfoBookedNext(int id);
 
-//	List<BookingDetails> getEmpBookedInfo(int id);
+//	UserDeatils changePassword(int id, String password);
 
-//	List<BookingDetails> getEmpBookedInfo(UserDeatils user);
+	String changePassword(int id, String oldPassword, String Password);
+
+
 
 
 
