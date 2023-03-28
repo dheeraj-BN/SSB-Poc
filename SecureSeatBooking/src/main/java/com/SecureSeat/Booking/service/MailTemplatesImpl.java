@@ -15,8 +15,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -33,12 +33,12 @@ public class MailTemplatesImpl implements MailTemplates {
 	private UserDetailsRepo userDetailsRepo;
 	
 	@Override
-	public void registrationMail(UserDeatils userInfo) {
+	public void registrationMail(UserDeatils userInfo,String pass) {
 		Employee emp=userInfo.getEmployee();
 		String subject="Secure Seat Booking Registed";
 		String body= "Hello "+emp.getEmployeeName()+", \n\n  Welcome To Secure Seat Booking(SSB) Valtech \n\n"
 				+ "Below are your login credentials:\r\n"
-				+ "Username: "+emp.getEmployeeEmail()+ "\n Password : "+userInfo.getPassword()+
+				+ "Username: "+emp.getEmployeeEmail()+ "\n Password : "+pass+
 				"\n Please keep these credentials safe and secure. We recommend that you change your password periodically to ensure the security of your account.\r\n"
 				+ "\r\n"
 				+ "If you have any questions or concerns, please do not hesitate to contact our customer support team. We are always here to assist you in any way we can."

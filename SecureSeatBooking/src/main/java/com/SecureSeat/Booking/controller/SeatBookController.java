@@ -2,6 +2,7 @@ package com.SecureSeat.Booking.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.SeatBook;
 
 @RestController
+
 public class SeatBookController {
 	
 	@Autowired
@@ -42,7 +44,7 @@ public class SeatBookController {
 	}
 	
 	
-	@PostMapping("/savebookdetails")
+	@PostMapping("api/employee/seatbookdetails")
 	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
 		String message =seatBook.savebookeddetails(bookingDetails, from, to);
 		return message;
@@ -55,6 +57,18 @@ public class SeatBookController {
 	return message;
 		
 	}
+	
+	@GetMapping("/seatnumber/{date1}")
+	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+		List<String> seatNos = seatBook.getSeatNoByDate(date1);
+		return seatNos;
+		}
+	
+	@GetMapping("/bookingdetails/{date1}")
+	public List<BookingDetails> seatbookingdetailsfordate(@PathVariable LocalDate date1){
+		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
+		return seatNos;
+		}
 	
 
 }

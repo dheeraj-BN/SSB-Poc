@@ -5,7 +5,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface MailTemplates {
 
-	void registrationMail(UserDeatils userInfo);
+	void registrationMail(UserDeatils userInfo,String pass);
 
 	void dailyBookedSeatReminder(BookingDetails bookingDetails);
 

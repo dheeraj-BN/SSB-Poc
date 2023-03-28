@@ -33,7 +33,7 @@ public class LoginController {
 		return "ADMIN HOME";
 	}
 	
-	@GetMapping("/user/test")
+	@GetMapping("/employee/test")
 	public String userHome() {
 		return "USER HOME";
 	}
@@ -65,5 +65,6 @@ public class LoginController {
 	public List<Employee> findAllEmps() {
 		return loginService.findAllEmployees();
 	}
+	
 	
 }
