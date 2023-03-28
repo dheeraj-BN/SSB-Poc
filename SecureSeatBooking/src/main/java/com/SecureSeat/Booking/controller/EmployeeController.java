@@ -28,6 +28,7 @@ public class EmployeeController {
 	
 	@PutMapping("/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword) {
+		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfrimMail(id);
 		return message;

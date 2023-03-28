@@ -16,8 +16,6 @@ public interface EmployeeService {
 
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id);
 
-//	UserDeatils changePassword(int id, String password);
-
 	String changePassword(int id, String oldPassword, String Password);
 
 
