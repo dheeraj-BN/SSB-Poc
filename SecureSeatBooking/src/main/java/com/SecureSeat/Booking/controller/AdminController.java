@@ -24,14 +24,14 @@ public class AdminController {
 	
 
 	
-	@PostMapping("api/addUser/{id}")
+	@PostMapping("api/admin/addUser/{id}")
 	public String addUser(@PathVariable int id) {
 		
 		return userServiceImpl.addUser(id);
 	}
 	
 	
-	@GetMapping("api/validateToken/")
+	@GetMapping("api/admin/validateToken/")
 	public String validateTocken(@RequestParam String token) throws Exception {
 		
 		return userServiceImpl.validateTocken(token);

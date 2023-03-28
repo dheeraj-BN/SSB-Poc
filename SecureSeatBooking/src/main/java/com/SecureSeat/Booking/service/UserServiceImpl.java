@@ -65,10 +65,11 @@ public class UserServiceImpl {
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);
+			 mailTemplatesImpl.registrationMail(user);
 
 		}
 		
-		// return mailTemplatesImpl.registrationMail(user);
+		 
 
 		return "SUCCESS";
 
