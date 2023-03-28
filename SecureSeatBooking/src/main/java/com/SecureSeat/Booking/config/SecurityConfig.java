@@ -22,17 +22,36 @@ public class SecurityConfig {
 		
 		http.securityContext().requireExplicitSave(false)
 		.and().authorizeHttpRequests()
-//		.requestMatchers("/api/allEmps").hasRole("ADMIN")
-//		.requestMatchers("/api/user/**").hasRole("EMPLOYEE")
 		.requestMatchers("/api/admin/**").hasRole("ADMIN")
-		.requestMatchers("/api/user/**").hasRole("EMPLOYEE")
+		.requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
 		.requestMatchers("/api/developer/**").hasRole("DEVELOPER")
 		.requestMatchers("/api/allEmps").authenticated()
 		.anyRequest().permitAll()
-		.and().formLogin()
-		.and().httpBasic();
+		.and()
+		.httpBasic()
+		.and()
+		.csrf().disable();
 		
 		return http.build();
+//		.requestMatchers("/api/allEmps").hasRole("ADMIN")
+//		.requestMatchers("/api/user/**").hasRole("EMPLOYEE")
+//		.requestMatchers("/api/admin/**").hasRole("ADMIN")
+//		.requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
+//		.requestMatchers("/api/developer/**").hasRole("DEVELOPER")
+//		.and()
+//		.formLogin()
+////		.successHandler(customSuccessHandler)
+////		.and()
+////		.logout()
+////		.logoutSuccessUrl("/")
+////		.and()
+//		
+//		.and().formLogin()
+//		.and().httpBasic();
+//		
+//		return http.build();
+//		
+		
 		
 	}
 
