@@ -11,9 +11,15 @@ public interface FloorService {
 
 	List<FloorDetails> getAllFloors();
 
+	void deleteFloor(int floorId);
+
+	FloorDetails getFloorById(int floorId);
+
 	FloorDetails addFloor(FloorDetails floor);
 
-	//FloorDetails getFloorById(int floorId);
+
+	//FloorDetails addSeat(int floorId);
+
 
 }
 
