@@ -20,6 +20,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.SeatBook;
 
 @RestController
+
 public class SeatBookController {
 	
 	@Autowired
@@ -43,7 +44,7 @@ public class SeatBookController {
 	}
 	
 	
-	@PostMapping("/savebookdetails")
+	@PostMapping("api/employee/seatbookdetails")
 	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
 		String message =seatBook.savebookeddetails(bookingDetails, from, to);
 		return message;
@@ -60,6 +61,12 @@ public class SeatBookController {
 	@GetMapping("/seatnumber/{date1}")
 	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
+		return seatNos;
+		}
+	
+	@GetMapping("/bookingdetails/{date1}")
+	public List<BookingDetails> seatbookingdetailsfordate(@PathVariable LocalDate date1){
+		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
 		return seatNos;
 		}
 	
