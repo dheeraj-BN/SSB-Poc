@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import com.SecureSeat.Booking.config.SSBUsernamePasswordAuthentication;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.service.LoginService;
@@ -30,9 +31,16 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
+	@Autowired
+	private SSBUsernamePasswordAuthentication authentication;
 	@GetMapping("/api/user/{id}")
 	public Optional<UserDeatils> findById(@PathVariable int id) {
 		return loginService.findUserByUsername(id);
+	}
+	
+	@GetMapping("/home")
+	public String home() {
+		return "home";
 	}
 	
 	@GetMapping("/api/admin/test/{userId}")
@@ -68,19 +76,6 @@ public class LoginController {
 //		}
 //
 //	}
-	
-	@GetMapping("/login")
-	public String loginresponse() {
-		 return "<form action=\"/login\" method=\"post\">\n" +
-		           "  <label for=\"username\">Username:</label>\n" +
-		           "  <input type=\"text\" id=\"username\" name=\"username\">\n" +
-		           "  <br>\n" +
-		           "  <label for=\"password\">Password:</label>\n" +
-		           "  <input type=\"password\" id=\"password\" name=\"password\">\n" +
-		           "  <br>\n" +
-		           "  <button type=\"submit\">Log in</button>\n" +
-		           "</form>";
-	}
 	
 	@ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception ex, WebRequest request) {
