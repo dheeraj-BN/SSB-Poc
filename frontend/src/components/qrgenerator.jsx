@@ -23,7 +23,7 @@ function App() {
   return (
     <div className='QR'>
     
-      <button onClick={generateQrData}>Generate QR Code</button>
+      <button className='btn btn-primary' onClick={generateQrData}>Generate QR Code</button>
       <QRCode value={qrData} />
     </div>
   );

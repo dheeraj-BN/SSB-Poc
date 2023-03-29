@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
@@ -20,6 +22,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.SeatBook;
 
 @RestController
+
 public class SeatBookController {
 	
 	@Autowired
@@ -30,6 +33,9 @@ public class SeatBookController {
 	
 	@Autowired
 	private ShiftDetailsRepo shiftDetailsRepo;
+	
+	@Autowired
+	private UserDetailDao userDetailDao;
 	
 	
 	@GetMapping("/getuser")
@@ -43,7 +49,7 @@ public class SeatBookController {
 	}
 	
 	
-	@PostMapping("/savebookdetails")
+	@PostMapping("api/employee/seatbookdetails")
 	public String saveBookedDetails(@RequestBody BookingDetails bookingDetails,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
 		String message =seatBook.savebookeddetails(bookingDetails, from, to);
 		return message;
@@ -62,6 +68,15 @@ public class SeatBookController {
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
+	
+	@GetMapping("/bookingdetails/{date1}")
+	public List<BookingDetails> seatbookingdetailsfordate(@PathVariable LocalDate date1){
+		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
+		return seatNos;
+		}
+	
+	
+
 	
 
 }

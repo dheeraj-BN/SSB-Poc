@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,12 @@ import com.SecureSeat.Booking.dao.SeatBookDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
+import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.HolidayDetailsRepo;
+import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
 @Service
 public class SeatBookImpl implements SeatBook {
@@ -26,6 +31,12 @@ public class SeatBookImpl implements SeatBook {
 
 	@Autowired
 	private HolidayDetailsRepo holidayDetailsRepo;
+	
+	@Autowired
+	private UserDetailsRepo userDetailsRepo;
+	
+	@Autowired
+	private ShiftDetailsRepo shiftDetailsRepo;
 	
 	@Autowired
 	private SeatBookDAO seatBookDAO;
@@ -78,9 +89,11 @@ public class SeatBookImpl implements SeatBook {
 
 	@Override
 	public String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
-
+        
 		LocalDate to1 = to.plusDays(1);
 		for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
+			int checkweekends = checkweekends(i);
+			if(checkweekends==1) {
 			int checkholiday = checkholiday(i);
 			if (checkholiday == 0) {
 				int checkuser = checkbookingdetails(i, bookingDetails);
@@ -104,6 +117,7 @@ public class SeatBookImpl implements SeatBook {
 
 			}
 
+		}
 		}
 
 		return "seat has been booked for week";
@@ -131,6 +145,19 @@ public class SeatBookImpl implements SeatBook {
 			}
 		}
 
+	}
+	
+	@Override
+	public int checkweekends(LocalDate date) {
+		int flag=0;
+		String dayofweek = date.getDayOfWeek().toString();
+		if("SATURDAY".equalsIgnoreCase(dayofweek) || "SUNDAY".equalsIgnoreCase(dayofweek)) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+		
 	}
 
 	@Override
@@ -175,6 +202,24 @@ public class SeatBookImpl implements SeatBook {
 	public List<String> getSeatNoByDate(LocalDate bookeddate){
 		List<String> seatNos=seatBookDAO.getseatNoByBookedDate(bookeddate);
 		return seatNos;
+	}
+	
+	@Override
+	public List<BookingDetails> getbookingdetails(LocalDate bookeddate){
+		List<BookingDetails> bookingdetails = bookingDetailsRepo.findByBookedDate(bookeddate);
+//		List<BookingDetails> bookingdetails = seatBookDAO.getbookingdetailsbydate(bookeddate);
+		return bookingdetails;
+	}
+	
+	@Override
+	public UserDeatils getuserbyid(int id) {
+		System.out.println(userDetailsRepo.getById(id));
+		return  userDetailsRepo.getById(id);
+	}
+	
+	@Override
+	public ShiftDetails getshiftdetails(int id) {
+		return shiftDetailsRepo.getById(id);
 	}
 
 }
