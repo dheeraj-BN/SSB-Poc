@@ -66,7 +66,6 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 ////			Integer user =(Integer) row.get("USER_ID"); 
 ////			UserDeatils userDeatils = userDetailsRepo.getById(user);
 ////			book.setUserDeatils(userDeatils);
-//			book.setUserDeatils((UserDeatils) row.get("USERDEATILS"));
 //			
 //			bookingdetails.add(book);
 //			
