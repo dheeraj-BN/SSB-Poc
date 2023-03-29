@@ -38,11 +38,13 @@ public class SSBUsernamePasswordAuthentication implements AuthenticationProvider
 		String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         String role=null;
+        int id=0;
         List<Employee> employee =  empRepo.findByEmployeeEmail(username);
         if(employee.size() > 0 ) {
         	username=employee.get(0).getEmployeeEmail();
 	    	UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
 	    	System.out.println(user.getUserId());
+	    	id=user.getUserId();
 	    	if (passwordEncoder.matches(password,user.getPassword() )) {
 	    		
 	    		Set<Role> roles = user.getRoles();
@@ -71,6 +73,7 @@ public class SSBUsernamePasswordAuthentication implements AuthenticationProvider
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+authority.getRoleName().toUpperCase()));
         }
         System.out.println(grantedAuthorities);
+//        System.out.println(id);
         return grantedAuthorities;
     }
 
