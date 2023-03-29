@@ -49,13 +49,13 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
     	System.out.println(authorities);
     	for (GrantedAuthority authority : authorities) {
             if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                response.sendRedirect("/api/admin/test/?userId="+user.get().getUserId());
+                response.sendRedirect("/api/admin/test/"+user.get().getUserId());
                 return;
             } else if (authority.getAuthority().equals("ROLE_EMPLOYEE")) {
-                response.sendRedirect("/api/employee/test/?userId="+user.get().getUserId());
+                response.sendRedirect("/api/employee/test/"+user.get().getUserId());
                 return;
             }else if(authority.getAuthority().equals("ROLE_DEVELOPER")){
-            	response.sendRedirect("/api/developer/test?userId="+user.get().getUserId());
+            	response.sendRedirect("/api/developer/test/"+user.get().getUserId());
             	 return;
             }
         }
@@ -63,11 +63,4 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
     }
 
 }
-/*Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
-
-        // construct the URL with the user ID as a parameter
-        String redirectUrl = request.getContextPath() + "/dashboard?id=" + userId;
-
-        // redirect the user to the dashboard with the ID parameter in the URL
-        redirectStrategy.sendRedirect(request, response, redirectUrl);*/
 
