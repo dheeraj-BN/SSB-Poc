@@ -46,10 +46,6 @@ public class LoginServiceImpl implements LoginService {
 		return userRepo.findByUserId(id);
 	}
 
-//	@Override
-//	public Employee findEmployeeByName(String name) {
-//		return empRepo.findByEmployeeEmail(name);
-//	}
 
 	@Override
 	public List<Employee> findAllEmployees() {

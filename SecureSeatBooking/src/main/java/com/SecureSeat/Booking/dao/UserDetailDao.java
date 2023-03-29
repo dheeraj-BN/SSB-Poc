@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.UserDeatils;
 
 @Component
 public class UserDetailDao {
@@ -42,6 +43,22 @@ public class UserDetailDao {
                  rs.getString("employee_gender"),
                  rs.getString("employee_personal_email")
          ));
+	}
+	
+	
+	public UserDeatils getAdminInfo() {
+		String sql="select * from user_deatils  ud INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
+				+ "INNER JOIN role r ON r.role_id = ur.role_id where r.role_name ='ADMIN'";
+//		return jdbcTemplate.queryForObject(sql, new Object[] ,(rs,rowNum) ->
+//			new UserDeatils(
+//					rs.getInt("user_id"),
+//					rs.getString("password"),
+//					rs.getObject("employee_id")
+//					)
+//				);
+		
+		
+		return (UserDeatils) jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(UserDeatils.class));
 	}
 
 }
