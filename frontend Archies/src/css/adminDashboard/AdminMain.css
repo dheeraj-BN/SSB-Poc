@@ -1,0 +1,40 @@
+.empData{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-evenly;
+    margin: 80px auto;
+}
+.adminPage{
+    display: flex;
+    overflow: initial scroll;
+    gap: 4rem;
+}
+.admincard{
+    width: 300px;
+    height: 200px;
+}
+
+@media only screen and (max-width:1000px) {
+    .empData{
+        /* margin: 10px auto; */
+        gap: 0rem;
+        padding: 0px;
+        margin:110px auto;
+        /* margin: 110px auto; */
+    }
+
+    /* .empData:nth-child(0){
+        font-size: 43px;
+    } */
+    .admincard{
+        width: 200px;
+        height: 140px;  
+        /* margin-top: -160px; */
+        /* margin-top: -102px; */
+    }
+    .adminPage{
+        gap: 1rem;
+        overflow: hidden;
+    }
+}

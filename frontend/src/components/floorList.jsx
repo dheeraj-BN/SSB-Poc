@@ -4,11 +4,12 @@ import axios from 'axios';
 
 function FloorList(){
     useEffect(()=>{
-        axios.get('http://10.191.80.109:9090/api/admin/validateToken/?token=280320236')
+        axios.get('http://10.191.80.109:9090/api/developer/getAllFloorDetails')
     .then(resp=>{
         console.log(resp.data)
     },[])
     })
+    
     return(
        
             
@@ -16,7 +17,7 @@ function FloorList(){
             <h3>Select Floor</h3>
             <div className="floor0">
                 
-                <button className='floorbtn'>Ground Floor</button>
+                <button className='floorbtn'><a href="/seatmatrix">Ground Floor</a></button>
             </div>
             <div className="floor0">
                 
