@@ -23,6 +23,7 @@ import com.SecureSeat.Booking.service.FloorService;
 
 @RestController()
 @RequestMapping("/api/developer")
+@CrossOrigin("http://10.191.80.118:3001/")
 public class FloorController {
 	
 	
@@ -41,13 +42,72 @@ public class FloorController {
 	    }
 	    
 	    
+  
 	   
-//	    @PostMapping("/addFloor")
-//	    public ResponseEntity<FloorDetails> addFloor(@RequestBody FloorDetails floorDetails) {
-//	        FloorDetails savedFloor = floorDetailsRepo.save(floorDetails);
-//	        return new ResponseEntity<>(savedFloor, HttpStatus.CREATED);
-//	    }
+	    
+	    
 
+	    
+	    
+	    //add seats to floors
+	    @PostMapping("/Addseats/{floorId}")
+	    public FloorDetails addSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
+	        return floorService.addSeatsToFloorDetails(floorId, noOfSeats);
+	    }
+	    
+	    
+	    //update seats to floor
+	    @PutMapping("/Updateseats/{floorId}")
+	    public FloorDetails updateSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
+	        return floorService.updateSeatsToFloorDetails(floorId, noOfSeats);
+	    }
+
+	   
+   
+	    
+
+//	    @PostMapping("/addfloor")
+//	      public ResponseEntity<FloorDetails> addFloorWithSeats(@RequestParam("floorId") int floorId,
+//	                                                             @RequestParam("floorName") String floorName,
+//	                                                             @RequestParam("noOfSeats") int noOfSeats) {
+//	          FloorDetails floorDetails = new FloorDetails(floorId, floorName, noOfSeats);
+//	          FloorDetails newFloorDetails = floorDetailsRepo.save(floorDetails);
+//	          return new ResponseEntity<>(newFloorDetails, HttpStatus.CREATED);
+//	      }
+//	    
+	    
+	    //Add a new floor with details
+	    @PostMapping("/addfloor/{floorId}")
+	    public ResponseEntity<FloorDetails> addFloorWithDetails(@RequestBody FloorDetails floorDetails) {
+	        FloorDetails newFloor = floorService.addFloorWithDetails(floorDetails);
+	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloor);
+	    }
+	    
+	    
+	 // Update floor details by ID
+	    @PutMapping("/Updatefloor/{id}")
+	    public ResponseEntity<FloorDetails> updateFloorWithDetails(@PathVariable("id") int floorId, 
+	                                                            @RequestBody FloorDetails floorDetails) {
+	        FloorDetails updatedFloorDetails = floorService.updateFloorWithDetails(floorId, floorDetails);
+	        if (updatedFloorDetails != null) {
+	            return new ResponseEntity<>(updatedFloorDetails, HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        }
+	    }
+	
+	
+
+	    
+	    
+	    
+	    
+
+
+	    
+	    
+	    
+	
 	    
 	  
 
@@ -66,6 +126,10 @@ public class FloorController {
 	    	
 	    }
 	    
+	    
+	    
+	    
+	    
 	    @GetMapping("/{floorId}")
 	    public ResponseEntity<FloorDetails> getFloorById(@PathVariable ("floorId") int floorId){
 	    	FloorDetails floor = floorService.getFloorById(floorId);
@@ -79,10 +143,7 @@ public class FloorController {
 	    }
 	    
 	    
-	    
-	    
 
-	    
 	    
 
 }

@@ -18,7 +18,7 @@ import com.SecureSeat.Booking.service.UserServiceImpl;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin("http://10.191.80.120:3000")
+//@CrossOrigin(origins = "http://10.191.80.118:3001")
 public class AdminController {
 	
 	@Autowired
