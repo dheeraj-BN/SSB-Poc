@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
@@ -31,6 +33,9 @@ public class SeatBookController {
 	
 	@Autowired
 	private ShiftDetailsRepo shiftDetailsRepo;
+	
+	@Autowired
+	private UserDetailDao userDetailDao;
 	
 	
 	@GetMapping("/getuser")
@@ -69,6 +74,7 @@ public class SeatBookController {
 		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
 		return seatNos;
 		}
+	
 	
 
 	

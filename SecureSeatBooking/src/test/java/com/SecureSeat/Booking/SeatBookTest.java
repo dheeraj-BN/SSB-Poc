@@ -19,9 +19,10 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.SeatBook;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+//@SpringBootTest
+//@AutoConfigureMockMvc
 public class SeatBookTest {
 	
 	@Autowired
@@ -30,11 +31,9 @@ public class SeatBookTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@Autowired
-	private UserDetailsRepo userDetailsRepo;
 	
-	@Autowired
-	private ShiftDetailsRepo shiftDetailsRepo;
+	
+
 	
 //	@Test
 //	@WithAnonymousUser
@@ -42,13 +41,16 @@ public class SeatBookTest {
 //		mockMvc.perform(get("/getuser")).andExpect(status().isOk());
 //		
 //	}
-	
-	@Test
-	public void savedbookeddetails() {
-//		List<UserDeatils> userDeatilss= userDetailsRepo.findAll();
-		UserDeatils userDeatils = userDetailsRepo.getById(18);
-		ShiftDetails shiftDetails = shiftDetailsRepo.getById(1);
-//		BookingDetails bookingDetails = new BookingDetails("G12", true, , null, null, null, null, userDeatils, shiftDetails)
-	}
+//	
+//	@Test
+//	public void savedbookeddetails() {
+////		List<UserDeatils> userDeatilss= userDetailsRepo.findAll();
+//		UserDeatils userDeatils = seatBook.getuserbyid(22);
+//		ShiftDetails shiftDetails =seatBook.getshiftdetails(1);
+//		LocalDate date1=LocalDate.parse("2023-03-29");
+//		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null, userDeatils, shiftDetails);
+//		
+//		seatBook.savebookeddetails(bookingDetails, date1, date1);
+//	}
 
 }

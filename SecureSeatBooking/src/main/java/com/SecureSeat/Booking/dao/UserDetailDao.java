@@ -46,8 +46,8 @@ public class UserDetailDao {
 	}
 	
 	
-	public UserDeatils getAdminInfo() {
-		String sql="select * from user_deatils  ud INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
+	public Employee getAdminInfo() {
+		String sql="select * from user_deatils  ud INNER JOIN employee em ON ud.employee_id=em.employee_id INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
 				+ "INNER JOIN role r ON r.role_id = ur.role_id where r.role_name ='ADMIN'";
 //		return jdbcTemplate.queryForObject(sql, new Object[] ,(rs,rowNum) ->
 //			new UserDeatils(
@@ -58,7 +58,7 @@ public class UserDetailDao {
 //				);
 		
 		
-		return (UserDeatils) jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(UserDeatils.class));
+		return (Employee) jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Employee.class));
 	}
 
 }
