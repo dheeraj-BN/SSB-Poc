@@ -8,6 +8,7 @@ import QrCodeScan from "./components/QrCodeScan";
 // import AdminDash from "./components/AdminDash"
 // import AddUser from "./components/AddUser"
 // import SignIn from "./routes/SignIn"
+import LoginForm from "./routes/LoginForm";
 // import EmailVer from "./routes/EmailVer"
 // import ResetPassword from "./routes/ResetPassword"
 
@@ -18,7 +19,8 @@ function App() {
     <div>
     
       <Routes>
-        {/* <Route path="/" element={<SignIn/>} /> */}
+        <Route path="/login" element={<LoginForm/>} />
+        {/* <Route path="/login" element={<SignIn/>} /> */}
         {/* <Route path="/email" element={<EmailVer/>} />
   <Route path="/resetpass" element={<ResetPassword/>} /> */}
         {/* <Route path="*" element={<AdminDash/>}/> */}
