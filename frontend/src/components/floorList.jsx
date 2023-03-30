@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../components/floorList.css';
+import axios from 'axios';
 
 function FloorList(){
+    useEffect(()=>{
+        axios.get('http://10.191.80.109:9090/api/developer/getAllFloorDetails')
+    .then(resp=>{
+        console.log(resp.data)
+    },[])
+    })
+    
     return(
        
             
@@ -9,7 +17,7 @@ function FloorList(){
             <h3>Select Floor</h3>
             <div className="floor0">
                 
-                <button className='floorbtn'>Ground Floor</button>
+                <button className='floorbtn'><a href="/seatmatrix">Ground Floor</a></button>
             </div>
             <div className="floor0">
                 
@@ -19,10 +27,7 @@ function FloorList(){
                 
                 <button className='floorbtn'>Second Floor</button>
             </div>
-            <div className="floor0">
-                
-                <button className='floorbtn'>Third Floor</button>
-            </div>
+           
         </div>
         
     )

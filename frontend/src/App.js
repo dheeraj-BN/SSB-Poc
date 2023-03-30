@@ -25,6 +25,7 @@ import SeatBookingForm from "./components/BookingForm";
 import FloorList from "./components/floorList";
 import UserDashboard from "./components/UserDashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SeatMatrix from "./components/seatMatrix";
 
 function App() {
  
@@ -42,6 +43,13 @@ function App() {
       <Routes>
         <Route path="/"  element={<UserDashBoard/>} />
         <Route path="/booking" element={<SeatBookingForm/>} />
+        <Route path="/seatSelection" element={<FloorList/>}/>
+        <Route path="/seatmatrix" element={<SeatMatrix/>}/>
+        <Route path="/seatsample" element={<SeatBooking/>}/>
+        <Route path="/qr" element={<QRGenerator/>}/>
+
+
+
       </Routes>
     </Router>
 

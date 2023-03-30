@@ -5,19 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
-//import com.SecureSeat.Booking.repo.EmployeeRepo;
-import com.SecureSeat.Booking.repo.UserDetailsRepo;
-
-
-import java.io.IOException;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamSource;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -29,8 +18,8 @@ public class MailTemplatesImpl implements MailTemplates {
 	@Autowired
 	private SendMail sendMail;
 	
-	@Autowired
-	private UserDetailsRepo userDetailsRepo;
+//	@Autowired
+//	private UserDetailsRepo userDetailsRepo;
 	
 	@Override
 	public void registrationMail(UserDeatils userInfo,String pass) {
@@ -91,6 +80,25 @@ public class MailTemplatesImpl implements MailTemplates {
 		sendMail.sendMail(emp.getEmployeeEmail(), subject, body);
 		
 	}
+	
+	@Override
+	public void addedFloorTemplete(FloorDetails floorDetails,String adminEmail) {
+		String subject="New Floor added to building";
+		String body="Dear Admin,\r\n"
+				+ "\r\n"
+				+ "We are pleased to inform you that we have successfully added a new floor to our office building"+floorDetails.getFloorName()
+				+ ". The new floor is now ready for use with "+floorDetails.getNoOfSeats()+" number of seats and we have already completed all necessary installations and inspections.\r\n"
+				+ "\r\n"
+				+ "We would like to take this opportunity to thank you for your support and cooperation throughout this process. We appreciate your patience and understanding as we worked to expand our facilities.\r\n"
+				+ "\r\n"
+				+ "Best regards,\r\n"
+				+ "\r\n"
+				+ "Develpor\r\n"
+				+ "Secure Seat Booking";
+		sendMail.sendMail(adminEmail, subject, body);
+	}
+	
+	
 	
 //	 public void sendEmailWithAttachment(String toEmail, String subject, String body, MultipartFile attachment) throws MessagingException, IOException {
 //

@@ -1,45 +1,60 @@
 package com.SecureSeat.Booking.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
+import com.SecureSeat.Booking.config.SSBUsernamePasswordAuthentication;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.service.LoginService;
 
 @RestController
 //@CrossOrigin("http://10.191.80.118:3001")
-@RequestMapping("/api")
+@RequestMapping("")
 public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
 
-	@GetMapping("/user/{id}")
+	@Autowired
+	private SSBUsernamePasswordAuthentication authentication;
+	@GetMapping("/api/user/{id}")
 	public Optional<UserDeatils> findById(@PathVariable int id) {
 		return loginService.findUserByUsername(id);
 	}
 	
-	@GetMapping("/admin/test")
-	public String adminHome() {
+	@GetMapping("/home")
+	public String home() {
+		return "home";
+	}
+	
+	@GetMapping("/api/admin/test/{userId}")
+	public String adminHome(@PathVariable int userId) {
 		return "ADMIN HOME";
 	}
 	
-	@GetMapping("/employee/test")
-	public String userHome() {
+	@GetMapping("/api/employee/test/{userId}")
+	public String userHome(@PathVariable int userId) {
 		return "USER HOME";
 	}
 	
-	@GetMapping("/developer/test")
-	public String developerHome() {
+	@GetMapping("/api/developer/test/{userId}")
+	public String developerHome(@PathVariable int userId) {
 		return "Developer HOME";
 	}
 
@@ -47,6 +62,7 @@ public class LoginController {
 	public Employee findEmployeeByName(@RequestParam String email) {
 		return loginService.findEmployeeByName(email);
 	}
+
 
 //	@GetMapping("/login")
 //	public String loginres(@RequestParam("email") String email, @RequestParam String password) {
@@ -60,6 +76,22 @@ public class LoginController {
 //		}
 //
 //	}
+	
+	@ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleExceptions(Exception ex, WebRequest request) {
+        if (ex instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException manvEx = (MethodArgumentNotValidException) ex;
+            BindingResult result = manvEx.getBindingResult();
+            List<String> errors = new ArrayList<>();
+            result.getAllErrors().forEach(error -> {
+                String errorMessage = error.getDefaultMessage();
+                errors.add(errorMessage);
+            });
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+    }
 
 	@GetMapping("/allEmps")
 	public List<Employee> findAllEmps() {
