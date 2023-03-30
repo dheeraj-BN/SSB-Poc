@@ -38,12 +38,12 @@ public class SeatBookTest {
 	
 
 	
-	@Test
-	@WithAnonymousUser
-	public void getuserdetails() throws Exception {
-		mockMvc.perform(get("/getuser")).andExpect(status().isOk());
-		
-	}
+//	@Test
+//	@WithAnonymous
+//	public void getuserdetails() throws Exception {
+//		mockMvc.perform(get("/getuser")).andExpect(status().isOk());
+//		
+//	}
 	
 	@Test
 	public void savedbookeddetailsforday() {

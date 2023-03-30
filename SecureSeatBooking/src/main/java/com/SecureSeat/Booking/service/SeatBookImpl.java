@@ -213,8 +213,8 @@ public class SeatBookImpl implements SeatBook {
 	
 	@Override
 	public List<BookingDetails> getbookingdetails(LocalDate bookeddate){
-		List<BookingDetails> bookingdetails = bookingDetailsRepo.findByBookedDate(bookeddate);
-//		List<BookingDetails> bookingdetails = seatBookDAO.getbookingdetailsbydate(bookeddate);
+//		List<BookingDetails> bookingdetails = bookingDetailsRepo.findByBookedDate(bookeddate);
+	List<BookingDetails> bookingdetails = seatBookDAO.getbookingdetailsbydate(bookeddate);
 		return bookingdetails;
 	}
 	
