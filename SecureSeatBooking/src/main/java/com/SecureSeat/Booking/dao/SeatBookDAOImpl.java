@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
@@ -36,42 +38,55 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 		return seatNo;
 	}
 	
-//	@Override
-//	public List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate) {
-//		String sql="SELECT * from booking_details where booked_date=?";
-//		List<BookingDetails> bookingdetails = new ArrayList<>();
-//		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {bookedDate});
-//		for(Map row : rows) {
-//			BookingDetails book  = new BookingDetails();
-//			Time sqltime = (Time) row.get("BOOKED_TIMINGS");
-//			LocalTime bookedtime = sqltime.toLocalTime();
-//			Time sqllogintime = (Time) row.get("LOGIN_TIME");
-//			LocalTime logintime;
-//			if(sqllogintime==null) {
-//				logintime = null;
-//			}
-//			else {
-//				logintime = sqllogintime.toLocalTime();
-//			}
-//			Date sqldate = (Date) row.get("BOOKED_DATE");
-//			LocalDate bookeddate = sqldate.toLocalDate();
-//			book.setBookingId((Integer)row.get("BOOKING_ID"));
-//  		book.setDate(bookeddate);
-//	book.setBookedTimings( bookedtime);
-//			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-////			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
-//			book.setLoginTime(logintime);
-//			book.setSeatNo((String) row.get("SEATNO"));
-//			book.setToken((String) row.get("TOKEN"));
-////			Integer user =(Integer) row.get("USER_ID"); 
-////			UserDeatils userDeatils = userDetailsRepo.getById(user);
-////			book.setUserDeatils(userDeatils);
-//			
-//			bookingdetails.add(book);
-//			
-//		}
-//		return bookingdetails;
-//	}
+	@Override
+	public List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate) {
+		String sql="SELECT * from booking_details where booked_date=?";
+		List<BookingDetails> bookingdetails = new ArrayList<>();
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {bookedDate});
+		for(Map row : rows) {
+			BookingDetails book  = new BookingDetails();
+			Time sqltime = (Time) row.get("BOOKED_TIMINGS");
+			LocalTime bookedtime = sqltime.toLocalTime();
+			Time sqllogintime = (Time) row.get("LOGIN_TIME");
+			LocalTime logintime;
+			if(sqllogintime==null) {
+				logintime = null;
+			}
+			else {
+				logintime = sqllogintime.toLocalTime();
+			}
+			Date sqldate = (Date) row.get("BOOKED_DATE");
+			LocalDate bookeddate = sqldate.toLocalDate();
+			book.setBookingId((Integer)row.get("BOOKING_ID"));
+  		book.setDate(bookeddate);
+	book.setBookedTimings( bookedtime);
+			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
+//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+			book.setLoginTime(logintime);
+			book.setSeatNo((String) row.get("SEATNO"));
+			book.setToken((String) row.get("TOKEN"));
+            UserDeatils user = new UserDeatils();
+            user.setUserId((Integer) row.get("USER_ID"));
+            user.setPassword((String) row.get("PASSWORD"));
+            Employee emp = new Employee();
+            emp.setEmployeeId((Integer) row.get("EMPLOYEE_ID"));
+			emp.setEmployeeName((String) row .get("EMPLOYEE_NAME"));
+			emp.setEmployeeDesignation((String) row.get("EMPLOYEE_DESIGNATION"));
+			emp.setEmployeeEmail((String) row.get("EMPLOYEE_EMAIL"));
+			emp.setEmployeeGender((String) row.get("EMPLOYEE_GENDER"));
+			emp.setEmployeePersonalEmail((String) row.get("EMPLOYEE_PERSONAL_EMAIL"));
+			emp.setEmployeePhoneNo((String) row.get("EMPLOYEE_PHONE_NO"));
+			user.setEmployee(emp);
+			book.setUserDeatils(user);
+			ShiftDetails shift = new ShiftDetails();
+			shift.setShiftId((Integer) row.get("SHIFT_ID"));
+			shift.setShiftTimings((String) row.get("SHIFT_TIMINGS"));
+			book.setShiftDetails(shift);
+			bookingdetails.add(book);
+			
+		}
+		return bookingdetails;
+	}
 
 	
 }

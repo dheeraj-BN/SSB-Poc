@@ -89,7 +89,7 @@ public class SeatBookImpl implements SeatBook {
 
 	@Override
 	public String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
-        
+        int flag=0;
 		LocalDate to1 = to.plusDays(1);
 		for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
 			int checkweekends = checkweekends(i);
@@ -112,15 +112,22 @@ public class SeatBookImpl implements SeatBook {
 							bookeddate, LocalTime.now(), null, "PENDING", tokenvalue, user,
 							bookingDetails.getShiftDetails());
 					bookingDetailsRepo.save(book);
-
+                    flag=1;
 				}
 
 			}
 
 		}
 		}
+		
+		if(flag==1) {
+			return "seat has been booked for week";
+		}
+		else {
+			return "seat has been already booked for that week ";
+		}
 
-		return "seat has been booked for week";
+		
 
 	}
 
