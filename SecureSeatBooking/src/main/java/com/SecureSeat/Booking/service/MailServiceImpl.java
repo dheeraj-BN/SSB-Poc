@@ -33,7 +33,8 @@ public class MailServiceImpl implements MailService {
 	
 	
 	 @Override
-	@Scheduled(cron = "0 0 10 * * ?") // runs every day at 12:00 PM  //0 0 10 * * ?
+//	@Scheduled(cron = "0 0 10 * * ?") // runs every day at 12:00 PM  //0 0 10 * * ?
+	 @Scheduled(cron = "0 * * * * ?")// for evey min
 	 public void schecludedMailForDailyBooking() {
 		 
 		 LocalDate date1=LocalDate.now();//need to change after ching format

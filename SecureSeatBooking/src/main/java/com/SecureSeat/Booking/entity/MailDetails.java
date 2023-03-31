@@ -21,28 +21,61 @@ public class MailDetails {
 			CascadeType.PERSIST }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId")
 	private UserDeatils userDeatils;
+	
+	private boolean status;
+	
+	
+	
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	public MailDetails() {
 	}
 
-	public MailDetails(String subject, String body, UserDeatils userDeatils) {
-		super();
-		this.subject = subject;
-		Body = body;
-		this.userDeatils = userDeatils;
-	}
-
-	public MailDetails(int mailId, String subject, String body, UserDeatils userDeatils) {
-		super();
-		this.mailId = mailId;
-		this.subject = subject;
-		Body = body;
-		this.userDeatils = userDeatils;
-	}
+//	public MailDetails(String subject, String body, UserDeatils userDeatils) {
+//		super();
+//		this.subject = subject;
+//		Body = body;
+//		this.userDeatils = userDeatils;
+//	}
+//
+//	public MailDetails(int mailId, String subject, String body, UserDeatils userDeatils) {
+//		super();
+//		this.mailId = mailId;
+//		this.subject = subject;
+//		Body = body;
+//		this.userDeatils = userDeatils;
+//	}
+	
+	
+	
 
 	public int getMailId() {
 		return mailId;
 	}
+
+	public MailDetails(String subject, String body, UserDeatils userDeatils, boolean status) {
+	super();
+	this.subject = subject;
+	Body = body;
+	this.userDeatils = userDeatils;
+	this.status = status;
+}
+
+	public MailDetails(int mailId, String subject, String body, UserDeatils userDeatils, boolean status) {
+	super();
+	this.mailId = mailId;
+	this.subject = subject;
+	Body = body;
+	this.userDeatils = userDeatils;
+	this.status = status;
+}
 
 	public void setMailId(int mailId) {
 		this.mailId = mailId;
