@@ -228,5 +228,12 @@ public class SeatBookImpl implements SeatBook {
 	public ShiftDetails getshiftdetails(int id) {
 		return shiftDetailsRepo.getById(id);
 	}
+	
+	@Override
+	public void updatecanceledetails(String token) {
+		int booking_id=bookingDetailsRepo.findBookingIdByToken(token);
+		seatBookDAO.updatebookingstatus(booking_id);
+		
+	}
 
 }
