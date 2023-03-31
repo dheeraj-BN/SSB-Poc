@@ -6,30 +6,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.annotation.PostConstruct;
 
 @RestController
 @RequestMapping("/api/admin")
-//@CrossOrigin(origins = "http://10.191.80.118:3001")
 public class AdminController {
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
 	
-	
-	
 
+	
 	
 	@PostMapping("/addUser/{id}")
 	public String addUser(@PathVariable int id) {
@@ -45,6 +47,11 @@ public class AdminController {
 	}
 	
 	
+	 @PostMapping("/addHoliday")
+	    public void saveHolidayDetails(@PathVariable int holidayDetails) {
+	        // code to save holiday details here
+		 System.out.println(holidayDetails);
+	    }
 	
 	
 	

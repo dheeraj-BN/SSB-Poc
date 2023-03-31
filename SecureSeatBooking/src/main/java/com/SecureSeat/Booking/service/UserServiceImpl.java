@@ -14,10 +14,12 @@ import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.entity.Role;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
+import com.SecureSeat.Booking.repo.HolidayDetailsRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
@@ -49,6 +51,9 @@ public class UserServiceImpl {
 	
 	@Autowired
 	private SecurityConfig securityConfig;
+	
+	@Autowired
+	private HolidayDetailsRepo holidayDetailsRepo;
 	
 	
 	 @PostConstruct
@@ -120,6 +125,25 @@ public class UserServiceImpl {
 		
 	}
 	
+	
+	public String addHolidays(HolidayDetails holidayDetails) {
+		
+		
+		HolidayDetails h1= holidayDetailsRepo.findByHolidayDate(holidayDetails.getHolidayDate());
+		
+		System.out.println(h1.getHolidayDate()+">>>>>"+holidayDetails.getHolidayDate());
+		
+		if(h1.getHolidayDate().equals(holidayDetails.getHolidayDate())) {
+			
+			return "You have alredy added this date";
+			
+		}else {
+			holidayDetailsRepo.save(holidayDetails);
+		}
+		
+		
+		return "Holiday Added";
+	}
 	
 	
 }
