@@ -103,10 +103,30 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	}
 	
 	@Override
-	public void updatebookingstatus(int booking_id) {
-		String sql="Update booking_details  set booking_status = 'CANCELLED' where booking_id =?";
-		jdbcTemplate.update(sql,booking_id);
+	public int getbookingidfromtoken(String token){
+		String sql="select booking_id from booking_details   where token=?";
+		int  bookingid = jdbcTemplate.queryForObject(sql, new Object[] {token},Integer.class);
+		return bookingid;
 	}
+	
+	@Override
+	public void updatebookingstatus(int bookingid) {
+		String sql="Update booking_details  set booking_status = 'CANCELLED' where booking_id =?";
+		jdbcTemplate.update(sql,bookingid);
+	}
+	
+	@Override
+	public void updateseatNo(String seatno,int bookingid) {
+		String sql="Update booking_details  set seat_no=? where booking_id =?";
+		jdbcTemplate.update(sql,seatno,bookingid);
+	}
+	
+	@Override
+	public void updatefoodstatus(Boolean foodstatus,int bookingid) {
+		String sql="Update booking_details  set food_status=? where booking_id =?";
+		jdbcTemplate.update(sql, foodstatus,bookingid);
+	}
+	
 
 	
 }
