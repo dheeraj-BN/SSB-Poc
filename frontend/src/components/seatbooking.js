@@ -21,6 +21,7 @@ const SeatBooking = () => {
     { id: 15, name: 'D3', booked: false },
     { id: 16, name: 'D4', booked: false },
   ]);
+  const [selectedSeat, setSelectedSeat] = useState(null);
 
   const handleSeatClick = (id) => {
     const updatedSeats = seats.map((seat) => {
@@ -31,12 +32,13 @@ const SeatBooking = () => {
       }
     });
     setSeats(updatedSeats);
+    setSelectedSeat(id);
   };
-     axios.get("http://10.191.80:9090/floors")
-      .then(res => { 
-        console.log(res.data)
-      })    
-  
+
+  axios.get("http://10.191.80:9090/floors")
+    .then(res => { 
+      console.log(res.data)
+    })    
 
   return (
     <div className="seat-booking-app">
@@ -46,7 +48,7 @@ const SeatBooking = () => {
         {seats.map((seat) => (
           <div
             key={seat.id}
-            className={`seat ${seat.booked ? 'booked' : ''}`}
+            className={`seat ${seat.booked ? 'booked' : ''} ${seat.id === selectedSeat ? 'selected' : ''}`}
             onClick={() => handleSeatClick(seat.id)}
           >
             {seat.name}
@@ -58,19 +60,8 @@ const SeatBooking = () => {
       <div id="legend">
         <div class="seat"></div> <div class="txt">Available</div>
         <div class="seat taken"></div> <div class="txt">Taken</div>
-        <div class="seat selected"></div> <div class="txt">Your Chosen Seats</div>
-
-        {/* {
-            seats.map((seat)=>(
-                <div className='seat-map'>
-
-                    <div className='seat'> {seat.id}</div>
-                </div>
-            )
-            )
-        } */}
-       
-        </div>
+        <div class="seat selected"></div> <div class="txt">Your Chosen Seat</div>
+      </div>
     </div>
   );
 };

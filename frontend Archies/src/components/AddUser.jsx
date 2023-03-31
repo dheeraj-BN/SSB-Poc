@@ -14,7 +14,7 @@ function PopUp(){
         setPop(false)
     }
 function addData(){
-    axios.post("http://10.191.80.109:9090/api/addUser/"+empId).then((res)=>{
+    axios.post("http://10.191.80.98:9090/api/admin/addUser/"+empId).then((res)=>{
             if(res.data === "USER ALREDY EXIST"){
                 window.location = "/"
             }
@@ -55,3 +55,6 @@ function addData(){
     )
 }
 export default PopUp;
+
+
+// Create header and session 

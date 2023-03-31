@@ -6,7 +6,7 @@ import QrCodeScan from "./components/QrCodeScan";
 // import AdminData from "./components/AdminDashboard/AdminData";
 
 // import AdminDash from "./components/AdminDash"
-// import AddUser from "./components/AddUser"
+import AddUser from "./components/AddUser"
 // import SignIn from "./routes/SignIn"
 import LoginForm from "./routes/LoginForm";
 // import EmailVer from "./routes/EmailVer"
@@ -24,7 +24,7 @@ function App() {
         {/* <Route path="/email" element={<EmailVer/>} />
   <Route path="/resetpass" element={<ResetPassword/>} /> */}
         {/* <Route path="*" element={<AdminDash/>}/> */}
-        {/* <Route path="/adduser" element={<AddUser/>} /> */}
+        <Route path="/adduser" element={<AddUser/>} />
         <Route path="/admin" element={<AdminMain/>}/>
         <Route path="/qrcodescan" element={<QrCodeScan/>} />
       </Routes>

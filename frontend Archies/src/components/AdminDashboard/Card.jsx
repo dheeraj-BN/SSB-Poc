@@ -10,10 +10,10 @@ function CardDes(props) {
           className="mb-2 admincard"
           onClick={props.onclick}
         >
-          <Card.Body>
-            <Card.Title style={{fontSize:'30px'}}>{props.title}</Card.Title>
+          <Card.Body className='cardbody'>
+            <Card.Title  className='fonttitle'>{props.title}</Card.Title>
             <Card.Text>
-              <h1>{props.counts}</h1>
+              <h2>{props.counts}</h2>
             </Card.Text>
           </Card.Body>
         </Card>
