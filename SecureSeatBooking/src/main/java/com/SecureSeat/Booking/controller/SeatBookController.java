@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
@@ -37,6 +38,8 @@ public class SeatBookController {
 	
 	@Autowired
 	private UserDetailDao userDetailDao;
+	
+
 	
 	
 	@GetMapping("api/employee/getuser")
@@ -90,6 +93,8 @@ public class SeatBookController {
 	public void updatefoodstatus(@PathVariable String token,@RequestParam Boolean foodstatus) {
 		seatBook.updatefoodstatus(token, foodstatus);
 	}
+	
+
 	
 
 }

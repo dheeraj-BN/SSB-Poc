@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
 import jakarta.annotation.PostConstruct;
@@ -56,6 +58,9 @@ public class AdminController {
 	                .body("An error occurred: " + ex.getMessage());
 	    }
 	
-	
+	@PostMapping("/addholiday")
+	public HolidayDetails saveholiday(@RequestBody HolidayDetails holidayDetails) {
+		return holidayDetails;
+	}
 
 }
