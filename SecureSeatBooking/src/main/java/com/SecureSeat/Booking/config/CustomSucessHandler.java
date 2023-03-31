@@ -62,8 +62,10 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
 
 			} else if (authority.getAuthority().equals("ROLE_DEVELOPER")) {
 				redirectUrl = "/api/developer/test/" + user.get().getUserId();
+				response.addIntHeader("DEVELOPER-ID", user.get().getUserId());
 				response.addHeader("location", redirectUrl);
 				response.addHeader("ROLE", "DEVELOPER");
+				
 				return;
 
 			}
