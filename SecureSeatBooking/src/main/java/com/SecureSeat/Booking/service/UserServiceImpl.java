@@ -53,8 +53,12 @@ public class UserServiceImpl {
 	
 	 @PostConstruct
 		public void init() {
+		 
+		 
 			
-			String result = addUser(8);
+		 Employee employee = userDetailDao.getAdminInfo();
+		 
+			String result = addUser(employee.getEmployeeId());
 			
 			System.out.println(result);
 			
