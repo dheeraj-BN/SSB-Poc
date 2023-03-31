@@ -21,6 +21,8 @@ import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class UserServiceImpl {
 
@@ -47,6 +49,16 @@ public class UserServiceImpl {
 	
 	@Autowired
 	private SecurityConfig securityConfig;
+	
+	
+	 @PostConstruct
+		public void init() {
+			
+			String result = addUser(8);
+			
+			System.out.println(result);
+			
+		}
 
 	public String addUser(int employeeId) {
 

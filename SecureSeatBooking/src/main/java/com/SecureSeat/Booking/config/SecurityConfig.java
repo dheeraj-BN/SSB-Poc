@@ -31,8 +31,8 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Collections.singletonList("*"));
-               //config.setAllowedOriginPatterns((Collections.singletonList("http://localhos:3001")));
+                config.setAllowedOrigins(Collections.singletonList("http://10.191.80.118:3001"));
+               //config.setAllowedOriginPatterns((Collections.singletonList("http://localhost:3001")));
                 config.setAllowedMethods(Collections.singletonList("*"));
                 config.setAllowCredentials(true);
                 config.setAllowedHeaders(Collections.singletonList("*"));
@@ -53,7 +53,7 @@ public class SecurityConfig {
 		.and()
 		.formLogin()
 //		.loginProcessingUrl("/login")
-//		.loginPage("/login")
+		.loginPage("/login")
 		.successHandler(customSuccessHandler)
 		.and()
 		.csrf().disable();
