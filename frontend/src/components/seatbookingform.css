@@ -32,6 +32,7 @@
   color: #0b0b0b;
   font-family: Arial, Helvetica, sans-serif;
   gap: 1rem;
+  border-color: #535151;
   
 }
 
@@ -46,7 +47,7 @@
   cursor: pointer;
 }
 button{
-  background-color: #e2dede;
+  background-color: #535151;
   font-family: Arial, Helvetica, sans-serif;
   font-size: larger;
 }
