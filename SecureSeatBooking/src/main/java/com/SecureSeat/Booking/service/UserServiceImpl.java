@@ -81,7 +81,7 @@ public class UserServiceImpl {
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(role);
 
-			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee);
+			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee, true);
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);

@@ -67,11 +67,11 @@ public class UserDeatils {
 
 	
 
-	public UserDeatils(String password, Employee employee, Set<Role> roles, boolean status) {
+	public UserDeatils(String password, Employee employee,  boolean status) {
 	super();
 	this.password = password;
 	this.employee = employee;
-	this.roles = roles;
+
 	this.status = status;
 }
 
