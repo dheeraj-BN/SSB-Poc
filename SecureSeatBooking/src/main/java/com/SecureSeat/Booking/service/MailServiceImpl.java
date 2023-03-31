@@ -37,12 +37,8 @@ public class MailServiceImpl implements MailService {
 	 @Scheduled(cron = "0 * * * * ?")// for evey min
 	 public void schecludedMailForDailyBooking() {
 		 
-		 LocalDate date1=LocalDate.now();//need to change after ching format
-		 List<BookingDetails> bookingDL=bookingDetailsRepo.findAllByLoginTimeIsNullAndBookedDateEquals(date1);
-		 for (BookingDetails bookingDetails : bookingDL) {
-			mailTemplates.dailyBookedSeatReminder(bookingDetails);
-		}
-		 
+//		 
+System.out.println("scheluded");
 		 
 		 
 	 }
