@@ -36,4 +36,6 @@ public interface SeatBook {
 
 	ShiftDetails getshiftdetails(int id);
 
+	void updatecanceledetails(String token);
+
 }

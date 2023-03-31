@@ -75,6 +75,11 @@ public class SeatBookController {
 		return seatNos;
 		}
 	
+	@GetMapping("api/employee/cancel/{token}")
+	public void updatecancel(@PathVariable String token) {
+		seatBook.updatecanceledetails(token);
+	}
+	
 	
 
 	

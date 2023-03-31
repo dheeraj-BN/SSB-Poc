@@ -101,6 +101,12 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 		}
 		return bookingdetails;
 	}
+	
+	@Override
+	public void updatebookingstatus(int booking_id) {
+		String sql="Update booking_details  set booking_status = 'CANCELLED' where booking_id =?";
+		jdbcTemplate.update(sql,booking_id);
+	}
 
 	
 }
