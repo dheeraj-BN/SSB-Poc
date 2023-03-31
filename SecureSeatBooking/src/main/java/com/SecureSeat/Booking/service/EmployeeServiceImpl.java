@@ -59,7 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id) {
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
-		List<BookingDetails> info=bookingDetailsRepo.findByUserDeatilsAndBookedDateGreaterThan(user, LocalDate.now());
+//	List<BookingDetails> info=bookingDetailsRepo.findByUserDeatilsAndBookedDateGreaterThan(user, LocalDate.now());
+		List<BookingDetails> info=employeeDAO.getEmpBookedInfoBookedNext(id, LocalDate.now());
 		return info;	
 	}
 	

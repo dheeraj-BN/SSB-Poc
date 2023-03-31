@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
@@ -32,13 +34,16 @@ public class SeatBookController {
 	@Autowired
 	private ShiftDetailsRepo shiftDetailsRepo;
 	
+	@Autowired
+	private UserDetailDao userDetailDao;
 	
-	@GetMapping("/getuser")
+	
+	@GetMapping("api/employee/getuser")
 	public List<UserDeatils> getuser() {
 		return userDetailsRepo.findAll();
 	}
 	
-	@GetMapping("/getshift")
+	@GetMapping("api/employee/getshift")
 	public List<ShiftDetails> getshift() {
 		return shiftDetailsRepo.findAll();
 	}
@@ -50,7 +55,7 @@ public class SeatBookController {
 		return message;
 	}
 	
-	@GetMapping("/seatnumber/{seatno}/{date1}")
+	@GetMapping("api/employee/seatnumber/{seatno}/{date1}")
 	public String seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
 
 	String message = seatBook.checkseatalreadybooked(seatno, date1);
@@ -58,17 +63,20 @@ public class SeatBookController {
 		
 	}
 	
-	@GetMapping("/seatnumber/{date1}")
+	@GetMapping("api/employee/seatnumber/{date1}")
 	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
 	
-	@GetMapping("/bookingdetails/{date1}")
+	@GetMapping("api/employee/bookingdetails/{date1}")
 	public List<BookingDetails> seatbookingdetailsfordate(@PathVariable LocalDate date1){
 		List<BookingDetails> seatNos = seatBook.getbookingdetails(date1);
 		return seatNos;
 		}
+	
+	
+
 	
 
 }
