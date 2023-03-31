@@ -14,12 +14,16 @@ import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.entity.Role;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
+import com.SecureSeat.Booking.repo.HolidayDetailsRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class UserServiceImpl {
@@ -47,6 +51,23 @@ public class UserServiceImpl {
 	
 	@Autowired
 	private SecurityConfig securityConfig;
+	
+	@Autowired
+	private HolidayDetailsRepo holidayDetailsRepo;
+	
+	
+	 @PostConstruct
+		public void init() {
+		 
+		 
+			
+		 Employee employee = userDetailDao.getAdminInfo();
+		 
+			String result = addUser(employee.getEmployeeId());
+			
+			System.out.println(result);
+			
+		}
 
 	public String addUser(int employeeId) {
 
@@ -65,7 +86,7 @@ public class UserServiceImpl {
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(role);
 
-			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee);
+			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee, true);
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);
@@ -104,6 +125,33 @@ public class UserServiceImpl {
 		
 	}
 	
+	
+	public String addHolidays(HolidayDetails holidayDetails) {
+		
+		try {	
+		HolidayDetails h1= holidayDetailsRepo.findByHolidayDate(holidayDetails.getHolidayDate());
+//		
+		
+		
+		System.out.println(h1.getHolidayDate()+">>>>>"+holidayDetails.getHolidayDate());
+		
+		if(h1.equals(null)){
+			
+			
+		}
+		}
+		
+		catch (NullPointerException e) {
+			holidayDetailsRepo.save(holidayDetails);
+			return "Holiday Added";
+		}
+			
+		
+		
+		System.out.println(holidayDetails.getHolidayDate());
+		return "holiday alredy added";
+		
+	}
 	
 	
 }

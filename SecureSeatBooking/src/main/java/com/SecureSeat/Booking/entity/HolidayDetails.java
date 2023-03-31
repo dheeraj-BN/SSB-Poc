@@ -11,51 +11,55 @@ import jakarta.persistence.Id;
 public class HolidayDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int holidayId;
-	private LocalDate holidayDate;
-	private String holidayDescription;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int holidayId;
 
-	public HolidayDetails() {
-	}
+    private LocalDate holidayDate;
 
-	public HolidayDetails(int holidayId, LocalDate holidayDate, String holidayDescription) {
-		super();
-		this.holidayId = holidayId;
-		this.holidayDate = holidayDate;
-		this.holidayDescription = holidayDescription;
-	}
+    private String holidayDescription;
 
-	public int getHolidayId() {
-		return holidayId;
-	}
+    // default constructor
+    public HolidayDetails() {}
 
-	public void setHolidayId(int holidayId) {
-		this.holidayId = holidayId;
-	}
+    // constructor with arguments
+    public HolidayDetails(int holidayId, LocalDate holidayDate, String holidayDescription) {
+        this.holidayId = holidayId;
+        this.holidayDate = holidayDate;
+        this.holidayDescription = holidayDescription;
+    }
 
-	public LocalDate getHolidayDate() {
-		return holidayDate;
-	}
+    // getters and setters
+    public int getHolidayId() {
+        return holidayId;
+    }
 
-	public void setHolidayDate(LocalDate holidayDate) {
-		this.holidayDate = holidayDate;
-	}
+    public void setHolidayId(int holidayId) {
+        this.holidayId = holidayId;
+    }
 
-	public String getHolidayDescription() {
-		return holidayDescription;
-	}
+    public LocalDate getHolidayDate() {
+        return holidayDate;
+    }
 
-	public void setHolidayDescription(String holidayDescription) {
-		this.holidayDescription = holidayDescription;
-	}
+    public void setHolidayDate(LocalDate holidayDate) {
+        this.holidayDate = holidayDate;
+    }
 
-	@Override
-	public String toString() {
-		return "HolidayDetails [holidayId=" + holidayId + ", holidayDate=" + holidayDate + ", holidayDescription="
-				+ holidayDescription + "]";
-	}
-	
-	
+    public String getHolidayDescription() {
+        return holidayDescription;
+    }
 
+    public void setHolidayDescription(String holidayDescription) {
+        this.holidayDescription = holidayDescription;
+    }
+
+    // toString method for debugging purposes
+    @Override
+    public String toString() {
+        return "Holiday{" +
+                "holidayId=" + holidayId +
+                ", holidayDate=" + holidayDate +
+                ", holidayDescription='" + holidayDescription + '\'' +
+                '}';
+    }
 }
