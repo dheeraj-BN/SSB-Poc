@@ -1,0 +1,17 @@
+button{
+    width: 200px;
+      height: 40px;
+      border-radius: 60px;
+      background-color: #039dfc;
+      color: white;
+      font-size: 15px;
+      border: 10px;
+      
+}
+.QR{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
