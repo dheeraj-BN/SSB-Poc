@@ -128,21 +128,29 @@ public class UserServiceImpl {
 	
 	public String addHolidays(HolidayDetails holidayDetails) {
 		
-		
+		try {	
 		HolidayDetails h1= holidayDetailsRepo.findByHolidayDate(holidayDetails.getHolidayDate());
+//		
+		
 		
 		System.out.println(h1.getHolidayDate()+">>>>>"+holidayDetails.getHolidayDate());
 		
-		if(h1.getHolidayDate().equals(holidayDetails.getHolidayDate())) {
+		if(h1.equals(null)){
 			
-			return "You have alredy added this date";
 			
-		}else {
-			holidayDetailsRepo.save(holidayDetails);
+		}
 		}
 		
+		catch (NullPointerException e) {
+			holidayDetailsRepo.save(holidayDetails);
+			return "Holiday Added";
+		}
+			
 		
-		return "Holiday Added";
+		
+		System.out.println(holidayDetails.getHolidayDate());
+		return "holiday alredy added";
+		
 	}
 	
 	

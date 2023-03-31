@@ -20,7 +20,6 @@ import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.annotation.PostConstruct;
 
 @RestController
@@ -48,11 +47,6 @@ public class AdminController {
 	}
 	
 	
-	 @PostMapping("/addHoliday")
-	    public void saveHolidayDetails(@PathVariable int holidayDetails) {
-	        // code to save holiday details here
-		 System.out.println(holidayDetails);
-	    }
 	
 	
 	
@@ -65,8 +59,10 @@ public class AdminController {
 	    }
 	
 	@PostMapping("/addholiday")
-	public HolidayDetails saveholiday(@RequestBody HolidayDetails holidayDetails) {
-		return holidayDetails;
+	public String saveholiday(@RequestBody HolidayDetails holidayDetails) {
+		System.out.println(holidayDetails);
+		String s= userServiceImpl.addHolidays(holidayDetails);
+		return s;
 	}
 
 }
