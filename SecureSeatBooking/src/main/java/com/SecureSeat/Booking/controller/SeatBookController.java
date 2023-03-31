@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,13 +76,20 @@ public class SeatBookController {
 		return seatNos;
 		}
 	
-	@GetMapping("api/employee/cancel/{token}")
+	@PutMapping("api/employee/cancel/{token}")
 	public void updatecancel(@PathVariable String token) {
 		seatBook.updatecanceledetails(token);
 	}
 	
+	@PutMapping("api/employee/updateseat/{token}")
+	public void updateseat(@PathVariable String token,@RequestParam String seatno) {
+		seatBook.updateseatno(token, seatno);
+	}
 	
-
+	@PutMapping("api/employee/updatefoodstatus/{token}")
+	public void updatefoodstatus(@PathVariable String token,@RequestParam Boolean foodstatus) {
+		seatBook.updatefoodstatus(token, foodstatus);
+	}
 	
 
 }
