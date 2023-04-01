@@ -1,5 +1,5 @@
 import React from 'react';
-import "../components/Groundfloor.css"
+import "./Groundfloor.css"
 
 
 function SeatMatrix1() {

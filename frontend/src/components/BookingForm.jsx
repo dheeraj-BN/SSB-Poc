@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "../components/seatbookingform.css"
 import { Link } from "react-router-dom";
-import "../components/seatbookingform.css";
+import axios from "axios";
 
 function SeatBookingForm() {
   const [branchName, setBranchName] = useState("");
@@ -16,7 +17,7 @@ function SeatBookingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.location="/floorlist"
+    window.location = "/floorlist";
   };
 
   function todayDate() {
@@ -40,7 +41,11 @@ function SeatBookingForm() {
     }
   }
 
-  // var date = new Date();
+  useEffect(()=>{
+    axios.post("https://reqres.in/api/users").then((res)=>{
+      console.log(res.data)
+    })
+  },[])
 
   return (
     <form onSubmit={handleSubmit} className="seat-booking-form">
@@ -158,7 +163,7 @@ function SeatBookingForm() {
         </>
       )}
 
-<button  type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         {/* <Link
           to="/floorlist"
           type="submit"

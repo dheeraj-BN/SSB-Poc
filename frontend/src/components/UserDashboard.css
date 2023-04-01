@@ -18,7 +18,7 @@ nav li button {
   /* background-color: transparent; */
   background-color: black;
   border: none;
-  color: inherit;
+  /* color: inherit; */
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
