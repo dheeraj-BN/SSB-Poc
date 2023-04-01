@@ -94,6 +94,10 @@ public class SeatBookController {
 		seatBook.updatefoodstatus(token, foodstatus);
 	}
 	
+	@PutMapping("api/employee/updatebookingstatus/{token}")
+	public void updateseatbooking(@PathVariable String token,@RequestParam Boolean foodstatus,@RequestParam String seatno) {
+		seatBook.updateseatbooking(token, foodstatus, seatno);
+	}
 
 	
 

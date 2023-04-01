@@ -42,4 +42,6 @@ public interface SeatBook {
 
 	void updatefoodstatus(String token, Boolean foodstatus);
 
+	void updateseatbooking(String token, Boolean foodstatus, String seatno);
+
 }
