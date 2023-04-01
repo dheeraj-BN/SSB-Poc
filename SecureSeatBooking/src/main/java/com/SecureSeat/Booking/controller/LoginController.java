@@ -2,31 +2,43 @@ package com.SecureSeat.Booking.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import com.SecureSeat.Booking.config.SSBUsernamePasswordAuthentication;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.UserDeatils;
+import com.SecureSeat.Booking.filter.JwtService;
+import com.SecureSeat.Booking.model.AuthenticationRequest;
+import com.SecureSeat.Booking.model.AuthenticationResponse;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.LoginService;
+
+
 
 @RestController
 //@CrossOrigin("http://10.191.80.118:3001")
-@RequestMapping("")
 public class LoginController {
 
 	@Autowired
@@ -34,23 +46,64 @@ public class LoginController {
 	
 	@Autowired
 	private EmployeeRepo empRepo;
-
+	
 	@Autowired
-	private SSBUsernamePasswordAuthentication authentication;
-	@GetMapping("/api/user/{id}")
-	public Optional<UserDeatils> findById(@PathVariable int id) {
-		return loginService.findUserByUsername(id);
-	}
+	private UserDetailsRepo userRepo;
 	
-	@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
+	@Autowired
+	private JwtService jwtService;
 	
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
+	@Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
+
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+            System.out.println("Login-Controller " + authenticationRequest.getUsername());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            //String token = JwtUtils.generateToken(authentication);
+
+            // Get the user's roles
+            String name=authentication.getName();
+            int id=0;
+            String token;
+            List<Employee> employee=empRepo.findByEmployeeEmail(name);
+            if(employee.size()>0) {
+            	UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
+            	id=user.getUserId();
+            }
+            //
+            
+            System.out.println("Login-Controller" + authentication.getName());
+            List<String> roles = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+            
+            if(authentication.isAuthenticated()) {
+            	token= jwtService.generateToken(name,roles);
+            	System.out.println("Login-Controller" +token);
+            }else {
+            	throw new UsernameNotFoundException("Invalid User !");
+            }
+            
+              String roless="ROLE_"+roles.get(0);
+
+            // Construct the response body
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse(id,name, roless,token);
+
+            // Return the response
+            return ResponseEntity.ok(authenticationResponse);
+
+        } catch (BadCredentialsException e) {
+            throw new RuntimeException("Incorrect email or password", e);
+        }
+        }
+
+	
+	
 	
 	@GetMapping("/api/admin/test/{userId}")
 	public String adminHome(@PathVariable int userId) {
@@ -67,10 +120,6 @@ public class LoginController {
 		return "Developer HOME";
 	}
 
-	@GetMapping("/employee")
-	public Employee findEmployeeByName(@RequestParam String email) {
-		return loginService.findEmployeeByName(email);
-	}
 
 
 //	@GetMapping("/login")
@@ -100,22 +149,6 @@ public class LoginController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
-    }
-
-	@GetMapping("/allEmps")
-	public List<Employee> findAllEmps() {
-		return loginService.findAllEmployees();
-	}
-	
-	@RequestMapping("/user")
-    public Employee getUserDetailsAfterLogin(Authentication authentication) {
-        List<Employee> customers = empRepo.findByEmployeeEmail(authentication.getName());
-        if (customers.size() > 0) {
-            return customers.get(0);
-        } else {
-            return null;
-        }
-
     }
 	
 	

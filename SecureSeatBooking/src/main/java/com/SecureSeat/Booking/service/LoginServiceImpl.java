@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements LoginService,UserDetailsService {
 
 	@Autowired
 	private UserDetailsRepo userRepo;
@@ -115,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 	}
 
-	
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		String userNameAuth,password=null,role=null;
 		List<GrantedAuthority> authorities = null;
