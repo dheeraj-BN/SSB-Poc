@@ -1,33 +1,36 @@
-import axios from 'axios';
-import "../components/qrgenerator.css";
-import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
 
-function App() {
-  const [qrData, setQrData] = useState("");
-  const [data, setData] = useState({});
+import { useEffect, useRef, useState } from "react";
+import qrcode from "qrcode";
 
-  const generateQrData = () => {
-    setQrData(String(data[1].phone))
-  };
 
-  useEffect(()=>{
+import axios from "axios";
+function QRGenerator(){
+const [imgQR, setImageQR] = useState();
 
-    axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(res => {
-           
-        setData(res.data)
-      })    
-  },[])
-
-  return (
-    <div className='QR'>
     
-      <button className='btn btn-primary' onClick={generateQrData}>Generate QR Code</button>
-      <QRCode value={qrData} />
-    </div>
-  );
+    useEffect(() => {
+      axios.get("https://reqres.in/api/users").then(async(response) => {
+        const image = await qrcode.toDataURL(response.data.data[1].email)
+        setImageQR(image);
+      }); 
+    }, []);
+    return (
+        <div className="container mx-auto mt-2">
+             <div className="row">
+            <h2 className="col-sm-10 badges bg-danger text-center text-white">QrCode generator</h2>
+        </div>
+      <div class="card col-sm-3 m-2">
+        <div class="card-header m-1 rounded text-center">
+          <h3 class="badges bg-secondary rounded text-center text-light">
+            Qrcode Image
+          </h3>
+        </div>
+        <div class="card-body text-center">
+        {imgQR && (<a href ={imgQR} download><img src={imgQR} width="100%" alt = "qr code pic is here"/></a>)}
+        </div>
+      </div>
+        </div>
+    );
 }
-
-export default App;
+export default QRGenerator;
 

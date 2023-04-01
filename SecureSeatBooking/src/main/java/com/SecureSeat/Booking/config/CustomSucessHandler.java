@@ -48,6 +48,7 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
 		for (GrantedAuthority authority : authorities) {
 			if (authority.getAuthority().equals("ROLE_ADMIN")) {
 				redirectUrl = "/api/admin/test/" + user.get().getUserId();
+				response.addIntHeader("ADMIN-ID", user.get().getUserId());
 				response.addHeader("location", redirectUrl);
 				response.addHeader("ROLE", "ADMIN");
 
@@ -55,6 +56,7 @@ public class CustomSucessHandler implements AuthenticationSuccessHandler {
 
 			} else if (authority.getAuthority().equals("ROLE_EMPLOYEE")) {
 				redirectUrl = "/api/employee/test/" + user.get().getUserId();
+				response.addIntHeader("EMPLOYEE-ID", user.get().getUserId());
 				response.addHeader("location", redirectUrl);
 				response.addHeader("ROLE", "EMPLOYEE");
 
