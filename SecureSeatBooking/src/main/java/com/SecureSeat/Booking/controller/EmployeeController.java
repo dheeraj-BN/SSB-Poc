@@ -17,6 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.UserDeatils;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
 
@@ -30,10 +32,19 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
+	@PostMapping("/forgot/{id}")
+	public UserDeatils forgot(@PathVariable int id,@RequestParam("employee_email") String email,@RequestParam("password") String password) {
+		System.out.println("hii");
+		return employeeService.forgotPasword(id, email, password);
+	}
+
+	
+	
+	
 	@PutMapping("/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
-		System.out.println("controller "+id);
+//		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfrimMail(id);
 		return message;
@@ -51,14 +62,13 @@ public class EmployeeController {
 	 
 	@GetMapping("/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
-		
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
 	
-	@ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
-    }
+//	@ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleException(Exception e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
+//    }
 	
 	@GetMapping("/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
@@ -77,5 +87,7 @@ public class EmployeeController {
 	public List<Employee> getAllEmployees(){
 		return employeeService.getAllEmployee();
 	}
+	
+	
 	
 }

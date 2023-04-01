@@ -22,6 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	
+	
+	
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
 	
@@ -33,12 +35,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private SecurityConfig config;
+	
+	
+	@Override
+	public UserDeatils forgotPasword(int id,String emali,String password) {
+		UserDeatils user=employeeDAO.forgotPassword(id);
+		
+		System.out.println(user.getUserId());
+		user.setPassword(config.passwordEncoder().encode(password));
+		return userDetailsRepo.save(user);
+		
+	}
+	
+	
+	
 	@Override
 	public String changePassword(int id,String oldPassword,String newPassword) {
-		System.out.println(id);
+//		System.out.println(id);
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
-		System.out.println(user);
-		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
+//		System.out.println(user);
+//		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
 		if(config.passwordEncoder().matches(oldPassword,user.getPassword())) {
 			
 			employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),id);
@@ -75,5 +91,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> e=employeeRepo.findAll();
 		return e;
 	}
+
+
 
 }

@@ -35,12 +35,22 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	}
 	
 	@Override
+	public UserDeatils forgotPassword(int id) {
+		  String sql= "select ud.user_id from employee em INNER JOIN user_deatils ud ON ud.employee_id=em.employee_id "
+		  		+ "where em.employee_email=?";
+		  jdbcTemplate.queryForMap(sql, id);
+		return null;
+	
+	}
+	
+	
+	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id , LocalDate date){
 		String sql="select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
 				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
 				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
 				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
-				+ "ON ud.user_id=? where booked_date>?";
+				+ "ON ud.user_id=bd.user_id where ud.user_id=? AND booked_date>? AND booking_status='PENDING'";
 		List<BookingDetails> bookingdetails = new ArrayList<>();
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {id,date} );
 		for(Map row : rows) {

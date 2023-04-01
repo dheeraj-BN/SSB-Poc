@@ -18,6 +18,11 @@ public interface EmployeeService {
 
 	String changePassword(int id, String oldPassword, String Password);
 
+	UserDeatils forgotPasword(int id, String emali, String password);
+
+
+	
+
 
 
 
