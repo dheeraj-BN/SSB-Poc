@@ -28,28 +28,61 @@ public class UserDeatils {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<Role>();
+	
+	private boolean status;
+	
+	
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	public UserDeatils() {
 	}
 
-	public UserDeatils(String password, Employee employee) {
-		super();
-		this.password = password;
-		this.employee = employee;
-		//this.roles = roles;
-	}
-
-	public UserDeatils(int userId, String password, Employee employee, Set<Role> roles) {
-		super();
-		this.userId = userId;
-		this.password = password;
-		this.employee = employee;
-		this.roles = roles;
-	}
+//	public UserDeatils(String password, Employee employee) {
+//		super();
+//		this.password = password;
+//		this.employee = employee;
+//		//this.roles = roles;
+//	}
+//
+//	public UserDeatils(int userId, String password, Employee employee, Set<Role> roles) {
+//		super();
+//		this.userId = userId;
+//		this.password = password;
+//		this.employee = employee;
+//		this.roles = roles;
+//	}
+	
+	
 
 	public int getUserId() {
 		return userId;
 	}
+
+	
+
+	public UserDeatils(String password, Employee employee,  boolean status) {
+	super();
+	this.password = password;
+	this.employee = employee;
+
+	this.status = status;
+}
+
+	public UserDeatils(int userId, String password, Employee employee, Set<Role> roles, boolean status) {
+	super();
+	this.userId = userId;
+	this.password = password;
+	this.employee = employee;
+	this.roles = roles;
+	this.status = status;
+}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
