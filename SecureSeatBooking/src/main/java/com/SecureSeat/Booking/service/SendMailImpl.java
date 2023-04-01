@@ -16,15 +16,22 @@ import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.SecureSeat.Booking.entity.MailDetails;
+import com.SecureSeat.Booking.repo.MailDetailsRepo;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS)
 public class SendMailImpl implements SendMail {
 
 	private static final Logger logger = LoggerFactory.getLogger(SendMailImpl.class);
+	
+	@Autowired
+	private MailDetailsRepo mailDetailsRepo;
 
 	@Override
 	public void sendMail(String email, String subject, String body) {
@@ -69,8 +76,12 @@ public class SendMailImpl implements SendMail {
 			// message.setText("This email was sent with JavaMail.");
 			message.setText(body);
 			Transport.send(message);
+			MailDetails mailDetails =new MailDetails(subject,body,email,true);
+			mailDetailsRepo.save(mailDetails);
 			logger.debug("Mail Sent Successfully!");
 		} catch (MessagingException e) {
+			MailDetails mailDetails =new MailDetails(subject,body,email,false);
+			mailDetailsRepo.save(mailDetails);
 			logger.error("Error Occurred while Sending Mail at Line 87 in SendMailImpl");
 		}
 	}
