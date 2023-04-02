@@ -10,6 +10,18 @@ public interface SeatBookDAO {
 
 	List<String> getseatNoByBookedDate(LocalDate bookedDate);
 
+	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
+
+	void updatebookingstatus(int booking_id);
+
+	int getbookingidfromtoken(String token);
+
+	void updateseatNo(String seatno, int bookingid);
+
+	void updatefoodstatus(Boolean foodstatus, int bookingid);
+
+	void updateseatbooking(Boolean foodstatus, String seatno, int bookingid);
+
 //	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
 
 }

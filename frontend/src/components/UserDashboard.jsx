@@ -3,22 +3,27 @@ import { useNavigate } from "react-router-dom";
 import "../components/UserDashboard.css"
 
 function UserDashboard() {
-  // const navigate=useNavigate()
-  // function SeatBookingForm(){
-  //   navigate("/booking")
-  // }
+  
   return (
    
       <div>
       <nav>
         <ul>
-          <li><button><a href="/booking">Seat Booking</a></button></li>
+          <li>
+          <a href="/booking">
+            <button>Seat Booking
+              </button></a></li>
           <li><button>View Profile</button></li>
-          <li><button><i class="fas fa-bell"></i></button></li>
+          <li>
+            <a href="/qr">
+           <button>View Seat Booking</button></a></li>
+        </ul>
+        <ul>
+         <li><i class="bi bi-box-arrow-right">Sign Out</i></li>
+          
         </ul>
       </nav>
       <h1>Welcome to your dashboard</h1>
-      {/* Other content of the dashboard */}
     </div>
    
   );

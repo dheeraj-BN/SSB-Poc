@@ -11,6 +11,7 @@
     "bootstrap": "^5.2.3",
     "jsqr": "^1.4.0",
     "mdb-ui-kit": "^6.2.0",
+    "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.10.0",
     "react-day-picker": "^8.6.0",
