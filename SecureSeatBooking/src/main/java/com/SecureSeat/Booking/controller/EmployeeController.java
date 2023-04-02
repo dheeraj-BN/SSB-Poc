@@ -32,10 +32,20 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
-	@PostMapping("/forgot/{id}")
-	public UserDeatils forgot(@PathVariable int id,@RequestParam("employee_email") String email,@RequestParam("password") String password) {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping("/forgot/password/{email}")
+	public void forgot(@PathVariable String email,@RequestParam("newPassword") String newPassword) {
 		System.out.println("hii");
-		return employeeService.forgotPasword(id, email, password);
+		 employeeService.forgotPasword(email, newPassword);
 	}
 
 	
@@ -62,6 +72,8 @@ public class EmployeeController {
 	 
 	@GetMapping("/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
+//		sySystem.out.println("hi");
+		System.out.println("hi");
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
 	
@@ -73,6 +85,7 @@ public class EmployeeController {
 	@GetMapping("/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
 		try {
+			System.out.println("hii");
 			return employeeService.getEmployee(id);
 	}catch (NullPointerException e) {
 		 throw new ResponseStatusException(HttpStatus.OK, "Employee not found", e);

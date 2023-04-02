@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
@@ -18,7 +19,11 @@ public interface EmployeeService {
 
 	String changePassword(int id, String oldPassword, String Password);
 
-	UserDeatils forgotPasword(int id, String emali, String password);
+
+	void forgotPasword(String email, String password);
+
+
+
 
 
 	

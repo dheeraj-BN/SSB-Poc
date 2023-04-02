@@ -37,13 +37,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private SecurityConfig config;
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
-	public UserDeatils forgotPasword(int id,String emali,String password) {
-		UserDeatils user=employeeDAO.forgotPassword(id);
-		
-		System.out.println(user.getUserId());
-		user.setPassword(config.passwordEncoder().encode(password));
-		return userDetailsRepo.save(user);
+	public void forgotPasword(String email,String password) {
+		int userid=employeeDAO.forgotPassword(email);
+		employeeDAO.restPassword(config.passwordEncoder().encode(password), userid);
 		
 	}
 	
@@ -92,6 +100,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return e;
 	}
 
+
+
+	
 
 
 }

@@ -12,8 +12,10 @@ public interface EmployeeDAO {
 
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id, LocalDate date);
 
+	int forgotPassword(String email);
 
-	UserDeatils forgotPassword(int id);
+
+	void restPassword(String password, int userid);
 
 
 }
