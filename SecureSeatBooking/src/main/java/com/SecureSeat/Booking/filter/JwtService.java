@@ -8,8 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.SecureSeat.Booking.controller.LoginController;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,21 +26,22 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
 
+	private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
+	
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
 
-//    public String extractUsername(String token) {
-//        return extractClaim(token, Claims::getSubject);
-//    }
     public String extractUsername(String token) throws SignatureException {
         String username = null;
         try {
             Claims claims = Jwts.parserBuilder().setSigningKey(SECRET).build().parseClaimsJws(token).getBody();
             username = claims.get("sub", String.class);
         } catch (Exception e) {
+        	logger.warn("Invalid Token "+e);
             throw new SignatureException("Invalid JWT token");
         }
-        System.out.println("JWTSERVICE-"+username);
+        logger.info("Extracted Username "+ username);
+        //System.out.println("JWTSERVICE-"+username);
         return username;
     }
 
@@ -64,8 +69,9 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        System.out.println(username);
-        System.out.println(userDetails.getUsername());
+        //System.out.println(username);
+        //System.out.println(userDetails.getUsername());
+        logger.info("Validating token for the user "+username);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
@@ -80,7 +86,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1200000))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 

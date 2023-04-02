@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.SecureSeat.Booking.controller.LoginController;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.Role;
 import com.SecureSeat.Booking.entity.UserDeatils;
@@ -28,6 +31,8 @@ public class LoginServiceImpl implements LoginService,UserDetailsService {
 
 	@Autowired
 	private EmployeeRepo empRepo;
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 	
 	
 
@@ -123,6 +128,7 @@ public class LoginServiceImpl implements LoginService,UserDetailsService {
 		
 	    List<Employee> employee =  empRepo.findByEmployeeEmail(username);
 	    if(employee.size() == 0) {
+	    	logger.warn("user details not found with email : "+username);
 	    	throw new UsernameNotFoundException("User details not found for the user : " + username);
 	    }else {
 	    	userNameAuth=employee.get(0).getEmployeeEmail();
@@ -137,7 +143,7 @@ public class LoginServiceImpl implements LoginService,UserDetailsService {
 	    	authorities.add(new SimpleGrantedAuthority(role));
 	    	 
 	    }
-		
+		logger.info("user has been loaded "+username);
 		return new User(username,password,authorities);
 	}
 
