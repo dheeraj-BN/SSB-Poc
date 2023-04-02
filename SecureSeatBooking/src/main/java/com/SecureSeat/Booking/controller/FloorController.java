@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.repo.FloorDetailsRepo;
 import com.SecureSeat.Booking.service.FloorService;
+import com.SecureSeat.Booking.service.MailService;
 
 @RestController()
 @RequestMapping("/api/developer")
@@ -34,54 +35,91 @@ public class FloorController {
 	@Autowired
 	private FloorDetailsRepo floorDetailsRepo;
 	
+	@Autowired
+	private MailService mailService;
 	
+
+	    
 	    @GetMapping("/getAllFloorDetails")
 	    public ResponseEntity<List<FloorDetails>> getAllFloors() {
-	        List<FloorDetails> floors = floorService.getAllFloors();
-	        return new ResponseEntity<>(floors, HttpStatus.OK);
+	        try {
+	            List<FloorDetails> floors = floorService.getAllFloors();
+	            if (floors.isEmpty()) {
+	                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	            }
+	            return new ResponseEntity<>(floors, HttpStatus.OK);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
 	    }
-	    
-	    
-  
 	   
 	    
 	    
 
 	    
+    
 	    
+
 	    //add seats to floors
 	    @PostMapping("/Addseats/{floorId}")
-	    public FloorDetails addSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
-	        return floorService.addSeatsToFloorDetails(floorId, noOfSeats);
+	    public ResponseEntity<FloorDetails> addSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
+	        try {
+	            FloorDetails floor = floorService.addSeatsToFloorDetails(floorId, noOfSeats);
+	            if (floor != null) {
+	                return new ResponseEntity<>(floor, HttpStatus.OK);
+	            } else {
+	                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	            }
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
 	    }
 	    
 	    
-	    //update seats to floor
-	    @PutMapping("/Updateseats/{floorId}")
-	    public FloorDetails updateSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
-	        return floorService.updateSeatsToFloorDetails(floorId, noOfSeats);
-	    }
-
-	   
+	    
+	    
+	  
    
 	    
-
-//	    @PostMapping("/addfloor")
-//	      public ResponseEntity<FloorDetails> addFloorWithSeats(@RequestParam("floorId") int floorId,
-//	                                                             @RequestParam("floorName") String floorName,
-//	                                                             @RequestParam("noOfSeats") int noOfSeats) {
-//	          FloorDetails floorDetails = new FloorDetails(floorId, floorName, noOfSeats);
-//	          FloorDetails newFloorDetails = floorDetailsRepo.save(floorDetails);
-//	          return new ResponseEntity<>(newFloorDetails, HttpStatus.CREATED);
-//	      }
-//	    
 	    
-	    //Add a new floor with details
-	    @PostMapping("/addfloor/{floorId}")
-	    public ResponseEntity<FloorDetails> addFloorWithDetails(@RequestBody FloorDetails floorDetails) {
-	        FloorDetails newFloor = floorService.addFloorWithDetails(floorDetails);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloor);
+	    // update seats to floor
+	    @PutMapping("/Updateseats/{floorId}")
+	    public ResponseEntity<FloorDetails> updateSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
+	        try {
+	            FloorDetails updatedFloorDetails = floorService.updateSeatsToFloorDetails(floorId, noOfSeats);
+	            if (updatedFloorDetails != null) {
+	                return new ResponseEntity<>(updatedFloorDetails, HttpStatus.OK);
+	            } else {
+	                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	            }
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
 	    }
+	    
+	    
+	    
+	       
+	    // Add a new floor with details
+	    @PostMapping("/addfloor")
+	    public ResponseEntity<FloorDetails> addFloorWithDetails(@RequestBody FloorDetails floorDetails) {
+	        try {
+	            FloorDetails newFloor = floorService.addFloorWithDetails(floorDetails);
+	            mailService.addedFloor(floorDetails);
+	            return ResponseEntity.status(HttpStatus.CREATED).body(newFloor);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 	    
 	 // Update floor details by ID
@@ -97,52 +135,46 @@ public class FloorController {
 	    }
 	
 	
-
 	    
 	    
-	    
-	    
-
-
-	    
-	    
-	    
-	
-	    
-	  
-
 	    
 	    
    
-	    @DeleteMapping("/delete/{floorId}")
-	    public ResponseEntity<Void> deleteFloor(@PathVariable("floorId") int floorId){
-	    	FloorDetails floor = floorService.getFloorById(floorId);
-	    	
-	    	if(floor == null) {
-	    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    	}
-	    	floorService.deleteFloor(floorId);
-	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	    	
-	    }
+
+
+		@DeleteMapping("/delete/{floorId}")
+		public ResponseEntity<Void> deleteFloor(@PathVariable("floorId") int floorId) {
+			try {
+				FloorDetails floor = floorService.getFloorById(floorId);
+				if (floor == null) {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+				floorService.deleteFloor(floorId);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
 	    
 	    
+
 	    
+		@GetMapping("/{floorId}")
+		public ResponseEntity<FloorDetails> getFloorById(@PathVariable("floorId") int floorId) {
+			try {
+				FloorDetails floor = floorService.getFloorById(floorId);
+				if (floor == null) {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+				return new ResponseEntity<>(floor, HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 	    
-	    
-	    @GetMapping("/{floorId}")
-	    public ResponseEntity<FloorDetails> getFloorById(@PathVariable ("floorId") int floorId){
-	    	FloorDetails floor = floorService.getFloorById(floorId);
-	    	if(floor == null) {
-	    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    	}
-	    	return new ResponseEntity<>(floor,HttpStatus.OK);
-	    	
-	    	
-	    	
-	    }
-	    
-	    
+		
+		
 
 	    
 
