@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -25,12 +25,9 @@ import com.SecureSeat.Booking.filter.JwtAuthFilter;
 import com.SecureSeat.Booking.service.LoginServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
-//@Import(SwaggerConfig.class)
-@EnableMethodSecurity
 public class SecurityConfig {
 	
 	@Autowired
@@ -54,6 +51,12 @@ public class SecurityConfig {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
+    
+    @Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+	    return new CustomLogoutSuccessHandler();
+	}
+
 	
 
     @Bean
@@ -76,12 +79,18 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/login").permitAll()
-            .requestMatchers("/logout").permitAll() 
+            //.requestMatchers("/api/logout").permitAll() 
 //            .requestMatchers("/swagger-ui.html").permitAll()
             .requestMatchers("/api/admin/**").hasRole("ADMIN")
             .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
             .requestMatchers("/api/developer/**").hasRole("DEVELOPER")
             .anyRequest().permitAll()
+            .and()
+            .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/clear/logout")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
