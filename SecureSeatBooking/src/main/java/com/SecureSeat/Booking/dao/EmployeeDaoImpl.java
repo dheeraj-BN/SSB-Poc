@@ -113,5 +113,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		return bookingdetails;
 	}
 
+	
+	@Override
+	public void changePasswordAndMakeStatusTrue(String password,int id) {
+		String sql=" UPDATE `seatsb`.`user_deatils` SET `password` = ? , `status` = true WHERE (`user_id` = ?) ";
+		jdbcTemplate.update(sql,password,id);
+		
+	}
 }
 

@@ -29,7 +29,8 @@ public class UserFPCServiceImpl implements UserFPCService {
 		}
 		
 		
-		employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),userId);
+//		employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),userId);
+		employeeDAO.changePasswordAndMakeStatusTrue(config.passwordEncoder().encode(newPassword),userId);
 		return "Password changed";
 	}
 
