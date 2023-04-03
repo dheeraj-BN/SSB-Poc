@@ -4,11 +4,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface EmployeeDAO {
 
 	void changePasswor(String password,int id);
 
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id, LocalDate date);
+
+
+	int forgotPassword(String email);
+
+
+	void restPassword(String password, int userid);
+
+
+	void changePasswordAndMakeStatusTrue(String password, int id);
 
 }

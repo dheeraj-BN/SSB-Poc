@@ -3,6 +3,8 @@ package com.SecureSeat.Booking.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	
+	
+	
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
 	
@@ -33,17 +37,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private SecurityConfig config;
+	
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
+	
+	
+	
+	@Override
+	public void forgotPasword(String email,String password) {
+		int userid=employeeDAO.forgotPassword(email);
+		employeeDAO.restPassword(config.passwordEncoder().encode(password), userid);
+		
+	}
+	
+	
+	
 	@Override
 	public String changePassword(int id,String oldPassword,String newPassword) {
-		System.out.println(id);
+		logger.info("getting the user_id and user details for change password");
+		logger.debug("user_id is" +id);
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
-		System.out.println(user);
-		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
+		logger.debug("userInfo" +user);
+//		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
 		if(config.passwordEncoder().matches(oldPassword,user.getPassword())) {
 			
 			employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),id);
 			return "Password changed";
 		}else {
+			logger.error("password wrong");
 		return "Old Password doesn't matched";
 		}
 	}
@@ -51,29 +72,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public BookingDetails getEmpBookedInfo(int id) {
+		logger.info("Fetching booking details of employee booked for today");
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
+		logger.debug("employee "+user);
+		System.out.println(user);
 		BookingDetails info=bookingDetailsRepo.findByUserDeatilsAndBookedDateEquals(user, LocalDate.now());
 		return info;	
 	}
 	
 	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id) {
+		logger.info("Fetching booking details of employee booked for next days");
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
-//	List<BookingDetails> info=bookingDetailsRepo.findByUserDeatilsAndBookedDateGreaterThan(user, LocalDate.now());
+		logger.debug("employee "+user);
 		List<BookingDetails> info=employeeDAO.getEmpBookedInfoBookedNext(id, LocalDate.now());
 		return info;	
 	}
 	
 	@Override
 	public Employee getEmployee(int id) {
+		logger.info("Retreving the particular employee details");
 		Employee e= employeeRepo.findById(id);
+		logger.debug("employee details" +e);
 		return e;
 	}
 	
 	@Override
 	public List<Employee> getAllEmployee(){
+		logger.info("List of all employee");
 		List<Employee> e=employeeRepo.findAll();
+		logger.info("loaded" +e.size() + "employees");
+		logger.debug("employees are" +e);
 		return e;
 	}
+
+
+
+	
+
 
 }

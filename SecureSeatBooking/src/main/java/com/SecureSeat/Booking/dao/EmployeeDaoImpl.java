@@ -35,12 +35,30 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	}
 	
 	@Override
+	public int forgotPassword(String email) {
+		  String sql= "select ud.user_id from employee em INNER JOIN user_deatils ud ON ud.employee_id=em.employee_id "
+		  		+ "where em.employee_email=?";
+		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {email},Integer.class);
+//		  List<Integer> userid =jdbcTemplate.queryForList(sql, Integer.class, email);
+		  System.out.println(userid);
+			return userid;
+	}
+	
+	@Override
+	public void restPassword(String password,int userid) {
+		String sql="Update user_deatils  set password=? where user_id =?";
+		jdbcTemplate.update(sql,password,userid);
+	}
+
+	
+	
+	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id , LocalDate date){
 		String sql="select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
 				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
 				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
 				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
-				+ "ON ud.user_id=? where booked_date>?";
+				+ "ON ud.user_id=bd.user_id where ud.user_id=? AND booked_date>? AND booking_status='PENDING'";
 		List<BookingDetails> bookingdetails = new ArrayList<>();
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {id,date} );
 		for(Map row : rows) {
@@ -95,5 +113,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		return bookingdetails;
 	}
 
+	
+	@Override
+	public void changePasswordAndMakeStatusTrue(String password,int id) {
+		String sql=" UPDATE `seatsb`.`user_deatils` SET `password` = ? , `status` = true WHERE (`user_id` = ?) ";
+		jdbcTemplate.update(sql,password,id);
+		
+	}
 }
 
