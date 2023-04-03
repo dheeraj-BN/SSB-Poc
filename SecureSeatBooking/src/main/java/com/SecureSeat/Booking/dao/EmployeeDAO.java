@@ -11,4 +11,6 @@ public interface EmployeeDAO {
 
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id, LocalDate date);
 
+	void changePasswordAndMakeStatusTrue(String password, int id);
+
 }
