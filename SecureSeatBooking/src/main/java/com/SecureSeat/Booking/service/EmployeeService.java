@@ -20,7 +20,18 @@ public interface EmployeeService {
 	String changePassword(int id, String oldPassword, String Password);
 
 
-	void forgotPasword(String email, String password);
+//	String generateOtp(String phoneNo);
+
+
+	int findUserIdByPhoneNo(String phoneNo);
+
+	String getRandomNumberString();
+
+	String generateOtp(String phoneNo);
+
+	String forgotPasword(int id, String password);
+
+
 
 
 

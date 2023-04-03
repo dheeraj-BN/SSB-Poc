@@ -9,6 +9,7 @@ import {
 } from "cdbreact";
 import { Link, NavLink } from "react-router-dom";
 
+
 const Sidebar1 = () => {
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}>
@@ -28,8 +29,8 @@ const Sidebar1 = () => {
             <Link  to="/admin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
             </Link>
-            <Link to="/profile" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
+            <Link to="/profileuser" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
+              <CDBSidebarMenuItem icon="user">Profile</CDBSidebarMenuItem>
             </Link>
           </CDBSidebarMenu>
         </CDBSidebarContent>

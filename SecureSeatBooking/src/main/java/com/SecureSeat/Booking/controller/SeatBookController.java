@@ -99,6 +99,11 @@ public class SeatBookController {
 	public void updateseatbooking(@PathVariable String token,@RequestParam Boolean foodstatus,@RequestParam String seatno) {
 		seatBook.updateseatbooking(token, foodstatus, seatno);
 	}
+	
+	@GetMapping("/api/employee/schedule")
+	public void getschedule(){
+		 seatBook.updatecancelforschedule();
+	}
 
 	
 

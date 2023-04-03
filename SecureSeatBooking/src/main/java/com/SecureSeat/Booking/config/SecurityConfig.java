@@ -18,9 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.SecureSeat.Booking.filter.CsrfCookieFilter;
 import com.SecureSeat.Booking.filter.JwtAuthFilter;
 import com.SecureSeat.Booking.service.LoginServiceImpl;
 
@@ -61,6 +65,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    	CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
+//        
+//          CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+// 
         return http
             .csrf().disable()
             .cors().configurationSource(new CorsConfigurationSource() {
@@ -77,6 +86,10 @@ public class SecurityConfig {
                 }
             })
             .and()
+//            .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+//            		.ignoringRequestMatchers("/login")
+//                    .csrfTokenRepository(csrfTokenRepository))
+//            .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
             .authorizeHttpRequests()
             .requestMatchers("/login").permitAll()
             //.requestMatchers("/api/logout").permitAll() 

@@ -21,6 +21,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
+import com.SecureSeat.Booking.service.UserFPCService;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -34,20 +35,24 @@ public class EmployeeController {
 	
 	
 	
+	@Autowired
+	private UserFPCService userFPCService;
 	
-	
-	
-	
-	
-	
-	
-	
-	@PostMapping("/forgot/password/{email}")
-	public void forgot(@PathVariable String email,@RequestParam("newPassword") String newPassword) {
-		System.out.println("hii");
-		 employeeService.forgotPasword(email, newPassword);
+	@PostMapping("/new/password/{id}")
+	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
+		String message=	employeeService.forgotPasword( id,newPassword);
+		return message;
+		
 	}
+	
+	
 
+	
+	@PostMapping("/forgot/password")
+	public String generateOtp(@RequestParam String phoneNo) {
+		System.out.println("hii");
+		return employeeService.generateOtp(phoneNo);
+	}
 	
 	
 	
@@ -101,6 +106,18 @@ public class EmployeeController {
 		return employeeService.getAllEmployee();
 	}
 	
-	
+	@PutMapping("/change/FTChangepassword/{id}")
+	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
+		try {
+		
+		String message=userFPCService.firstTimeCHangeOfPassword( userId, newPassword);
+    	
+		return message;
+		
+	}catch (Exception e) {
+		 e.printStackTrace();
+		    return "An error occurred " + e.getMessage();
+		  }
+	}
 	
 }
