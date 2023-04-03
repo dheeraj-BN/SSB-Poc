@@ -1,9 +1,9 @@
-import React, { useEffect, useState }  from "react";
+import React, {useState }  from "react";
 import axios from "axios"
-import '../css/adduser_popup.css'
+import '../..//css/adduser_popup.css'
 
 
-function PopUp(){
+function AddUser(){
     const [popup,setPop]=useState(false)
     const [empId,setEmpId]=useState(0)
     
@@ -24,11 +24,11 @@ function addData(){
         })
 
 }
-//     useEffect(()=>{
-//         axios.post("http://10.191.80.109:9090/api/addUser/4").then((res)=>{
-//             console.log(res.data);
-//         })
-//     },[])
+    // useEffect(()=>{
+    //     axios.post("https://reqres.in/api/users").then((res)=>{
+    //         console.log(res.data);
+    //     })
+    // },[])
     return(
         <div>
             <button onClick={handleClickOpen} className="btn btn-primary">Add User +</button>
@@ -54,7 +54,7 @@ function addData(){
         </div>
     )
 }
-export default PopUp;
+export default AddUser;
 
 
 // Create header and session 

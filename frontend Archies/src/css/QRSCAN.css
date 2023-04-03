@@ -1,0 +1,22 @@
+.qrscan{
+    display: flex;
+    flex-direction: row;
+}
+
+.qrreader{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.qrdata p{
+    text-align: left;
+}
+
+.qrdata{
+    border: 1px solid black;
+    padding: 32px;
+}
