@@ -255,14 +255,15 @@ public class SeatBookImpl implements SeatBook {
 	}
 	
 	@Override
-	@Scheduled(cron = "0 0 10 * * ?") 
+	@Scheduled(cron = "0 0 * * * ?") 
 	public void updatecancelforschedule(){
 		LocalDate date = LocalDate.now();
 		List<BookingDetails> bookingDetails = seatBookDAO.getbookingdetailsbydateandbookingstatus(date);
 		for(BookingDetails book: bookingDetails) {
 			String shift_timings=book.getShiftDetails().getShiftTimings();
- 	     String shift=shift_timings.substring(0,2);
-		    int i = Integer.parseInt(shift);
+// 	     String shift=shift_timings.substring(0,2);
+ 	     String[] n=shift_timings.split(":");
+		    int i = Integer.parseInt(n[0]);
 		    LocalTime time = LocalTime.now();
 		    int hour = time.getHour();
 		    int j=i+5;
