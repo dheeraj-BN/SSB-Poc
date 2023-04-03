@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../components/seatbookingform.css"
+import "../CSS/Bookingform.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -155,8 +155,6 @@ function SeatBookingForm() {
             id="to-date-input"
             type="date"
             min={todayDate()}
-            // onChange={(e) => setToDate(e.target.value)}
-            // onChange={(e) => setToDate(e.target.value)}
             onChange={(e) => weeklydate(e)}
             className="form-input"
           />
@@ -164,13 +162,6 @@ function SeatBookingForm() {
       )}
 
       <button type="submit" className="btn btn-primary">
-        {/* <Link
-          to="/floorlist"
-          type="submit"
-          
-        >
-          Next
-        </Link> */}
         Next
       </button>
     </form>

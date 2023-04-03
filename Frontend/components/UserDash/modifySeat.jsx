@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../components/modifySeat.css';
+import '../CSS/modifySeat.css';
 
 
 

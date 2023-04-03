@@ -16,7 +16,7 @@ nav ul {
 
 nav li button {
   /* background-color: transparent; */
-  background-color: black;
+  background-color: rgb(111, 110, 110);
   border: none;
   /* color: inherit; */
   cursor: pointer;
@@ -26,7 +26,7 @@ nav li button {
 }
 
 nav li button:hover {
-  color: #ccc;
+  color: #f7eded;
 }
 
 /* Style for the dashboard content */

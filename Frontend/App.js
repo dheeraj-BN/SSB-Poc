@@ -17,15 +17,17 @@
 // }
 
 // export default App
-import SeatBookingForm from "./components/BookingForm";
-import QRGenerator from "./components/qrgenerator";
-import UserDashBoard from "./components/UserDashboard";
-import FloorList from "./components/floorList";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SeatMatrix from "./components/Groundfloor";
-import SeatMatrix1 from "./components/FirstFloor";
-import SeatMatrix2 from "./components/Secondfloor";
-import SeatModify from "./components/modifySeat";
+import SeatModify from "./components/UserDash/modifySeat";
+import SeatMatrix from "./components/UserDash/Groundfloor";
+import SeatMatrix1 from "./components/UserDash/FirstFloor";
+import SeatMatrix2 from "./components/UserDash/Secondfloor";
+import FloorList from "./components/UserDash/floorList";
+import QRGenerator from "./components/UserDash/qrgenerator";
+import SeatBookingForm from "./components/UserDash/BookingForm" ;
+import UserDashBoardBoard from "./components/UserDash/UserDashboard"
+
+
 
 function App() {
  
@@ -35,7 +37,7 @@ function App() {
   
     <Router>
       <Routes>
-        <Route path="/"  element={<UserDashBoard/>} />
+        <Route path="/"  element={<UserDashBoardBoard/>} />
         <Route path="/booking" element={<SeatBookingForm/>} />
         <Route path="/floorlist" element={<FloorList/>}/>
         <Route path="/groundfloor" element={<SeatMatrix/>}/>

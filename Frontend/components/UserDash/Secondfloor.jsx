@@ -1,19 +1,16 @@
 import React from 'react';
-import "./Groundfloor.css"
+import "../CSS/Groundfloor.css";
 
-
-function SeatMatrix1() {
+function SeatMatrix2() {
   const numDivs = 20;
-  
 
   const divs = [];
   for (let i = 1; i <= numDivs; i++) {
-    const divId = `${"F"+i}`;
-    console.log(divId)
+    const divId = `${"S"+i}`;
 
     const newDiv = (
       <div className='seat' key={divId} id={divId}>
-        FF-{i}
+        SF-{i}
       </div>
     );
 
@@ -22,7 +19,7 @@ function SeatMatrix1() {
 
   return (
     <div className='seat-booking-app' >
-        { <h1>First Floor</h1> }
+        { <h1>Second Floor</h1> }
         <div className='seat-map'>
            {divs}
       </div>
@@ -36,6 +33,4 @@ function SeatMatrix1() {
   );
 }
 
-
-
-export default SeatMatrix1;
+export default SeatMatrix2;

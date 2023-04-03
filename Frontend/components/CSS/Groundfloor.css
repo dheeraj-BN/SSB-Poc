@@ -1,15 +1,17 @@
- 
+
  
  .seat-booking-app {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+
 }
 
 .seat-map {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+  
 }
 
 .seat {
@@ -34,7 +36,7 @@
 
 .seat:hover {
   background-color: #d4d4d4;
-}
+} */
 
 #legend {
   
@@ -44,9 +46,28 @@
     grid-gap: 10px;
     grid-template-columns: 50px auto ; 
 }
+
 #legend .txt {
   display: flex;
   align-items: center;
 }
-.taken {  color:#87ff96; }
-.selected { background: #87ff96; }
+/* .taken {  color:#87ff96; }
+.selected { background: #87ff96; }  */
+
+.selected {
+  background: #87ff96;
+}
+input[type=radio]{
+      width: 100px;
+
+  height: 100px;
+    -webkit-appearance: none;
+-moz-appearance: none;
+-ms-appearance: none;
+-o-appearance: none;
+appearance: none;
+}
+input[type=radio]:checked{
+  background-color: #08781b;
+   
+} 

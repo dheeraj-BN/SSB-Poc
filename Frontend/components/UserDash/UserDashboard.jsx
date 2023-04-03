@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../components/UserDashboard.css"
+import "../CSS/UserDashboard.css"
 
 function UserDashboard() {
   

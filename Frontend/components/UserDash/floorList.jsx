@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../components/floorList.css';
+import '../CSS/floorList.css';
 import axios from 'axios';
 
 function FloorList(){
