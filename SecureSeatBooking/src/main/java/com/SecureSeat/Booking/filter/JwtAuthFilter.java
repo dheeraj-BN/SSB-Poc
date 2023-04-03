@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +17,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.SecureSeat.Booking.controller.LoginController;
 import com.SecureSeat.Booking.service.LoginServiceImpl;
 
+import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +29,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
+	private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
+	
     @Autowired
     private JwtService jwtService;
 
@@ -33,6 +39,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    try {	
+    	logger.debug("Authenticating user  ");
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -57,7 +65,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+        //System.out.println(request.getRequestURI());
+        if (request.getRequestURI().equals("/clear/logout")) {
+        	//System.out.println(request.getRequestURI());
+        	logger.info("Clearing user credentials from Security Context for Logout ");
+            SecurityContextHolder.clearContext();
+            logger.info("Cleared Security Context ");
+        }
         filterChain.doFilter(request, response);
+        logger.debug("User Authenticated Successfully.  ");
+    }catch(Exception e) {
+    	logger.error("Error Authenticating User "+e.getMessage());
+    	throw new SignatureException("Invalid Token");
     }
+    }
+
+
 
 }
