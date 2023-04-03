@@ -22,6 +22,8 @@ public interface SeatBookDAO {
 
 	void updateseatbooking(Boolean foodstatus, String seatno, int bookingid);
 
+	List<BookingDetails> getbookingdetailsbydateandbookingstatus(LocalDate bookedDate);
+
 //	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
 
 }

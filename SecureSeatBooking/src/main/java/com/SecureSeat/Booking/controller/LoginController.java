@@ -67,10 +67,12 @@ public class LoginController {
 			String name = authentication.getName();
 			int id = 0;
 			String token;
+			boolean passwordStatus = false;
 			List<Employee> employee = empRepo.findByEmployeeEmail(name);
 			if (employee.size() > 0) {
 				UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
 				id = user.getUserId();
+				passwordStatus=user.isStatus();
 			}
 			//
 
@@ -87,8 +89,10 @@ public class LoginController {
 			}
 
 			String roless = "ROLE_" + roles.get(0);
+			
+			
 
-			AuthenticationResponse authenticationResponse = new AuthenticationResponse(id, name, roless, token);
+			AuthenticationResponse authenticationResponse = new AuthenticationResponse(id, name, roless, token,passwordStatus);
 			logger.info("Generated response for login request ");
 			return ResponseEntity.ok(authenticationResponse);
 

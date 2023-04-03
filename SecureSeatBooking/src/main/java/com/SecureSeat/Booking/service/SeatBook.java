@@ -44,4 +44,7 @@ public interface SeatBook {
 
 	void updateseatbooking(String token, Boolean foodstatus, String seatno);
 
+	void updatecancelforschedule();
+//	List<BookingDetails> updatecancelforschedule();
+
 }

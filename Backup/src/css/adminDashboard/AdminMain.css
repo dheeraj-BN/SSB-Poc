@@ -1,0 +1,158 @@
+.empData {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-evenly;
+  margin: 80px auto;
+}
+.adminPage {
+  display: flex;
+  overflow: initial scroll;
+  gap: 4rem;
+}
+.admincard {
+  width: 300px;
+  height: 200px;
+}
+
+.fonttitle {
+  font-size: 34px;
+}
+
+.cardbody{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.btnmanual {
+  height: 200px;
+  width: 150px;
+}
+
+.parentempdata {
+  height: 100vh;
+}
+
+@media only screen and (max-width: 1300px) {
+  .empData {
+    gap: 1rem;
+  }
+
+  .admincard {
+    width: 15rem;
+    height: 9rem;
+  }
+  .adminPage {
+    gap: 0rem;
+    overflow: hidden;
+  }
+  .parentempdata {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 5px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: -100px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .admincard {
+    width: 10rem;
+    height: 6rem;
+  }
+  .fonttitle {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 430px) {
+  .admincard {
+    width: 8rem;
+    height: 6rem;
+  }
+  .fonttitle {
+    font-size: 16px;
+  }
+
+  .empData{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .parentempdata{
+    gap: 0rem;
+  }
+}
+
+/* Fncards css */
+.fncards {
+  position: relative;
+  text-align: center;
+  text-shadow: 1px 1px 8px rgba(52, 32, 32, 0.68);
+  width: 12rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 5px 21px 87px 10px rgba(0, 0, 0, 0.9) inset;
+  -webkit-box-shadow: 5px 21px 87px 10px rgba(0, 0, 0, 0.9) inset;
+  -moz-box-shadow: 5px 21px 87px 10px rgba(0, 0, 0, 0.9) inset;
+
+  text-shadow: 0px 0px 0 rgb(138, 76, 0), -1px 0px 0 rgb(42, -20, 0),
+    -2px 0px 1px rgba(0, 0, 0, 1), -2px 0px 1px rgba(0, 0, 0, 0.5),
+    0px 0px 1px rgba(0, 0, 0, 0.2);
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  font-stretch: 2rem;
+
+}
+
+
+.fundata {
+  display: flex;
+  flex-wrap: wrap;
+  height: 30vh;
+  gap: 10rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1200px) {
+  .fncards {
+    width: 8rem;
+    cursor: pointer;
+    height: 5rem;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .fundata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .centered{
+     font-size: 24px;
+
+  }
+}
+@media only screen and (max-width: 430px) {
+  .fundata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+

@@ -1,0 +1,32 @@
+.item1{
+    grid-area: sidebar;
+}
+
+.item2{
+    grid-area: empinfo ;
+}
+.empdata{
+    display: grid;
+    grid-template-areas: 'sidebar  empinfo  empinfo empinfo  eminfo';
+    /* height: 100vh; */
+    overflow:unset;
+}
+
+.empscroller{
+    /* justify-content: center; */
+    /* margin-right: 10rem; */
+    width: 100%;
+    height: 100vh;
+    overflow: scroll;
+}
+
+
+.tss-hwdp7s-MUIDataTable-liveAnnounce{
+    height: 0px !important;
+}
+
+.css-11mde6h-MuiPaper-root{
+    background-color:transparent !important ;
+}
+
+

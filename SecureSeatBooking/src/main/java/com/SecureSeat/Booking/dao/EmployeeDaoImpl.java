@@ -27,6 +27,17 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	
+	
+	
+//	public List<BookingDetails> lastBookingDetails() {
+//		String sql="SELECT * from booking_details where user_id=? ORDER BY booking_id DESC LIMIT";
+//		
+//		
+//	}
+	
+	
+	
+	
 	@Override
 	public void changePasswor(String password,int id) {
 		String sql="UPDATE `seatsb`.`user_deatils` SET `password` = ? WHERE (`user_id` = ?)";
@@ -39,7 +50,6 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		  String sql= "select ud.user_id from employee em INNER JOIN user_deatils ud ON ud.employee_id=em.employee_id "
 		  		+ "where employee_phone_no=?";
 		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {phoneNo},Integer.class);
-//		  List<Integer> userid =jdbcTemplate.queryForList(sql, Integer.class, email);
 		  System.out.println(userid);
 			return userid;
 	}
