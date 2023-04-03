@@ -114,22 +114,6 @@ public class FloorServiceImpl implements FloorService {
 	}
 
 
-//
-//	@Override
-//	public FloorDetails updateFloorWithDetails(int id, FloorDetails floorDetails) {
-//		
-//		
-//		return null;
-//	}
-//
-//
-//
-//	@Override
-//	public ResponseEntity<FloorDetails> updateFloorDetails(int floorId, FloorDetails floorDetails) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	
 
 	 
 

@@ -94,8 +94,6 @@ public class UserServiceImpl {
 
 		}
 		
-		 
-
 		return "SUCCESS";
 
 	}

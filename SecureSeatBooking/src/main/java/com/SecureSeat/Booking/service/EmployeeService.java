@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
@@ -17,6 +18,26 @@ public interface EmployeeService {
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id);
 
 	String changePassword(int id, String oldPassword, String Password);
+
+
+//	String generateOtp(String phoneNo);
+
+
+	int findUserIdByPhoneNo(String phoneNo);
+
+	String getRandomNumberString();
+
+	String generateOtp(String phoneNo);
+
+	String forgotPasword(int id, String password);
+
+
+
+
+
+
+
+	
 
 
 

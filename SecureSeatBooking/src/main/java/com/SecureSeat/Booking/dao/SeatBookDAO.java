@@ -20,6 +20,10 @@ public interface SeatBookDAO {
 
 	void updatefoodstatus(Boolean foodstatus, int bookingid);
 
+	void updateseatbooking(Boolean foodstatus, String seatno, int bookingid);
+
+	List<BookingDetails> getbookingdetailsbydateandbookingstatus(LocalDate bookedDate);
+
 //	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
 
 }

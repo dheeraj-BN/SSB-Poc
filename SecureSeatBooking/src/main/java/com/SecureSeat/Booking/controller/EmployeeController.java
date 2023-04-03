@@ -17,8 +17,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.UserDeatils;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
+import com.SecureSeat.Booking.service.UserFPCService;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -30,10 +33,33 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
+	
+	
+	@Autowired
+	private UserFPCService userFPCService;
+	
+	@PostMapping("/new/password/{id}")
+	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
+		String message=	employeeService.forgotPasword( id,newPassword);
+		return message;
+		
+	}
+	
+	
+
+	
+	@PostMapping("/forgot/password")
+	public String generateOtp(@RequestParam String phoneNo) {
+		System.out.println("hii");
+		return employeeService.generateOtp(phoneNo);
+	}
+	
+	
+	
 	@PutMapping("/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
-		System.out.println("controller "+id);
+//		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfrimMail(id);
 		return message;
@@ -51,18 +77,20 @@ public class EmployeeController {
 	 
 	@GetMapping("/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
-		
+//		sySystem.out.println("hi");
+		System.out.println("hi");
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
 	
-	@ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
-    }
+//	@ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleException(Exception e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
+//    }
 	
 	@GetMapping("/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
 		try {
+			System.out.println("hii");
 			return employeeService.getEmployee(id);
 	}catch (NullPointerException e) {
 		 throw new ResponseStatusException(HttpStatus.OK, "Employee not found", e);
@@ -76,6 +104,20 @@ public class EmployeeController {
 	@GetMapping("/employeeList")
 	public List<Employee> getAllEmployees(){
 		return employeeService.getAllEmployee();
+	}
+	
+	@PutMapping("/change/FTChangepassword/{id}")
+	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
+		try {
+		
+		String message=userFPCService.firstTimeCHangeOfPassword( userId, newPassword);
+    	
+		return message;
+		
+	}catch (Exception e) {
+		 e.printStackTrace();
+		    return "An error occurred " + e.getMessage();
+		  }
 	}
 	
 }
