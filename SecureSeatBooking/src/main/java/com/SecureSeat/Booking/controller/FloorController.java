@@ -23,7 +23,7 @@ import com.SecureSeat.Booking.service.FloorService;
 
 @RestController()
 @RequestMapping("/api/developer")
-@CrossOrigin("http://10.191.80.118:3001/")
+//@CrossOrigin("http://10.191.80.118:3001/")
 public class FloorController {
 	
 	

@@ -21,6 +21,8 @@ import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class UserServiceImpl {
 
@@ -47,6 +49,20 @@ public class UserServiceImpl {
 	
 	@Autowired
 	private SecurityConfig securityConfig;
+	
+	
+	 @PostConstruct
+		public void init() {
+		 
+		 
+			
+		 Employee employee = userDetailDao.getAdminInfo();
+		 
+			String result = addUser(employee.getEmployeeId());
+			
+			System.out.println(result);
+			
+		}
 
 	public String addUser(int employeeId) {
 
@@ -65,7 +81,7 @@ public class UserServiceImpl {
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(role);
 
-			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee);
+			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee, true);
 			user.setRoles(roles);
 
 			userDetailsRepo.save(user);
