@@ -127,6 +127,12 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 		jdbcTemplate.update(sql, foodstatus,bookingid);
 	}
 	
+	@Override
+	public void updateseatbooking(Boolean foodstatus,String seatno,int bookingid) {
+		String sql="Update booking_details  set food_status=?,seat_no=? where booking_id =?";
+		jdbcTemplate.update(sql,foodstatus,seatno,bookingid);
+	}
+	
 
 	
 }

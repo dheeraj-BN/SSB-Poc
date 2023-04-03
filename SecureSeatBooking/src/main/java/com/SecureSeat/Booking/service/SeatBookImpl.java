@@ -241,11 +241,16 @@ public class SeatBookImpl implements SeatBook {
 		int bookingid=seatBookDAO.getbookingidfromtoken(token);
 		seatBookDAO.updateseatNo(seatno, bookingid);
 	}
-	
 	@Override
 	public void updatefoodstatus(String token,Boolean foodstatus) {
 		int bookingid=seatBookDAO.getbookingidfromtoken(token);
 		seatBookDAO.updatefoodstatus(foodstatus, bookingid);
+	}
+	
+	@Override
+	public void updateseatbooking(String token,Boolean foodstatus,String seatno) {
+		int bookingid=seatBookDAO.getbookingidfromtoken(token);
+		seatBookDAO.updateseatbooking(foodstatus, seatno, bookingid);
 	}
 
 }

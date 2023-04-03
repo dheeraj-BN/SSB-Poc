@@ -29,6 +29,14 @@ public class FloorDetails {
 		this.floorName = floorName;
 		this.noOfSeats = noOfSeats;
 	}
+	
+	
+
+	public FloorDetails(int floorId, int noOfSeats) {
+		super();
+		this.floorId = floorId;
+		this.noOfSeats = noOfSeats;
+	}
 
 	public int getFloorId() {
 		return floorId;

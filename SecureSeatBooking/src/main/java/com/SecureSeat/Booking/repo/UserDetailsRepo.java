@@ -16,7 +16,7 @@ public interface UserDetailsRepo extends JpaRepository<UserDeatils, Integer>{
 	
 	Optional<UserDeatils> findByEmployee(Employee e);
 	
-
+	
 	
 	
 }
