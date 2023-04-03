@@ -1,18 +1,10 @@
-<<<<<<< HEAD
-.qr{
-=======
 /* Style for the navigation bar */
 .nav {
   background-color: #666363;
   color: #fff;
->>>>>>> 858ad4605e961299982bdf4d5f7f523bbd598360
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
-  margin-top: 50px;
-}
-=======
   padding: 30px 40px;
 }
 
@@ -64,4 +56,3 @@ h1 {
     margin-bottom: 0px;
   }
 }
->>>>>>> 858ad4605e961299982bdf4d5f7f523bbd598360

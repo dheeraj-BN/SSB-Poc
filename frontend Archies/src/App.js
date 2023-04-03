@@ -42,15 +42,13 @@ function App() {
           <Route path="/groundfloor" element={<SeatMatrix/>}/>
           <Route path="/firstfloor" element={<SeatMatrix1/>}/>
           <Route path="/secondfloor" element={<SeatMatrix2/>}/>
-<<<<<<< HEAD
           <Route path="/modify" element={<SeatModify/>}/>
           {/*Developer dash */}
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
-=======
           <Route path="/modify" element={<SeatModify/>}/>  
           <Route path="/profileuser" element={<Profile/>}/>  
->>>>>>> 858ad4605e961299982bdf4d5f7f523bbd598360
+
 
 
         <Route path="/qr" element={<QRGenerator/>}/>
