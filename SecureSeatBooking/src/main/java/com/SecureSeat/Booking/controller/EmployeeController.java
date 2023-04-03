@@ -21,6 +21,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
+import com.SecureSeat.Booking.service.UserFPCService;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -34,7 +35,8 @@ public class EmployeeController {
 	
 	
 	
-	
+	@Autowired
+	private UserFPCService userFPCService;
 	
 	
 	
@@ -101,6 +103,18 @@ public class EmployeeController {
 		return employeeService.getAllEmployee();
 	}
 	
-	
+	@PutMapping("/change/FTChangepassword/{id}")
+	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
+		try {
+		
+		String message=userFPCService.firstTimeCHangeOfPassword( userId, newPassword);
+    	
+		return message;
+		
+	}catch (Exception e) {
+		 e.printStackTrace();
+		    return "An error occurred " + e.getMessage();
+		  }
+	}
 	
 }
