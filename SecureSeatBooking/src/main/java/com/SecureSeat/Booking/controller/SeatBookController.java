@@ -67,8 +67,9 @@ public class SeatBookController {
 		
 	}
 	
-	@GetMapping("api/employee/seatnumber/{date1}")
-	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+	@GetMapping("api/employee/seatnumber")
+	public List<String> seatnumberbookedfordate(){
+		LocalDate date1 = LocalDate.now();
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
@@ -97,6 +98,11 @@ public class SeatBookController {
 	@PutMapping("api/employee/updatebookingstatus/{token}")
 	public void updateseatbooking(@PathVariable String token,@RequestParam Boolean foodstatus,@RequestParam String seatno) {
 		seatBook.updateseatbooking(token, foodstatus, seatno);
+	}
+	
+	@GetMapping("/api/employee/schedule")
+	public void getschedule(){
+		 seatBook.updatecancelforschedule();
 	}
 
 	

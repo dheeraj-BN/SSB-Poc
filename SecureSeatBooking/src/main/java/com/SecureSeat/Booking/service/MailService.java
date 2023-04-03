@@ -11,3 +11,4 @@ public interface MailService {
 	String addedFloor(FloorDetails floorDetails);
 
 }
+

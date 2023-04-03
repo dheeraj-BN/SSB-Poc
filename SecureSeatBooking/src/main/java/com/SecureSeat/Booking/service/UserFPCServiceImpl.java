@@ -20,6 +20,9 @@ public class UserFPCServiceImpl implements UserFPCService {
 	@Autowired
 	private SecurityConfig config;
 	
+	@Autowired
+	private MailService mailService;
+	
 	
 	@Override
 	public String firstTimeCHangeOfPassword(int userId,String newPassword) {
@@ -29,7 +32,9 @@ public class UserFPCServiceImpl implements UserFPCService {
 		}
 		
 		
-		employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),userId);
+//		employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),userId);
+		employeeDAO.changePasswordAndMakeStatusTrue(config.passwordEncoder().encode(newPassword),userId);
+		mailService.passwordChangeConfrimMail(userId);
 		return "Password changed";
 	}
 
