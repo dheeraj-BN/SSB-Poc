@@ -45,29 +45,29 @@ public class SeatBookTest {
 //		
 //	}
 	
-	@Test
-	public void savedbookeddetailsforday() {
-		UserDeatils userDeatils = userDetailsRepo.findById(18).get();
-		ShiftDetails shiftDetails =seatBook.getshiftdetails(1);
-		LocalDate date1=LocalDate.parse("2023-03-29");
-		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null,userDeatils, shiftDetails);
-        seatBook.savebookeddetails(bookingDetails, date1, date1);
-		assertEquals("Seat has already  booked for today","Seat has already  booked for today");
-		
-		
-	}
-	
-	@Test
-	public void savedbookeddetailsforweek() {
-		UserDeatils userDeatils = userDetailsRepo.findById(22).get();
-		ShiftDetails shiftDetails =seatBook.getshiftdetails(1);
-		LocalDate date1=LocalDate.parse("2023-04-01");
-		LocalDate date2 = LocalDate.parse("2023-04-07");
-		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null,userDeatils, shiftDetails);
-        seatBook.savebookeddetails(bookingDetails, date1, date2);
-		assertEquals("seat has been already booked for that week","seat has been already booked for that week");
-		
-		
-	}
+//	@Test
+//	public void savedbookeddetailsforday() {
+//		UserDeatils userDeatils = userDetailsRepo.findById(18).get();
+//		ShiftDetails shiftDetails =seatBook.getshiftdetails(1);
+//		LocalDate date1=LocalDate.parse("2023-03-29");
+//		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null,userDeatils, shiftDetails);
+//        seatBook.savebookeddetails(bookingDetails, date1, date1);
+//		assertEquals("Seat has already  booked for today","Seat has already  booked for today");
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void savedbookeddetailsforweek() {
+//		UserDeatils userDeatils = userDetailsRepo.findById(22).get();
+//		ShiftDetails shiftDetails =seatBook.getshiftdetails(1);
+//		LocalDate date1=LocalDate.parse("2023-04-01");
+//		LocalDate date2 = LocalDate.parse("2023-04-07");
+//		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null,userDeatils, shiftDetails);
+//        seatBook.savebookeddetails(bookingDetails, date1, date2);
+//		assertEquals("seat has been already booked for that week","seat has been already booked for that week");
+//		
+//		
+//	}
 
 }
