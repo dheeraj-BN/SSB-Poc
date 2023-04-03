@@ -18,6 +18,8 @@ import EmployeeInfo from "./components/AdminDashboard/EmployeeInfo";
 import EmailVer from "./routes/EmailVer"
 import ResetPassword from "./routes/ResetPassword"
 import Login from "./routes/LoginForm";
+import Developer from "./components/DeveloperDashboard/developer";
+import AddFloor from "./components/DeveloperDashboard/addfloor";
 
 function App() {
   return (
@@ -41,6 +43,9 @@ function App() {
           <Route path="/firstfloor" element={<SeatMatrix1/>}/>
           <Route path="/secondfloor" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
+          {/*Developer dash */}
+          <Route path="/developer" element={<Developer/>}/>
+          <Route path="/addfloor" element={<AddFloor/>}/>
 
 
         <Route path="/qr" element={<QRGenerator/>}/>
@@ -51,3 +56,6 @@ function App() {
 }
 
 export default App;
+
+
+

@@ -1,4 +1,4 @@
-.seat-booking-form {
+ .seat-booking-form {
   
   border: 1px solid rgb(143, 141, 141);
   margin: 100px auto;
@@ -68,4 +68,29 @@ a{
   .form-button {
     width: 100%;
   }
+} 
+
+
+
+
+.seat-booking-form.animate .form-input, .seat-booking-form.animate .form-button {
+  opacity: 1;
+  transform: translateY(0);
 }
+
+.form-button:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
