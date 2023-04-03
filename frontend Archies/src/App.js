@@ -5,6 +5,14 @@ import AdminMain from "./components/AdminDashboard/AdminMain";
 import AddUser from "./components/AdminDashboard/AddUser";
 import Profile from "./components/AdminDashboard/Profile";
 import QRScan from "./components/AdminDashboard/QRScan";
+import SeatBookingForm from "./components/UserDashboard/BookingForm"
+import SeatMatrix1 from "./components/UserDashboard/FirstFloor"
+import FloorList from "./components/UserDashboard/floorList"
+import SeatMatrix from "./components/UserDashboard/Groundfloor"
+import SeatModify from "./components/UserDashboard/modifySeat"
+import QRGenerator from "./components/UserDashboard/qrgenerator"
+import SeatMatrix2 from "./components/UserDashboard/Secondfloor"
+import UserDashboard from "./components/UserDashboard/UserDash"
 // import SignIn from "./routes/SignIn";
 import EmployeeInfo from "./components/AdminDashboard/EmployeeInfo";
 import EmailVer from "./routes/EmailVer"
@@ -25,6 +33,17 @@ function App() {
           <Route path="/qrcodescan" element={<QRScan />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/empdata" element={<EmployeeInfo />} />
+          {/* user dash */}
+          <Route path="/"  element={<UserDashboard/>} />
+          <Route path="/booking" element={<SeatBookingForm/>} />
+          <Route path="/floorlist" element={<FloorList/>}/>
+          <Route path="/groundfloor" element={<SeatMatrix/>}/>
+          <Route path="/firstfloor" element={<SeatMatrix1/>}/>
+          <Route path="/secondfloor" element={<SeatMatrix2/>}/>
+          <Route path="/modify" element={<SeatModify/>}/>
+
+
+        <Route path="/qr" element={<QRGenerator/>}/>
         </Routes>
       </div>
     </BrowserRouter>

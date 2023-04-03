@@ -1,0 +1,44 @@
+.fList{
+    border: 2px solid rgb(18, 18, 18);
+    margin: 100px auto;
+    width: 40%;
+    border-radius: 15px;
+    padding: 50px;
+    text-align: center;
+    background-color:white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
+}
+a{
+    text-decoration: none;
+}
+
+
+.floor0{
+    display: flex;
+    margin: 20px;
+}
+
+.floorbtn{
+    
+  width: 300px;
+  padding: 5px;
+  height: 50px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  background-color: #e2dede;
+  text-decoration: none;
+  line-height: 50px;
+  color: #0b0b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  gap: 1rem;
+   
+    
+}

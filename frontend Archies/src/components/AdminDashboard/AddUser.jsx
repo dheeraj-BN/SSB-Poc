@@ -1,6 +1,6 @@
 import React, {useState }  from "react";
 import axios from "axios"
-import '../..//css/adduser_popup.css'
+import '../../css/adduser_popup.css'
 
 
 function AddUser(){
