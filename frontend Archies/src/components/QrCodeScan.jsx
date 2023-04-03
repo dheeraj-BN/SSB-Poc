@@ -8,6 +8,7 @@ function QrCodeScan(props) {
     props.data(webcamResult)
   },[webcamResult])
 
+
   return (
     <div className="card col-sm-3 m-2">
       <div className="card-header m-1 rounded">

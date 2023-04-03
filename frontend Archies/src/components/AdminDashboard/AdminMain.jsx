@@ -18,7 +18,6 @@ function AdminMain(props) {
     color : "#D5D887"
   }
   return (
-    <div>
       <div className="adminPage">
         <div>
           <Sidebar />
@@ -42,7 +41,6 @@ function AdminMain(props) {
             <FCards img = "https://pocproject.000webhostapp.com/images/Employee_Data.png" title="Employee data" address="/empdata" color={card3.color}/>
           </div>
         </div>
-      </div>
     </div>
   );
 }

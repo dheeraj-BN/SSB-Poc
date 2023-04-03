@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -251,6 +252,29 @@ public class SeatBookImpl implements SeatBook {
 	public void updateseatbooking(String token,Boolean foodstatus,String seatno) {
 		int bookingid=seatBookDAO.getbookingidfromtoken(token);
 		seatBookDAO.updateseatbooking(foodstatus, seatno, bookingid);
+	}
+	
+	@Override
+	@Scheduled(cron = "0 0 * * * ?") 
+	public void updatecancelforschedule(){
+		LocalDate date = LocalDate.now();
+		List<BookingDetails> bookingDetails = seatBookDAO.getbookingdetailsbydateandbookingstatus(date);
+		for(BookingDetails book: bookingDetails) {
+			String shift_timings=book.getShiftDetails().getShiftTimings();
+// 	     String shift=shift_timings.substring(0,2);
+ 	     String[] n=shift_timings.split(":");
+		    int i = Integer.parseInt(n[0]);
+		    LocalTime time = LocalTime.now();
+		    int hour = time.getHour();
+		    int j=i+5;
+		    System.out.println(j);
+		    if(j>=24) {
+		    	j=j-24;
+		    }
+		    if(j>=hour) {
+		    	seatBookDAO.updatebookingstatus(book.getBookingId());
+		    }
+		}
 	}
 
 }

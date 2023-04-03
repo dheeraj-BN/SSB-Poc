@@ -147,7 +147,13 @@ public class UserServiceImpl {
 		
 		
 		System.out.println(holidayDetails.getHolidayDate());
-		return "holiday alredy added";
+		return "holiday alredy added";	
+		
+	}
+	
+	public List<Employee> listOfEmployeeNotRegistered () {
+		
+		return userDetailDao.getemployee();
 		
 	}
 	

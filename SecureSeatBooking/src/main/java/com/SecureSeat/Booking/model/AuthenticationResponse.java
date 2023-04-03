@@ -1,13 +1,28 @@
 package com.SecureSeat.Booking.model;
 
-import java.util.List;
-
 public class AuthenticationResponse {
 
 	private int id;
     private String email;
     private String roles;
     private String token;
+    private boolean status;
+    
+    
+	public AuthenticationResponse(int id, String email, String roles, String token, boolean status) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.roles = roles;
+		this.token = token;
+		this.status = status;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	public int getId() {
 		return id;
 	}
