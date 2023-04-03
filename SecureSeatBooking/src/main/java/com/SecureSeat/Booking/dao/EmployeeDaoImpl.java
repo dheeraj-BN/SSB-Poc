@@ -35,10 +35,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public int forgotPassword(String email) {
+	public int forgotPassword(String phoneNo) {
 		  String sql= "select ud.user_id from employee em INNER JOIN user_deatils ud ON ud.employee_id=em.employee_id "
-		  		+ "where em.employee_email=?";
-		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {email},Integer.class);
+		  		+ "where employee_phone_no=?";
+		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {phoneNo},Integer.class);
 //		  List<Integer> userid =jdbcTemplate.queryForList(sql, Integer.class, email);
 		  System.out.println(userid);
 			return userid;
@@ -48,6 +48,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	public void restPassword(String password,int userid) {
 		String sql="Update user_deatils  set password=? where user_id =?";
 		jdbcTemplate.update(sql,password,userid);
+	}
+	
+	@Override
+	public void otp(String Otp,int userid) {
+		String sql="Update user_deatils  set password=? where user_id =?";
+		jdbcTemplate.update(sql,Otp,userid);
 	}
 
 	

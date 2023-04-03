@@ -32,20 +32,22 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
+
+	
+	@PostMapping("/new/password/{id}")
+	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
+		String message=	employeeService.forgotPasword( id,newPassword);
+		return message;
+		
+	}
 	
 	
+
 	
-	
-	
-	
-	
-	
-	
-	
-	@PostMapping("/forgot/password/{email}")
-	public void forgot(@PathVariable String email,@RequestParam("newPassword") String newPassword) {
+	@PostMapping("/forgot/password")
+	public String generateOtp(@RequestParam String phoneNo) {
 		System.out.println("hii");
-		 employeeService.forgotPasword(email, newPassword);
+		return employeeService.generateOtp(phoneNo);
 	}
 
 	
