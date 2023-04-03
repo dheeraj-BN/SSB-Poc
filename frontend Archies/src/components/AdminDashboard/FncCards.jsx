@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 function FCards(props) {
+
+
   useEffect(()=>{
     console.log(props.address)
   },[])
+  
   return (
     <Link to={props.address}>
       <Card

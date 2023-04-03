@@ -31,7 +31,7 @@ function App() {
           <Route path="/adduser" element={<AddUser />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/qrcodescan" element={<QRScan />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profileadmin" element={<Profile />} />
           <Route path="/empdata" element={<EmployeeInfo />} />
           {/* user dash */}
           <Route path="/"  element={<UserDashboard/>} />
@@ -40,7 +40,8 @@ function App() {
           <Route path="/groundfloor" element={<SeatMatrix/>}/>
           <Route path="/firstfloor" element={<SeatMatrix1/>}/>
           <Route path="/secondfloor" element={<SeatMatrix2/>}/>
-          <Route path="/modify" element={<SeatModify/>}/>
+          <Route path="/modify" element={<SeatModify/>}/>  
+          <Route path="/profileuser" element={<Profile/>}/>  
 
 
         <Route path="/qr" element={<QRGenerator/>}/>

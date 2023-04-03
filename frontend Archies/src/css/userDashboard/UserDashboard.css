@@ -1,5 +1,5 @@
 /* Style for the navigation bar */
-nav {
+.nav {
   background-color: #666363;
   color: #fff;
   display: flex;
@@ -8,13 +8,13 @@ nav {
   padding: 30px 40px;
 }
 
-nav ul {
+.nav ul {
   list-style: none;
   display: flex;
   gap: 20px;
 }
 
-nav li button {
+.nav li button {
   /* background-color: transparent; */
   background-color: rgb(111, 110, 110);
   border: none;
@@ -25,7 +25,7 @@ nav li button {
   outline: none;
 }
 
-nav li button:hover {
+.nav li button:hover {
   color: #f7eded;
 }
 
@@ -39,20 +39,20 @@ h1 {
 
 /* Responsive styles */
 @media screen and (max-width: 768px) {
-  nav {
+  .nav {
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
   }
 
-  nav ul {
+  .nav ul {
     margin-top: 10px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
 
-  nav li {
+  .nav li {
     margin-bottom: 0px;
   }
 }
