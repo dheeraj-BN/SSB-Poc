@@ -3,6 +3,8 @@ package com.SecureSeat.Booking.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SecureSeat.Booking.entity.Employee;
@@ -35,6 +36,8 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private EmployeeRepo empRepo;
@@ -53,11 +56,11 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
-
+		
 		try {
 			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-			System.out.println("Login-Controller " + authenticationRequest.getUsername());
+			//System.out.println("Login-Controller " + authenticationRequest.getUsername());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			// String token = JwtUtils.generateToken(authentication);
 
@@ -71,13 +74,14 @@ public class LoginController {
 			}
 			//
 
-			System.out.println("Login-Controller" + authentication.getName());
+			//System.out.println("Login-Controller" + authentication.getName());
 			List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 					.collect(Collectors.toList());
 
 			if (authentication.isAuthenticated()) {
 				token = jwtService.generateToken(name, roles);
-				System.out.println("Login-Controller" + token);
+				logger.info("Generated token for user: "+authenticationRequest.getUsername());
+				//System.out.println("Login-Controller" + token);
 			} else {
 				throw new UsernameNotFoundException("Invalid User !");
 			}
@@ -85,10 +89,11 @@ public class LoginController {
 			String roless = "ROLE_" + roles.get(0);
 
 			AuthenticationResponse authenticationResponse = new AuthenticationResponse(id, name, roless, token);
-
+			logger.info("Generated response for login request ");
 			return ResponseEntity.ok(authenticationResponse);
 
 		} catch (BadCredentialsException e) {
+			logger.error("Exception occurred while authenticating user", e);
 			throw new RuntimeException("Incorrect email or password", e);
 		}
 	}
@@ -108,6 +113,11 @@ public class LoginController {
 	@GetMapping("/api/developer/test/{userId}")
 	public String developerHome(@PathVariable int userId) {
 		return "Developer HOME";
+	}
+	
+	@GetMapping("/clear/logout")
+	public String login() {
+		return "return to Login Page";
 	}
 
 //	@GetMapping("/login")
