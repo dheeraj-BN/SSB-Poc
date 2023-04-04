@@ -104,6 +104,11 @@ public class SeatBookController {
 	public void getschedule(){
 		 seatBook.updatecancelforschedule();
 	}
+	
+	@GetMapping("/api/employee/{id}")
+	public BookingDetails getbyid(@PathVariable int id) {
+		return seatBook.getlatestbookingdetailsofid(id);
+	}
 
 	
 

@@ -278,5 +278,10 @@ public class SeatBookImpl implements SeatBook {
 		    }
 		}
 	}
+	
+	@Override
+	public BookingDetails getlatestbookingdetailsofid(int id) {
+		return seatBookDAO.getlatestbookingdetailsofid(id);
+	}
 
 }

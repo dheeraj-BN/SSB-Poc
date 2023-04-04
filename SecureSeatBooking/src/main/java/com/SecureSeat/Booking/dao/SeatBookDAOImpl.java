@@ -42,6 +42,67 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	}
 	
 	@Override
+	public BookingDetails getlatestbookingdetailsofid(int id) {
+		String sql=" select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
+				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
+				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
+				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
+				+ " where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
+
+	BookingDetails bookingDetails = jdbcTemplate.queryForObject(sql,new Object[] {id},(rs,rowNum) -> {
+		BookingDetails book  = new BookingDetails();
+		Time sqltime = (Time) rs.getTime("BOOKED_TIMINGS");
+		LocalTime bookedtime = sqltime.toLocalTime();
+		Time sqllogintime = (Time) rs.getTime("LOGIN_TIME");
+		LocalTime logintime;
+		if(sqllogintime==null) {
+			logintime = null;
+		}
+		else {
+			logintime = sqllogintime.toLocalTime();
+		}
+		Date sqldate = (Date) rs.getDate("BOOKED_DATE");
+		LocalDate bookeddate = sqldate.toLocalDate();
+		book.setBookingId((Integer)rs.getInt("BOOKING_ID"));
+		book.setDate(bookeddate);
+book.setBookedTimings( bookedtime);
+		book.setBookingStatus((String) rs.getString("BOOKING_STATUS"));
+		book.setFoodStatus((Boolean) rs .getBoolean("FOOD_STATUS"));
+		book.setLoginTime(logintime);
+		book.setSeatNo((String) rs.getString("SEAT_NO"));
+		book.setToken((String) rs.getString("TOKEN"));
+        UserDeatils user = new UserDeatils();
+        user.setUserId((Integer) rs.getInt("USER_ID"));
+        user.setPassword((String) rs.getString("PASSWORD"));
+        Employee emp = new Employee();
+       emp.setEmployeeId((Integer) rs.getInt("EMPLOYEE_ID"));
+		emp.setEmployeeName((String) rs .getString("EMPLOYEE_NAME"));
+		emp.setEmployeeDesignation((String) rs.getString("EMPLOYEE_DESIGNATION"));
+		emp.setEmployeeEmail((String) rs.getString("EMPLOYEE_EMAIL"));
+		emp.setEmployeeGender((String) rs.getString("EMPLOYEE_GENDER"));
+		emp.setEmployeePersonalEmail((String) rs.getString("EMPLOYEE_PERSONAL_EMAIL"));
+		emp.setEmployeePhoneNo((String) rs.getString("EMPLOYEE_PHONE_NO"));
+		Set<Role> roles = new HashSet<Role>();
+		Role role = new Role();
+		role.setRoleId((Integer) rs.getInt("ROLE_ID"));
+		role.setRoleName((String) rs.getString("ROLE_NAME"));
+		roles.add(role);
+		user.setRoles(roles);
+		user.setEmployee(emp);
+		book.setUserDeatils(user);
+		ShiftDetails shift = new ShiftDetails();
+		shift.setShiftId((Integer) rs.getInt("SHIFT_ID"));
+		shift.setShiftTimings((String) rs.getString("SHIFT_TIMINGS"));
+		book.setShiftDetails(shift);
+		return book;
+	});
+	
+	return bookingDetails;
+	
+		
+		}
+	
+	@Override
 	public List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate) {
 		String sql="select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
 				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
@@ -68,7 +129,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
   		book.setDate(bookeddate);
 	book.setBookedTimings( bookedtime);
 			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
 			book.setLoginTime(logintime);
 			book.setSeatNo((String) row.get("SEAT_NO"));
 			book.setToken((String) row.get("TOKEN"));
