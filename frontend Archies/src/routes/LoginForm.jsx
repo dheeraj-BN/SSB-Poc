@@ -29,8 +29,14 @@ function Login() {
       if (role === "ROLE_ADMIN") {
         window.localStorage.setItem("token", token);
         window.location = "/admin";
-      } else {
+      } 
+      else if(role === "ROLE_DEVELOPER") {
+        window.location = "/developer";
+        window.localStorage.setItem('token', token)
+      }
+      else{
         window.location = "/";
+        window.localStorage.setItem('token', token)
       }
     }
   }, [role]);

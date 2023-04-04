@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../css/DeveloperDashboard/developer.css";
-import FloorList from "../UserDashboard/floorList";
+import AddFloor from "./addfloor";
 
 function Developer() {
   const [showComponent, setShowComponent] = useState(false);
@@ -11,15 +11,15 @@ function Developer() {
 
   return (
     <div>
-      <nav>
+      <nav className="nav1">
         <ul>
           <li>
-            <a href="/Profile">
-              <button >View Profile</button>
+            <a href="/profileuser">
+              <button className="btn-profile">View Profile</button>
             </a>
           </li>
           <li>
-            <button onClick={handleClick}>Add Floors</button>
+            <button className="btn-floor" onClick={handleClick}>Add Floors</button>
           </li>
         </ul>
         <ul>
@@ -29,7 +29,7 @@ function Developer() {
         </ul>
       </nav>
       <div>
-            {showComponent && <FloorList />}
+            {showComponent && <AddFloor />}
            
 
       </div>

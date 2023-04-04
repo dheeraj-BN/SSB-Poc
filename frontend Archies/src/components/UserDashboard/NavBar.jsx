@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/userDashboard/UserDashboard.css";
+import "../../css/userDashboard/navbar.css";
 
 
 function NavBar() {
@@ -7,7 +7,7 @@ function NavBar() {
   return (
    
       <div>
-      <nav>
+      <nav className="nav2">
         <ul>
           <li>
           <a href="/booking">
@@ -15,7 +15,7 @@ function NavBar() {
               </button></a></li>
               
           <li>
-            <a href="/Profile"><button>View Profile</button>
+            <a href="/profileuser"><button>View Profile</button>
             </a>
             </li>
            <li>

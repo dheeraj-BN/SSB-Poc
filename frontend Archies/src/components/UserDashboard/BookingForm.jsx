@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../css/userDashboard/Bookingform.css";
+import NavBar  from "./NavBar.jsx";
 
 import axios from "axios";
-import UserDashboard from "./UserDash";
-import NavBar from "./NavBar";
 
 function SeatBookingForm() {
   const [branchName, setBranchName] = useState("");
   const [buildingName, setBuildingName] = useState("");
-  // const [Date, setDate] = useState("");
   const [differenceDay, setDifferenceDay] = useState(0);
   const [toDate, setToDate] = useState("");
   const [firstDate, setFirstDate] = useState("");
@@ -16,6 +14,10 @@ function SeatBookingForm() {
 
   const [shiftTiming, setShiftTiming] = useState("");
   const [request, setRequest] = useState("");
+  const [data, setData] = useState([{}]);
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,17 +45,34 @@ function SeatBookingForm() {
     }
   }
 
-  useEffect(()=>{
-    axios.post("https://reqres.in/api/users").then((res)=>{
-      console.log(res.data)
+  useEffect(() => {
+    fetch("http://10.191.80.98:9090/api/employee/getshift", {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
     })
-  },[])
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        console.log(text)
+        
+      });
+  },[]);
 
   return (
     <div>
-        <div>
+       <div>
           <NavBar/>
-        </div>
+        </div> 
         <div>
         <form onSubmit={handleSubmit} className="seat-booking-form">
       <label htmlFor="branch-name-input ">Branch Name:</label>
@@ -61,7 +80,7 @@ function SeatBookingForm() {
         id="branch-name-input"
         value={branchName}
         onChange={(e) => setBranchName(e.target.value)}
-        className="form-input"
+        className="form-input1"
       >
         <option value="Bangalore">Bangalore</option>
       </select>
@@ -71,7 +90,7 @@ function SeatBookingForm() {
         id="building-name-input"
         value={buildingName}
         onChange={(e) => setBuildingName(e.target.value)}
-        className="form-input"
+        className="form-input1"
       >
         <option value="JP Nagar">JP Nagar</option>
       </select>
@@ -80,7 +99,7 @@ function SeatBookingForm() {
         id="request-input"
         value={request}
         onChange={(e) => setRequest(e.target.value)}
-        className="form-input"
+        className="form-input1"
         required
       >
         <option value="" disabled>
@@ -94,7 +113,7 @@ function SeatBookingForm() {
         id="shift-timing-input"
         value={shiftTiming}
         onChange={(e) => setShiftTiming(e.target.value)}
-        className="form-input"
+        className="form-input1"
         required
       >
         <option value="" disabled>
@@ -110,7 +129,7 @@ function SeatBookingForm() {
         id="meal-name-input"
         value={meal}
         onChange={(e) => setMeal(e.target.value)}
-        className="form-input"
+        className="form-input1"
         required
       >
         <option value="" disabled>
@@ -130,7 +149,7 @@ function SeatBookingForm() {
             value={toDate}
             min={todayDate()}
             onChange={(e) => setToDate(e.target.value)}
-            className="form-input"
+            className="form-input1"
             required
           />
           <label htmlFor="to-date-input">To Date:</label>
@@ -141,7 +160,7 @@ function SeatBookingForm() {
             min={todayDate()}
             // onChange={(e) => setToDate(e.target.value)}
             onChange={(e) => setToDate(e.target.value)}
-            className="form-input"
+            className="form-input1"
           />
         </>
       )}
@@ -155,7 +174,7 @@ function SeatBookingForm() {
             type="date"
             min={todayDate()}
             onChange={(e) => setFirstDate(e.target.value)}
-            className="form-input"
+            className="form-input1"
           />
           <label htmlFor="to-date-input">To Date:</label>
           <input
@@ -163,12 +182,12 @@ function SeatBookingForm() {
             type="date"
             min={todayDate()}
             onChange={(e) => weeklydate(e)}
-            className="form-input"
+            className="form-input1"
           />
         </>
       )}
 
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary booking-btn">
         Next
       </button>
     </form>
