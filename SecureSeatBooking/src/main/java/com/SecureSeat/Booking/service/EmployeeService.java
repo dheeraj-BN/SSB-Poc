@@ -32,6 +32,11 @@ public interface EmployeeService {
 	String forgotPasword(int id, String password);
 
 
+	BookingDetails getbookingdetailsbyid(int id);
+
+	String savelastbookingdetails(int id, LocalDate from, LocalDate to);
+
+
 
 
 

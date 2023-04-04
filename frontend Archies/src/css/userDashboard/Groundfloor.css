@@ -61,13 +61,7 @@
    background-color: aqua;
 }
 
-/* .seat:hover {
-  background-color: #d4d4d4;
-} */
 
-/* .seat.booking{
-    background-color: yellow;
-} */
 
 #legend {
   display: grid;
@@ -77,25 +71,18 @@
   grid-gap: 80px;
   margin-top: 50px;
 
-  /* grid-template-columns: 50px auto; */
 }
 
-/* #legend .txt {
-  display: flex;
 
-  align-items: center;
-} */
 .seat.select {
   background-color: #87ff96;
-  /* width: 100px;
-  height: 100px; */
+
 }
 
 .selected {
   background: #87ff96;
 }
 input[type=radio]{
-    /* width: -9999px; */
     width: 100px;
 
   height: 100px;

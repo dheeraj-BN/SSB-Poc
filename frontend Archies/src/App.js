@@ -20,8 +20,14 @@ import ResetPassword from "./routes/ResetPassword"
 import Login from "./routes/LoginForm";
 import Developer from "./components/DeveloperDashboard/developer";
 import AddFloor from "./components/DeveloperDashboard/addfloor";
+import React, { useState } from "react";
+import ProfileAdmin from "./components/AdminDashboard/ProfileAdmin";
+
+
+export const  TokenContext = React.createContext();
 
 function App() {
+
   return (
     <BrowserRouter>
       <div>
@@ -33,7 +39,7 @@ function App() {
           <Route path="/adduser" element={<AddUser />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/qrcodescan" element={<QRScan />} />
-          <Route path="/profileadmin" element={<Profile />} />
+          <Route path="/profileadmin" element={<ProfileAdmin/>} />
           <Route path="/empdata" element={<EmployeeInfo />} />
           {/* user dash */}
           <Route path="/"  element={<UserDashboard/>} />
@@ -43,11 +49,11 @@ function App() {
           <Route path="/firstfloor" element={<SeatMatrix1/>}/>
           <Route path="/secondfloor" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
+          <Route path="/profileuser" element={<Profile/>}/>  
           {/*Developer dash */}
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
           <Route path="/modify" element={<SeatModify/>}/>  
-          <Route path="/profileuser" element={<Profile/>}/>  
 
 
 

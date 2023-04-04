@@ -47,4 +47,6 @@ public interface SeatBook {
 	void updatecancelforschedule();
 //	List<BookingDetails> updatecancelforschedule();
 
+	BookingDetails getlatestbookingdetailsofid(int id);
+
 }
