@@ -13,21 +13,15 @@ function QRGenerator() {
   }, []);
   return (
     <div className="">
-      <div class="card">
-        <div class="card-header m-1 rounded text-center">
-          <h3 class="badges bg-secondary rounded text-center text-light">
-            Qrcode Image
-          </h3>
-        </div>
         <div class="card-body text-center">
           {imgQR && (
             <a href={imgQR} download>
-              <img src={imgQR} width="100%" alt="qr code pic is here" />
+              <img src={imgQR} width="20%" alt="qr code pic is here" />
             </a>
           )}
         </div>
       </div>
-    </div>
+   
   );
 }
 export default QRGenerator;

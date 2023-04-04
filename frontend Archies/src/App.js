@@ -43,11 +43,11 @@ function App() {
           <Route path="/firstfloor" element={<SeatMatrix1/>}/>
           <Route path="/secondfloor" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
+          <Route path="/profileuser" element={<Profile/>}/>  
           {/*Developer dash */}
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
           <Route path="/modify" element={<SeatModify/>}/>  
-          <Route path="/profileuser" element={<Profile/>}/>  
 
 
 
