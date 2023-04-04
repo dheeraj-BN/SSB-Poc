@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,17 @@ public class EmployeeController {
 	
 	
 //	
-//	@GetMapping("/bookingdetails/{id}")
-//	public BookingDetails getbookingdetails(@PathVariable int id) {
-//		System.out.println(id);
-//		return employeeService.getbookingdetailsbyid(id);
-//	}
-//	
+	@GetMapping("/lastbookingdetails/{id}")
+	public BookingDetails getbookingdetails(@PathVariable int id) {
+		System.out.println(id);
+		return employeeService.getbookingdetailsbyid(id);
+	}
 	
+	@PostMapping("/savelastbooking/{id}")
+    public String savelastbookingdetails(@PathVariable int id,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
+		return employeeService.savelastbookingdetails(id, from, to);
+		
+	}
 	
 	
 	@PostMapping("/new/password/{id}")

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.config.SecurityConfig;
 import com.SecureSeat.Booking.dao.EmployeeDAO;
+import com.SecureSeat.Booking.dao.SeatBookDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.UserDeatils;
@@ -26,7 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	
-	
+	@Autowired
+	private SeatBook seatBook;
 	
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
@@ -40,16 +42,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private SecurityConfig config;
 	
-	
+	@Autowired
+	private SeatBookDAO seatBookDAO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	
 	
-//	@Override
-//	public BookingDetails getbookingdetailsbyid(int id) {
-//		return employeeDAO.getbookingdetailsbyid(id);
-//	}
+	@Override
+	public BookingDetails getbookingdetailsbyid(int id) {
+		return seatBookDAO.getlatestbookingdetailsofid(id);
+	}
+	
+	@Override
+	public String savelastbookingdetails(int id,LocalDate from,LocalDate to) {
+		BookingDetails bookingDetails = seatBookDAO.getlatestbookingdetailsofid(id);
+		System.out.println(bookingDetails);
+		BookingDetails book = new BookingDetails();
+		book.setSeatNo(bookingDetails.getSeatNo());
+		book.setFoodStatus(bookingDetails.isFoodStatus());
+		book.setUserDeatils(bookingDetails.getUserDeatils());
+		book.setShiftDetails(bookingDetails.getShiftDetails());
+		return seatBook.savebookeddetails(book, from, to);
+		
+	}
 	
 	
 	@Override

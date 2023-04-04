@@ -43,11 +43,14 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	
 	@Override
 	public BookingDetails getlatestbookingdetailsofid(int id) {
-		String sql=" select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
-				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
-				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
-				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
-				+ " where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
+		String sql=" select * from booking_details bd INNER JOIN shift_details  sh ON sh.shift_id = bd.shift_id\r\n"
+				+ "INNER JOIN user_deatils ud\r\n"
+				+ "INNER JOIN users_roles ur\r\n"
+				+ "INNER JOIN role  r ON r.role_id = ur.role_id\r\n"
+				+ " ON ur.user_id=ud.user_id\r\n"
+				+ "INNER JOIN employee em ON em.employee_id = ud.employee_id\r\n"
+				+ " ON ud.user_id=bd.user_id\r\n"
+				+ "where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
 
 	BookingDetails bookingDetails = jdbcTemplate.queryForObject(sql,new Object[] {id},(rs,rowNum) -> {
 		BookingDetails book  = new BookingDetails();
