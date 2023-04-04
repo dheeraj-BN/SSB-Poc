@@ -24,6 +24,8 @@ public interface SeatBookDAO {
 
 	List<BookingDetails> getbookingdetailsbydateandbookingstatus(LocalDate bookedDate);
 
+	BookingDetails getlatestbookingdetailsofid(int id);
+
 //	List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate);
 
 }
