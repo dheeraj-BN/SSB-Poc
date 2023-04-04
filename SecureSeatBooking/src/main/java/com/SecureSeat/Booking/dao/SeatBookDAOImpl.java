@@ -193,7 +193,7 @@ book.setBookedTimings( bookedtime);
   		book.setDate(bookeddate);
 	book.setBookedTimings( bookedtime);
 			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
 			book.setLoginTime(logintime);
 			book.setSeatNo((String) row.get("SEAT_NO"));
 			book.setToken((String) row.get("TOKEN"));
