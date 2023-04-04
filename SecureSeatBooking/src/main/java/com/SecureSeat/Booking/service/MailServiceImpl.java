@@ -20,7 +20,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 @Service
 public class MailServiceImpl implements MailService {
 
-	private static final Logger logger = LoggerFactory.getLogger(SendMailImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
