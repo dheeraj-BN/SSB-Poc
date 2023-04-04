@@ -46,6 +46,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	
 	
+//	@Override
+//	public BookingDetails getbookingdetailsbyid(int id) {
+//		return employeeDAO.getbookingdetailsbyid(id);
+//	}
+	
 	
 	@Override
 	public String forgotPasword(int id,String password) {

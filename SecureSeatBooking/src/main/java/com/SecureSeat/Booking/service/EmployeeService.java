@@ -31,6 +31,8 @@ public interface EmployeeService {
 
 	String forgotPasword(int id, String password);
 
+//	BookingDetails getbookingdetailsbyid(int id);
+
 
 
 

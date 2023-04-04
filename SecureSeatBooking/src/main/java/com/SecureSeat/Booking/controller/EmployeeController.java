@@ -34,6 +34,17 @@ public class EmployeeController {
 	@Autowired
 	private UserFirstTimeLoginService userFirstTimeLoginService;
 	
+	
+//	
+//	@GetMapping("/bookingdetails/{id}")
+//	public BookingDetails getbookingdetails(@PathVariable int id) {
+//		System.out.println(id);
+//		return employeeService.getbookingdetailsbyid(id);
+//	}
+//	
+	
+	
+	
 	@PostMapping("/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
 		String message=	employeeService.forgotPasword( id,newPassword);

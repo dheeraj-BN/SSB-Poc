@@ -28,16 +28,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	
-	
-	
-//	public List<BookingDetails> lastBookingDetails() {
-//		String sql="SELECT * from booking_details where user_id=? ORDER BY booking_id DESC LIMIT";
-//		
-//		
-//	}
-	
-	
-	
+
 	
 	@Override
 	public void changePasswor(String password,int id) {
