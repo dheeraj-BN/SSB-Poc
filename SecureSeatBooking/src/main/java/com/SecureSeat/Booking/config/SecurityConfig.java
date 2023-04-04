@@ -18,13 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import com.SecureSeat.Booking.filter.CsrfCookieFilter;
 import com.SecureSeat.Booking.filter.JwtAuthFilter;
 import com.SecureSeat.Booking.service.LoginServiceImpl;
 
@@ -97,7 +93,10 @@ public class SecurityConfig {
             .requestMatchers("/api/admin/**").hasRole("ADMIN")
             .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
             .requestMatchers("/api/developer/**").hasRole("DEVELOPER")
+            .requestMatchers("/swagger-ui.html").permitAll()
             .anyRequest().permitAll()
+            .and()
+            .httpBasic()
             .and()
             .logout()
             .logoutUrl("/logout")
