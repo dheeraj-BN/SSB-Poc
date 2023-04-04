@@ -10,46 +10,49 @@ import com.SecureSeat.Booking.entity.FloorDetails;
 
 public interface FloorService {
 
-	List<FloorDetails> getAllFloors();
 
-	void deleteFloor(int floorId);
+	
 
 	FloorDetails getFloorById(int floorId);
 
-	FloorDetails addSeatsToFloorDetails(int floorId, int noOfSeats);
-
-	FloorDetails updateSeatsToFloorDetails(int floorId, int noOfSeats);
-
-	
-	FloorDetails addFloorWithDetails(FloorDetails floorDetails);
-
-	FloorDetails updateFloorWithDetails(int floorId, FloorDetails floorDetails);
-	
-	
-	
-	
-	
 	
 
-	//ResponseEntity<FloorDetails> updateFloorDetails(int floorId, FloorDetails floorDetails);
-	
 
-	//FloorDetails updateFloorWithDetails(int id, FloorDetails floorDetails);
+	FloorDetails addFloor(String floorName, int noOfSeats);
 
-	
-	
-	//FloorDetails saveFloor(int floorId, String floorName, int noOfSeats);
-
-	//FloorDetails updateFloorDetails(int floorId, String floorName, int noOfSeats);
-	
-	//FloorDetails updateFloorDetails(int floorId, FloorDetails floorDetails);
-	
-	
-	//FloorDetails addFloor(FloorDetails floor);
-
-		//FloorDetails updateFloor(int floorId, FloorDetails floorDetails);
+	FloorDetails getFloorDetailsByFloorName(String floorName);
 
 
+	FloorDetails getFloorByFloorName(String floorName);
+
+
+
+
+	FloorDetails updateFloorByFloorName(String floorName, FloorDetails floorDetails);
+
+
+
+
+	void deleteFloorByFloorName(String floorName);
+
+
+
+
+	//FloorDetails updateFloorByFloorName(String floorName, FloorDetails floorDetails);
+
+
+
+	
+
+
+	
+	
+	
+	
+	
+	
+
+	
 
 
 
