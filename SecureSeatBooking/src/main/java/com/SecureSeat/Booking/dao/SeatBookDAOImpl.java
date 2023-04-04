@@ -36,7 +36,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	
 	@Override
 	public List<String> getseatNoByBookedDate(LocalDate bookedDate) {
-		String sql="SELECT seat_no from booking_details where booked_date=?";
+		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status='PENDING'";
 		List<String> seatNo = jdbcTemplate.queryForList(sql, new Object[] {bookedDate},String.class);
 		return seatNo;
 	}
