@@ -45,7 +45,7 @@ public class AdminController {
 	@GetMapping("/validateToken/")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		
-		return userServiceImpl.validateTocken(token);
+		return userServiceImpl.validateToken(token);
 	}
 	
 	
