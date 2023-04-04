@@ -7,7 +7,6 @@ import axios from "axios";
 function SeatBookingForm() {
   const [branchName, setBranchName] = useState("");
   const [buildingName, setBuildingName] = useState("");
-  // const [Date, setDate] = useState("");
   const [differenceDay, setDifferenceDay] = useState(0);
   const [toDate, setToDate] = useState("");
   const [firstDate, setFirstDate] = useState("");
@@ -15,6 +14,10 @@ function SeatBookingForm() {
 
   const [shiftTiming, setShiftTiming] = useState("");
   const [request, setRequest] = useState("");
+  const [data, setData] = useState([{}]);
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,11 +45,28 @@ function SeatBookingForm() {
     }
   }
 
-  useEffect(()=>{
-    axios.post("https://reqres.in/api/users").then((res)=>{
-      console.log(res.data)
+  useEffect(() => {
+    fetch("http://10.191.80.98:9090/api/employee/getshift", {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
     })
-  },[])
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        console.log(text)
+        
+      });
+  },[]);
 
   return (
     <div>

@@ -1,7 +1,9 @@
 package com.SecureSeat.Booking.config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -72,12 +74,20 @@ public class SecurityConfig {
                 @Override
                 public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                     CorsConfiguration config = new CorsConfiguration();
-                    // config.setAllowedOrigins(Collections.singletonList("http://10.191.80.120:3000"));
-                    config.setAllowedOrigins(Arrays.asList("http://164.164.48.46", "http://10.191.80.118:3000", "http://164.164.48.46:3000", "http://164.164.48.46:80"));
+                    //config.setAllowedOrigins(Arrays.asList("*"));
+//                   config.setAllowedOrigins(Collections.singletonList("http://10.191.80.120:3000"));
+//                   config.setAllowedOrigins(Collections.singletonList("http://10.191.80.118:3000"));
+                    config.setAllowedOrigins(Arrays.asList("http://10.191.80.120:3000", "http://10.191.80.118:3000"));
 
-                    config.setAllowedMethods(Collections.singletonList("*"));
+                   //config.setAllowedHeaders(Arrays.asList("*"));
+//                    List<String> allowedMethods = Arrays.asList("GET", "POST", "PUT", "DELETE");
+//                    config.setAllowedMethods(allowedMethods);
+//                   config.setAllowedMethods(Collections.singletonList("*"));
+                    List<String> allowedMethods = Arrays.asList("GET", "POST", "PUT", "DELETE");
+                    config.setAllowedMethods(allowedMethods);
+
                     config.setAllowCredentials(true);
-                    config.setAllowedHeaders(Collections.singletonList("*"));
+                    config.setAllowedHeaders(Arrays.asList("*"));
                     config.setExposedHeaders(Arrays.asList("Authorization","location","ROLE","DEVELOPER-ID","EMPLOYEE-ID","ADMIN-ID"));
                     config.setMaxAge(7200L);
                     return config;
