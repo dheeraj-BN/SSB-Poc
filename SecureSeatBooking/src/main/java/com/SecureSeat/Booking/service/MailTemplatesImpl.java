@@ -13,7 +13,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 @Service
 public class MailTemplatesImpl implements MailTemplates {
 
-	private static final Logger logger = LoggerFactory.getLogger(SendMailImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MailTemplatesImpl.class);
 
 	@Autowired
 	private SendMail sendMail;

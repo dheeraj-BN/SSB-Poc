@@ -11,7 +11,7 @@ import com.SecureSeat.Booking.dao.EmployeeDAO;
 @Service
 public class UserFirstTimeLoginServiceImpl implements UserFirstTimeLoginService {
 
-	private static final Logger logger = LoggerFactory.getLogger(SendMailImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserFirstTimeLoginServiceImpl.class);
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
