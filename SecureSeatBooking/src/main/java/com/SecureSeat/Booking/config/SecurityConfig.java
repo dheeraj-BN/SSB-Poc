@@ -61,6 +61,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    	CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
+//        
+//          CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+// 
         return http
             .csrf().disable()
             .cors().configurationSource(new CorsConfigurationSource() {
@@ -77,6 +82,10 @@ public class SecurityConfig {
                 }
             })
             .and()
+//            .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+//            		.ignoringRequestMatchers("/login")
+//                    .csrfTokenRepository(csrfTokenRepository))
+//            .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
             .authorizeHttpRequests()
             .requestMatchers("/login").permitAll()
             //.requestMatchers("/api/logout").permitAll() 
@@ -84,7 +93,10 @@ public class SecurityConfig {
             .requestMatchers("/api/admin/**").hasRole("ADMIN")
             .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
             .requestMatchers("/api/developer/**").hasRole("DEVELOPER")
+            .requestMatchers("/swagger-ui.html").permitAll()
             .anyRequest().permitAll()
+            .and()
+            .httpBasic()
             .and()
             .logout()
             .logoutUrl("/logout")

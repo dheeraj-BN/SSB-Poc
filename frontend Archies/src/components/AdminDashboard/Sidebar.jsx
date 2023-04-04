@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -6,40 +6,39 @@ import {
   CDBSidebarHeader,
   CDBSidebarMenu,
   CDBSidebarMenuItem,
-} from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+} from "cdbreact";
+import { Link, NavLink } from "react-router-dom";
+
 
 const Sidebar1 = () => {
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial'}}>
+    <div style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}>
       <CDBSidebar textColor="#fff" backgroundColor="#333">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+          <a
+            href="/"
+            className="text-decoration-none"
+            style={{ color: "inherit" }}
+          >
             Admin
           </a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/admin" activeClassName="activeClicked">
+            <Link  to="/admin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/qrcodescan" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">QR Scan</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            {/* <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
-            </NavLink> */}
+            </Link>
+            <Link to="/profileuser" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
+              <CDBSidebarMenuItem icon="user">Profile</CDBSidebarMenuItem>
+            </Link>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
+        <CDBSidebarFooter style={{ textAlign: "center" }}>
           <div
             style={{
-              padding: '20px 5px',
+              padding: "20px 5px",
             }}
           >
             Valtech POC

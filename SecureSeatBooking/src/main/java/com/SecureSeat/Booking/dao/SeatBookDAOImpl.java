@@ -36,10 +36,74 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	
 	@Override
 	public List<String> getseatNoByBookedDate(LocalDate bookedDate) {
-		String sql="SELECT seat_no from booking_details where booked_date=?";
+		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status='PENDING'";
 		List<String> seatNo = jdbcTemplate.queryForList(sql, new Object[] {bookedDate},String.class);
 		return seatNo;
 	}
+	
+	@Override
+	public BookingDetails getlatestbookingdetailsofid(int id) {
+		String sql=" select * from booking_details bd INNER JOIN shift_details  sh ON sh.shift_id = bd.shift_id\r\n"
+				+ "INNER JOIN user_deatils ud\r\n"
+				+ "INNER JOIN users_roles ur\r\n"
+				+ "INNER JOIN role  r ON r.role_id = ur.role_id\r\n"
+				+ " ON ur.user_id=ud.user_id\r\n"
+				+ "INNER JOIN employee em ON em.employee_id = ud.employee_id\r\n"
+				+ " ON ud.user_id=bd.user_id\r\n"
+				+ "where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
+
+	BookingDetails bookingDetails = jdbcTemplate.queryForObject(sql,new Object[] {id},(rs,rowNum) -> {
+		BookingDetails book  = new BookingDetails();
+		Time sqltime = (Time) rs.getTime("BOOKED_TIMINGS");
+		LocalTime bookedtime = sqltime.toLocalTime();
+		Time sqllogintime = (Time) rs.getTime("LOGIN_TIME");
+		LocalTime logintime;
+		if(sqllogintime==null) {
+			logintime = null;
+		}
+		else {
+			logintime = sqllogintime.toLocalTime();
+		}
+		Date sqldate = (Date) rs.getDate("BOOKED_DATE");
+		LocalDate bookeddate = sqldate.toLocalDate();
+		book.setBookingId((Integer)rs.getInt("BOOKING_ID"));
+		book.setDate(bookeddate);
+book.setBookedTimings( bookedtime);
+		book.setBookingStatus((String) rs.getString("BOOKING_STATUS"));
+		book.setFoodStatus((Boolean) rs .getBoolean("FOOD_STATUS"));
+		book.setLoginTime(logintime);
+		book.setSeatNo((String) rs.getString("SEAT_NO"));
+		book.setToken((String) rs.getString("TOKEN"));
+        UserDeatils user = new UserDeatils();
+        user.setUserId((Integer) rs.getInt("USER_ID"));
+        user.setPassword((String) rs.getString("PASSWORD"));
+        Employee emp = new Employee();
+       emp.setEmployeeId((Integer) rs.getInt("EMPLOYEE_ID"));
+		emp.setEmployeeName((String) rs .getString("EMPLOYEE_NAME"));
+		emp.setEmployeeDesignation((String) rs.getString("EMPLOYEE_DESIGNATION"));
+		emp.setEmployeeEmail((String) rs.getString("EMPLOYEE_EMAIL"));
+		emp.setEmployeeGender((String) rs.getString("EMPLOYEE_GENDER"));
+		emp.setEmployeePersonalEmail((String) rs.getString("EMPLOYEE_PERSONAL_EMAIL"));
+		emp.setEmployeePhoneNo((String) rs.getString("EMPLOYEE_PHONE_NO"));
+		Set<Role> roles = new HashSet<Role>();
+		Role role = new Role();
+		role.setRoleId((Integer) rs.getInt("ROLE_ID"));
+		role.setRoleName((String) rs.getString("ROLE_NAME"));
+		roles.add(role);
+		user.setRoles(roles);
+		user.setEmployee(emp);
+		book.setUserDeatils(user);
+		ShiftDetails shift = new ShiftDetails();
+		shift.setShiftId((Integer) rs.getInt("SHIFT_ID"));
+		shift.setShiftTimings((String) rs.getString("SHIFT_TIMINGS"));
+		book.setShiftDetails(shift);
+		return book;
+	});
+	
+	return bookingDetails;
+	
+		
+		}
 	
 	@Override
 	public List<BookingDetails> getbookingdetailsbydate(LocalDate bookedDate) {
@@ -48,6 +112,67 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
 				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
 				+ "ON ud.user_id=bd.user_id where booked_date=?";
+		List<BookingDetails> bookingdetails = new ArrayList<>();
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {bookedDate});
+		for(Map row : rows) {
+			BookingDetails book  = new BookingDetails();
+			Time sqltime = (Time) row.get("BOOKED_TIMINGS");
+			LocalTime bookedtime = sqltime.toLocalTime();
+			Time sqllogintime = (Time) row.get("LOGIN_TIME");
+			LocalTime logintime;
+			if(sqllogintime==null) {
+				logintime = null;
+			}
+			else {
+				logintime = sqllogintime.toLocalTime();
+			}
+			Date sqldate = (Date) row.get("BOOKED_DATE");
+			LocalDate bookeddate = sqldate.toLocalDate();
+			book.setBookingId((Integer)row.get("BOOKING_ID"));
+  		book.setDate(bookeddate);
+	book.setBookedTimings( bookedtime);
+			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
+			book.setLoginTime(logintime);
+			book.setSeatNo((String) row.get("SEAT_NO"));
+			book.setToken((String) row.get("TOKEN"));
+            UserDeatils user = new UserDeatils();
+            user.setUserId((Integer) row.get("USER_ID"));
+            user.setPassword((String) row.get("PASSWORD"));
+            Employee emp = new Employee();
+           emp.setEmployeeId((Integer) row.get("EMPLOYEE_ID"));
+			emp.setEmployeeName((String) row .get("EMPLOYEE_NAME"));
+			emp.setEmployeeDesignation((String) row.get("EMPLOYEE_DESIGNATION"));
+			emp.setEmployeeEmail((String) row.get("EMPLOYEE_EMAIL"));
+			emp.setEmployeeGender((String) row.get("EMPLOYEE_GENDER"));
+			emp.setEmployeePersonalEmail((String) row.get("EMPLOYEE_PERSONAL_EMAIL"));
+			emp.setEmployeePhoneNo((String) row.get("EMPLOYEE_PHONE_NO"));
+			Set<Role> roles = new HashSet<Role>();
+			Role role = new Role();
+			role.setRoleId((Integer) row.get("ROLE_ID"));
+			role.setRoleName((String) row.get("ROLE_NAME"));
+			roles.add(role);
+			user.setRoles(roles);
+			user.setEmployee(emp);
+			book.setUserDeatils(user);
+			ShiftDetails shift = new ShiftDetails();
+			shift.setShiftId((Integer) row.get("SHIFT_ID"));
+			shift.setShiftTimings((String) row.get("SHIFT_TIMINGS"));
+			book.setShiftDetails(shift);
+			bookingdetails.add(book);
+			
+			
+		}
+		return bookingdetails;
+	}
+	
+	@Override
+	public List<BookingDetails> getbookingdetailsbydateandbookingstatus(LocalDate bookedDate ) {
+		String sql="select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
+				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id and ud.user_id = bd.user_id\r\n"
+				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
+				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
+				+ "where booked_date=? and booking_status='PENDING'";
 		List<BookingDetails> bookingdetails = new ArrayList<>();
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {bookedDate});
 		for(Map row : rows) {

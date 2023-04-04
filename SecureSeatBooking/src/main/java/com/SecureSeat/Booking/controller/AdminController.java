@@ -1,5 +1,7 @@
 package com.SecureSeat.Booking.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +45,7 @@ public class AdminController {
 	@GetMapping("/validateToken/")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		
-		return userServiceImpl.validateTocken(token);
+		return userServiceImpl.validateToken(token);
 	}
 	
 	
@@ -63,6 +65,12 @@ public class AdminController {
 		System.out.println(holidayDetails);
 		String s= userServiceImpl.addHolidays(holidayDetails);
 		return s;
+	}
+	
+	@GetMapping("/notRegistered")
+	public List<Employee> listOfEmployeeNotRegistered(){
+		
+		return userServiceImpl.listOfEmployeeNotRegistered();
 	}
 
 }
