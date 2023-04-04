@@ -170,6 +170,13 @@ public class UserServiceImpl {
 		return "Holiday already added";
 	}
 
+	
+	public void modifiHolidays(LocalDate date , HolidayDetails holidayDetails) {
+		
+		
+		
+	}
+	
 	public List<Employee> listOfEmployeeNotRegistered() {
 
 		return userDetailDao.getemployee();

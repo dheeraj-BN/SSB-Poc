@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,11 @@ public class AdminController {
 		System.out.println(holidayDetails);
 		String s= userServiceImpl.addHolidays(holidayDetails);
 		return s;
+	}
+	
+	@PutMapping("/modifiHoliday")
+	public void editHoliday(@RequestParam LocalDate date, @RequestBody HolidayDetails holidayDetails) {
+		
 	}
 	
 	@GetMapping("/notRegistered")
