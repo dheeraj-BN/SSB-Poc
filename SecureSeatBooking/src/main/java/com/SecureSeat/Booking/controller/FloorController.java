@@ -40,123 +40,56 @@ public class FloorController {
 	
 
 	    
-	    @GetMapping("/getAllFloorDetails")
-	    public ResponseEntity<List<FloorDetails>> getAllFloors() {
-	        try {
-	            List<FloorDetails> floors = floorService.getAllFloors();
-	            if (floors.isEmpty()) {
-	                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	            }
-	            return new ResponseEntity<>(floors, HttpStatus.OK);
-	        } catch (Exception e) {
-	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	        }
+	
+	 @GetMapping("/floors/{floorName}")
+	    public FloorDetails getFloorDetailsByFloorName(@PathVariable String floorName) {
+	        return floorService.getFloorDetailsByFloorName(floorName);
 	    }
-	   
-	    
 	    
 
 	    
-    
+ 
 	    
-
-	    //add seats to floors
-	    @PostMapping("/Addseats/{floorId}")
-	    public ResponseEntity<FloorDetails> addSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
-	        try {
-	            FloorDetails floor = floorService.addSeatsToFloorDetails(floorId, noOfSeats);
-	            if (floor != null) {
-	                return new ResponseEntity<>(floor, HttpStatus.OK);
-	            } else {
-	                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	            }
-	        } catch (Exception e) {
-	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	        }
-	    }
-	    
-	    
-	    
-	    
-	  
-   
-	    
-	    
-	    // update seats to floor
-	    @PutMapping("/Updateseats/{floorId}")
-	    public ResponseEntity<FloorDetails> updateSeatsToFloors(@PathVariable int floorId, @RequestBody int noOfSeats) {
-	        try {
-	            FloorDetails updatedFloorDetails = floorService.updateSeatsToFloorDetails(floorId, noOfSeats);
-	            if (updatedFloorDetails != null) {
-	                return new ResponseEntity<>(updatedFloorDetails, HttpStatus.OK);
-	            } else {
-	                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	            }
-	        } catch (Exception e) {
-	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	        }
-	    }
-	    
-	    
-	    
-	       
-	    // Add a new floor with details
 	    @PostMapping("/addfloor")
-	    public ResponseEntity<FloorDetails> addFloorWithDetails(@RequestBody FloorDetails floorDetails) {
+	    public ResponseEntity<FloorDetails> addFloorWithdetails(@RequestBody FloorDetails floorDetails) {
+	        FloorDetails newFloorDetails = floorService.addFloor(floorDetails.getFloorName(), floorDetails.getNoOfSeats());
+	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloorDetails);
+	    }
+	    
+	    
+	    
+	    
+
+	    @DeleteMapping("/{floorName}")
+	    public ResponseEntity<String> deleteFloorByFloorName(@PathVariable String floorName) {
 	        try {
-	            FloorDetails newFloor = floorService.addFloorWithDetails(floorDetails);
-	            mailService.addedFloor(floorDetails);
-	            return ResponseEntity.status(HttpStatus.CREATED).body(newFloor);
+	            FloorDetails floorDetails = floorDetailsRepo.findByFloorName(floorName);
+	            if (floorDetails != null) {
+	                floorDetailsRepo.deleteById(floorDetails.getFloorId());
+	                return ResponseEntity.ok().body("Floor " + floorName + " deleted successfully.");
+	            } else {
+	                return ResponseEntity.badRequest().body("Floor " + floorName + " not found.");
+	            }
 	        } catch (Exception e) {
-	            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting floor " + floorName + ": " + e.getMessage());
 	        }
 	    }
 
 	    
+
 	    
 	    
 	    
 	    
 	    
+
+
 	    
 	    
-	    
-	    
-	 // Update floor details by ID
-	    @PutMapping("/Updatefloor/{id}")
-	    public ResponseEntity<FloorDetails> updateFloorWithDetails(@PathVariable("id") int floorId, 
-	                                                            @RequestBody FloorDetails floorDetails) {
-	        FloorDetails updatedFloorDetails = floorService.updateFloorWithDetails(floorId, floorDetails);
-	        if (updatedFloorDetails != null) {
-	            return new ResponseEntity<>(updatedFloorDetails, HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	        }
+	    @PutMapping("/{floorName}")
+	    public FloorDetails updateFloorByFloorName(@PathVariable String floorName, @RequestBody FloorDetails floorDetails) {
+	        return floorService.updateFloorByFloorName(floorName, floorDetails);
 	    }
-	
-	
-	    
-	    
-	    
-	    
-   
-
-
-		@DeleteMapping("/delete/{floorId}")
-		public ResponseEntity<Void> deleteFloor(@PathVariable("floorId") int floorId) {
-			try {
-				FloorDetails floor = floorService.getFloorById(floorId);
-				if (floor == null) {
-					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-				}
-				floorService.deleteFloor(floorId);
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			} catch (Exception e) {
-				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-
-	    
 	    
 
 	    
@@ -174,7 +107,11 @@ public class FloorController {
 		}
 	    
 		
-		
+		@GetMapping("/floordetails")
+		public List<FloorDetails> getAllFloorDetails() {
+		    List<FloorDetails> floorDetailsList = floorDetailsRepo.findAll();
+		    return floorDetailsList;
+		}
 
 	    
 

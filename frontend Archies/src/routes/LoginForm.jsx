@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState();
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [token , setToken] = useState()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ function Login() {
       });
       console.log(response.data); // handle successful login
       setRole(response.data.roles);
+      setToken(response.data.token)
       setFormSubmitted(true);
     } catch (error) {
       console.error(error); // handle error
@@ -25,11 +29,13 @@ function Login() {
   useEffect(() => {
     if (formSubmitted) {
       if (role === "ROLE_ADMIN") {
+        window.localStorage.setItem('token',token)
         window.location = "/admin";
       } else {
         window.location = "/";
       }
     }
+    
   }, [ role]);
 
   return (

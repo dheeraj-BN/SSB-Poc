@@ -23,4 +23,8 @@ public interface EmployeeDAO {
 
 	void otp(String Otp, int userid);
 
+	
+
+
+
 }

@@ -42,3 +42,24 @@ body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.item3{
+  grid-area: sidebar1 ;
+}
+
+.item4{
+  grid-area: profile;
+}
+
+.profilepage{
+  display: grid;
+  grid-template-areas:"sidebar1 profile profile profile profile" ;
+
+}
+
+
+
+
+
+
+
+

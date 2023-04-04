@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.repo.FloorDetailsRepo;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class FloorServiceImpl implements FloorService {
 
@@ -19,19 +21,9 @@ public class FloorServiceImpl implements FloorService {
 	
 	
 
-	@Override
-	public List<FloorDetails> getAllFloors() {
-		return floorDetailsRepo.findAll();
-
-	}
 	
 	
 	
-	@Override
-    public void deleteFloor(int floorId) {
-        floorDetailsRepo.deleteById(floorId);
-    }
-
 	
 	
 	@Override
@@ -41,33 +33,49 @@ public class FloorServiceImpl implements FloorService {
 	}
 
 	
-//
-//	
-//	    @Override
-//	    public ResponseEntity<FloorDetails> updateFloorDetails(int floorId, FloorDetails floorDetails) {
-//	        Optional<FloorDetails> floorDetailsOptional = floorDetailsRepo.findById(floorId);
-//	        if (floorDetailsOptional.isPresent()) {
-//	            floorDetails.setFloorId(floorId);
-//	            floorDetailsRepo.save(floorDetails);
-//	            return ResponseEntity.ok().body(floorDetails);
-//	        } else {
-//	            return ResponseEntity.notFound().build();
-//	        }
-//	    }
 
-	   
-	   
-	   
 
-	   //add seats to floors
+
+
+
 	@Override
-	public FloorDetails addSeatsToFloorDetails(int floorId, int noOfSeats) {
-		FloorDetails floorDetails = floorDetailsRepo.findById(floorId).orElse(null);
-        if (floorDetails != null) {
-            floorDetails.setNoOfSeats(floorDetails.getNoOfSeats() + noOfSeats);
-            return floorDetailsRepo.save(floorDetails);
-        }
+	public FloorDetails addFloor(String floorName, int noOfSeats) {
 		
+		FloorDetails floorDetails = new FloorDetails(floorName, noOfSeats);
+        return floorDetailsRepo.save(floorDetails);
+		
+	}
+
+
+
+	@Override
+	public FloorDetails getFloorDetailsByFloorName(String floorName) {
+		
+		  return floorDetailsRepo.findByFloorName(floorName);
+	}
+
+
+
+	    @Override
+	    public void deleteFloorByFloorName(String floorName) {
+	        FloorDetails floorDetails = floorDetailsRepo.findByFloorName(floorName);
+	        
+	        if (floorDetails != null) {
+	            floorDetailsRepo.deleteById(floorDetails.getFloorId());
+	        }
+
+	    }
+
+
+
+
+
+
+
+
+	@Override
+	public FloorDetails getFloorByFloorName(String floorName) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -76,45 +84,59 @@ public class FloorServiceImpl implements FloorService {
 
 
 
+
 	@Override
-	public FloorDetails updateSeatsToFloorDetails(int floorId, int noOfSeats) {
-		 FloorDetails floorDetails = floorDetailsRepo.findById(floorId).orElse(null);
-	        if (floorDetails != null) {
-	            floorDetails.setNoOfSeats(noOfSeats);
-	            return floorDetailsRepo.save(floorDetails);
+	public FloorDetails updateFloorByFloorName(String floorName, FloorDetails floorDetails) {
+		
+		 FloorDetails existingFloor = floorDetailsRepo.findByFloorName(floorName);
+	        if (existingFloor != null) {
+	            ((FloorDetails) existingFloor).setFloorName(floorDetails.getFloorName());
+	            ((FloorDetails) existingFloor).setNoOfSeats(floorDetails.getNoOfSeats());
+	            return floorDetailsRepo.save(existingFloor);
+	        } else {
+	            // handle not found case
+	            return null;
 	        }
-	        return null;
-		
-		
-	}
-
-
-
-	@Override
-	public FloorDetails addFloorWithDetails(FloorDetails floorDetails) {
-		return floorDetailsRepo.save(floorDetails);
-	}
-
-
-
-	@Override
-	public FloorDetails updateFloorWithDetails(int floorId, FloorDetails floorDetails) {
-	
-		Optional<FloorDetails> optionalFloorDetails = floorDetailsRepo.findById(floorId);
-	    if (optionalFloorDetails.isPresent()) {
-	        FloorDetails existingFloorDetails = optionalFloorDetails.get();
-	        existingFloorDetails.setFloorName(floorDetails.getFloorName());
-	        existingFloorDetails.setNoOfSeats(floorDetails.getNoOfSeats());
-	        return floorDetailsRepo.save(existingFloorDetails);
-	    } else {
-	        return null;
 	    }
-		
-		
+	
+
+
+
+
+
+
+
 	}
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
 
 
 
 	 
 
-}
+

@@ -1,11 +1,10 @@
 package com.SecureSeat.Booking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
-import com.SecureSeat.Booking.entity.UserDeatils;
-import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.EmployeeService;
 import com.SecureSeat.Booking.service.MailService;
-import com.SecureSeat.Booking.service.UserFPCService;
+import com.SecureSeat.Booking.service.UserFirstTimeLoginService;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -36,7 +33,22 @@ public class EmployeeController {
 	
 	
 	@Autowired
-	private UserFPCService userFPCService;
+	private UserFirstTimeLoginService userFirstTimeLoginService;
+	
+	
+//	
+	@GetMapping("/lastbookingdetails/{id}")
+	public BookingDetails getbookingdetails(@PathVariable int id) {
+		System.out.println(id);
+		return employeeService.getbookingdetailsbyid(id);
+	}
+	
+	@PostMapping("/savelastbooking/{id}")
+    public String savelastbookingdetails(@PathVariable int id,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
+		return employeeService.savelastbookingdetails(id, from, to);
+		
+	}
+	
 	
 	@PostMapping("/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
@@ -61,7 +73,7 @@ public class EmployeeController {
 		try {
 //		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
-    	mailService.passwordChangeConfrimMail(id);
+    	mailService.passwordChangeConfirmMail(id);
 		return message;
 		
 	}catch (Exception e) {
@@ -110,7 +122,7 @@ public class EmployeeController {
 	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
 		
-		String message=userFPCService.firstTimeCHangeOfPassword( userId, newPassword);
+		String message=userFirstTimeLoginService.firstTimeChangeOfPassword( userId, newPassword);
     	
 		return message;
 		
