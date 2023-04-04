@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/adduser_popup.css";
 import Sidebar1 from "./Sidebar";
 
 function AddUser() {
   const [empId, setEmpId] = useState(0);
-  // const [token , setToken] = useState('')
+
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
 
   // useEffect(()=>{
   //   axios.post("http://10.191.80.98:9090/login").then((db)=>{
@@ -26,19 +27,21 @@ function AddUser() {
     //       window.location = "/adduser";
     //     }
     //   });
-    fetch('http://10.191.80.98:9090/api/admin/addUser/'+ empId, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${" eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTiJdLCJzd…Q1OH0.sgZ4FxktfOJ4W1UvXvC52htszQOq-M7LAu7sTljjBS0"}`
-      }
-    })
-      .then(response => {
-        // Handle response
-        console.log(response.data)
+    axios
+      .put("http://10.191.80.98:9090/api/admin/updateShiftTime/4?shift_timings=", {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
       })
-      .catch(error => {
-        // Handle error
-      });
+      .then(response => {
+        console.log(response.data)
+      }
+      
+      
+      )
+      .then(data => console.log(data))
+      .catch(error => console.error(error))
   }
   // useEffect(()=>{
   //     axios.post("https://reqres.in/api/users").then((res)=>{
@@ -56,6 +59,7 @@ function AddUser() {
             <label htmlFor="exampleInputEmail1" className="form-label">
               Enter your Employee Id
             </label>
+            {console.log(token)}
             <input
               type="text"
               className="form-control"

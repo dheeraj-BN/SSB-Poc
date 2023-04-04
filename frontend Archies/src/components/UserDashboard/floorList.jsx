@@ -14,11 +14,9 @@ function FloorList(){
     return(
        
             
-        <div className='fList'>
+        <div className='fList1'>
             <h3>Select Floor</h3>
-            <div className="floor0">
-                
-               {/* <button className='floorbtn'><a href="/groundfloor">Ground Floor</a></button> */}
+            <div className="floor0"> 
                <a href="/groundfloor">
                <button className='floorbtn'>Ground Floor</button>
                </a>
