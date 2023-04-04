@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +66,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		String sql="Update user_deatils  set password=? where user_id =?";
 		jdbcTemplate.update(sql,Otp,userid);
 	}
-
+   
+	
 	
 	
 	@Override
