@@ -2,10 +2,12 @@ package com.SecureSeat.Booking.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.config.SecurityConfig;
@@ -38,18 +40,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private SecurityConfig config;
 	
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	
 	
 	
 	@Override
-	public void forgotPasword(String email,String password) {
-		int userid=employeeDAO.forgotPassword(email);
-		employeeDAO.restPassword(config.passwordEncoder().encode(password), userid);
+	public String forgotPasword(int id,String password) {
+			int userid=id;
+			employeeDAO.restPassword(config.passwordEncoder().encode(password), userid);		
+			return "Password Changed";
 		
 	}
 	
+
+	
+	@Override
+	public int findUserIdByPhoneNo(String phoneNo) {
+		int userid=employeeDAO.forgotPassword(phoneNo);
+		return userid;
+		
+	}
+	
+	@Override
+	public  String getRandomNumberString() {
+		Random rnd = new Random();
+		int number = rnd.nextInt(999999);
+		return String.format("%06d", number);
+	}
+	
+	@Override
+	public String generateOtp(String phoneNo) {
+		String otp1=getRandomNumberString();
+		System.out.println(otp1);
+		return otp1;
+	
+	}
 	
 	
 	@Override
@@ -105,6 +133,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.debug("employees are" +e);
 		return e;
 	}
+
+
+
+
+	
+
+	
 
 
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../css/userDashboard/Bookingform.css";
 
 import axios from "axios";
+import UserDashboard from "./UserDash";
+import NavBar from "./NavBar";
 
 function SeatBookingForm() {
   const [branchName, setBranchName] = useState("");
@@ -48,7 +50,12 @@ function SeatBookingForm() {
   },[])
 
   return (
-    <form onSubmit={handleSubmit} className="seat-booking-form">
+    <div>
+        <div>
+          <NavBar/>
+        </div>
+        <div>
+        <form onSubmit={handleSubmit} className="seat-booking-form">
       <label htmlFor="branch-name-input ">Branch Name:</label>
       <select
         id="branch-name-input"
@@ -165,6 +172,9 @@ function SeatBookingForm() {
         Next
       </button>
     </form>
+        </div>
+    </div>
+    
   );
 }
 

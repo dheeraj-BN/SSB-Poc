@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,17 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	
+	
+	
+//	public List<BookingDetails> lastBookingDetails() {
+//		String sql="SELECT * from booking_details where user_id=? ORDER BY booking_id DESC LIMIT";
+//		
+//		
+//	}
+	
+	
+	
+	
 	@Override
 	public void changePasswor(String password,int id) {
 		String sql="UPDATE `seatsb`.`user_deatils` SET `password` = ? WHERE (`user_id` = ?)";
@@ -35,11 +47,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public int forgotPassword(String email) {
+	public int forgotPassword(String phoneNo) {
 		  String sql= "select ud.user_id from employee em INNER JOIN user_deatils ud ON ud.employee_id=em.employee_id "
-		  		+ "where em.employee_email=?";
-		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {email},Integer.class);
-//		  List<Integer> userid =jdbcTemplate.queryForList(sql, Integer.class, email);
+		  		+ "where employee_phone_no=?";
+		  int  userid = jdbcTemplate.queryForObject(sql, new Object[] {phoneNo},Integer.class);
 		  System.out.println(userid);
 			return userid;
 	}
@@ -49,7 +60,14 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		String sql="Update user_deatils  set password=? where user_id =?";
 		jdbcTemplate.update(sql,password,userid);
 	}
-
+	
+	@Override
+	public void otp(String Otp,int userid) {
+		String sql="Update user_deatils  set password=? where user_id =?";
+		jdbcTemplate.update(sql,Otp,userid);
+	}
+   
+	
 	
 	
 	@Override

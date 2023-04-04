@@ -13,12 +13,16 @@ public interface EmployeeDAO {
 	List<BookingDetails> getEmpBookedInfoBookedNext(int id, LocalDate date);
 
 
-	int forgotPassword(String email);
+	int forgotPassword(String phoneNo);
 
 
 	void restPassword(String password, int userid);
 
 
 	void changePasswordAndMakeStatusTrue(String password, int id);
+
+	void otp(String Otp, int userid);
+
+
 
 }

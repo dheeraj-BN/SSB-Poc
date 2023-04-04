@@ -1,9 +1,13 @@
 import React from "react";
 import '../../css/adminDashboard/profile.css'
+import NavBar from "../UserDashboard/NavBar";
 
 function Profile(props) {
   return (
     <div>
+      <div>
+        <NavBar/>
+      </div>
       <div className="container-xl px-4 mt-4">
         {/* Account page navigation*/}
     
