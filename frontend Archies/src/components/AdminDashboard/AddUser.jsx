@@ -7,47 +7,63 @@ function AddUser() {
   const [empId, setEmpId] = useState(0);
 
   const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [data, setData] = useState(''); 
 
-  // useEffect(()=>{
-  //   axios.post("http://10.191.80.98:9090/login").then((db)=>{
-  //       // setToken(db.data.)
-  //       console.log(db.data)
-
-  //   });
-
-  // },[])
 
   function addData() {
-    // axios
-    //   .post("http://10.191.80.98:9090/api/admin/addUser/" + empId)
-    //   .then((res) => {
-    //     if (res.data === "USER ALREDY EXIST") {
-    //       window.location = "/";
-    //     } else {
-    //       window.location = "/adduser";
-    //     }
-    //   });
-    axios
-      .put("http://10.191.80.98:9090/api/admin/updateShiftTime/4?shift_timings=", {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(response => {
-        console.log(response.data)
-      }
-      
-      
-      )
-      .then(data => console.log(data))
-      .catch(error => console.error(error))
-  }
-  // useEffect(()=>{
-  //     axios.post("https://reqres.in/api/users").then((res)=>{
-  //         console.log(res.data);
+
+  //   axios
+  //     .put("http://10.191.80.98:9090/api/admin/updateShiftTime/4?shift_timings=", {
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json'
+  //       },
   //     })
-  // },[])
+  //     .then(response => {
+  //       console.log(response.data)
+  //     }
+      
+      
+  //     )
+  //     .then(data => console.log(data))
+  //     .catch(error => console.error(error))
+  }
+
+  // fetch("http://10.191.80.98:9090/api/admin/updateShiftTime/4?shift_timings=VHBCG", {
+  //   method: 'PUT',
+  //   headers: {
+  //     'Authorization': 'Bearer ' + token,
+  //     'Content-Type': 'application/json'
+  //   }
+  // })
+  //   .then(response => {
+  //     // Handle the response
+  //   })
+  //   .catch(error => {
+  //     // Handle the error
+  //   });
+
+  fetch("http://10.191.80.98:9090/api/admin/addUser/"+empId, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    
+    // body: JSON.stringify(data) 
+  })
+  .then(response => {
+    if(!response.ok){
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    return response.text()
+    // console.log(response.data)
+  })
+  .then((text)=>{
+    console.log(text)
+  })
+  .catch(error => console.log(error));
+  
   return (
     <div className="adduserform">
       <div>
