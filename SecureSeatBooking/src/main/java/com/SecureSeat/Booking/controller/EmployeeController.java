@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,7 @@ public class EmployeeController {
 	
 	
 	@Autowired
-	private UserFPCService userFPCService;
+	private UserDetailsService userFPCService;
 	
 	@PostMapping("/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
@@ -55,13 +56,12 @@ public class EmployeeController {
 	}
 	
 	
-	
 	@PutMapping("/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
 //		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
-    	mailService.passwordChangeConfrimMail(id);
+    	mailService.passwordChangeConfirmMail(id);
 		return message;
 		
 	}catch (Exception e) {
@@ -119,5 +119,7 @@ public class EmployeeController {
 		    return "An error occurred " + e.getMessage();
 		  }
 	}
+	
+	
 	
 }
