@@ -45,9 +45,9 @@ function App() {
           <Route path="/"  element={<UserDashboard/>} />
           <Route path="/booking" element={<SeatBookingForm/>} />
           <Route path="/floorlist" element={<FloorList/>}/>
-          <Route path="/groundfloor" element={<SeatMatrix/>}/>
-          <Route path="/firstfloor" element={<SeatMatrix1/>}/>
-          <Route path="/secondfloor" element={<SeatMatrix2/>}/>
+          <Route path="/floor0" element={<SeatMatrix/>}/>
+          <Route path="/floor1" element={<SeatMatrix1/>}/>
+          <Route path="/floor2" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
           <Route path="/profileuser" element={<Profile/>}/>  
           {/*Developer dash */}
