@@ -14,4 +14,14 @@ public interface MailTemplates {
 
 	void addedFloorTemplete(FloorDetails floorDetails, String adminEmail);
 
+	void dailyBookedSeatCancled(BookingDetails bookingDetails);
+
+	void cancledYourBooking(BookingDetails bookingDetails);
+
+	void updateSeatNumber(BookingDetails oldBookingDetails, BookingDetails newBookingDetails);
+
+	void updateFoodStatus(BookingDetails BookingDetails);
+
+	void updateBookingDetails(BookingDetails oldBookingDetails, BookingDetails newBookingDetails);
+
 }

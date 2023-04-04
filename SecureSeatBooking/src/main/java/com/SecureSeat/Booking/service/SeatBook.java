@@ -38,4 +38,15 @@ public interface SeatBook {
 
 	void updatecanceledetails(String token);
 
+	void updateseatno(String token, String seatno);
+
+	void updatefoodstatus(String token, Boolean foodstatus);
+
+	void updateseatbooking(String token, Boolean foodstatus, String seatno);
+
+	void updatecancelforschedule();
+//	List<BookingDetails> updatecancelforschedule();
+
+	BookingDetails getlatestbookingdetailsofid(int id);
+
 }

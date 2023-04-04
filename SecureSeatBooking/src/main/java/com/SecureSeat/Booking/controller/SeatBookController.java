@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SecureSeat.Booking.dao.UserDetailDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
@@ -36,6 +38,8 @@ public class SeatBookController {
 	
 	@Autowired
 	private UserDetailDao userDetailDao;
+	
+
 	
 	
 	@GetMapping("api/employee/getuser")
@@ -63,8 +67,9 @@ public class SeatBookController {
 		
 	}
 	
-	@GetMapping("api/employee/seatnumber/{date1}")
-	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
+	@GetMapping("api/employee/seatnumber")
+	public List<String> seatnumberbookedfordate(){
+		LocalDate date1 = LocalDate.now();
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
@@ -75,12 +80,35 @@ public class SeatBookController {
 		return seatNos;
 		}
 	
-	@GetMapping("api/employee/cancel/{token}")
+	@PutMapping("api/employee/cancel/{token}")
 	public void updatecancel(@PathVariable String token) {
 		seatBook.updatecanceledetails(token);
 	}
 	
+	@PutMapping("api/employee/updateseat/{token}")
+	public void updateseat(@PathVariable String token,@RequestParam String seatno) {
+		seatBook.updateseatno(token, seatno);
+	}
 	
+	@PutMapping("api/employee/updatefoodstatus/{token}")
+	public void updatefoodstatus(@PathVariable String token,@RequestParam Boolean foodstatus) {
+		seatBook.updatefoodstatus(token, foodstatus);
+	}
+	
+	@PutMapping("api/employee/updatebookingstatus/{token}")
+	public void updateseatbooking(@PathVariable String token,@RequestParam Boolean foodstatus,@RequestParam String seatno) {
+		seatBook.updateseatbooking(token, foodstatus, seatno);
+	}
+	
+	@GetMapping("/api/employee/schedule")
+	public void getschedule(){
+		 seatBook.updatecancelforschedule();
+	}
+	
+	@GetMapping("/api/employee/{id}")
+	public BookingDetails getbyid(@PathVariable int id) {
+		return seatBook.getlatestbookingdetailsofid(id);
+	}
 
 	
 

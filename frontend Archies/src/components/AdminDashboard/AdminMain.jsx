@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import CardDes from "./Card";
 import "../../css/adminDashboard/AdminMain.css";
 import FCards from "./FncCards";
+import AddUser from "./AddUser";
 
 function AdminMain(props) {
 
@@ -17,7 +18,6 @@ function AdminMain(props) {
     color : "#D5D887"
   }
   return (
-    <div>
       <div className="adminPage">
         <div>
           <Sidebar />
@@ -36,12 +36,11 @@ function AdminMain(props) {
             <CardDes color="Success" title="Food Counts." counts="90" />
           </div>
           <div className="fundata">
-            <FCards img = "https://pocproject.000webhostapp.com/images/QRScan.png" title="QR Scan" onclick={(e)=>{alert("I am QR Scan")}} color={card1.color}/>
-            <FCards img = "https://pocproject.000webhostapp.com/images/AddUser.png" title="ADD User" onclick={(e)=>{alert("I am Add User")}} color={card2.color}/>
-            <FCards img = "https://pocproject.000webhostapp.com/images/Employee_Data.png" title="Employee data" onclick={(e)=>{alert("I am Employee Data")}} color={card3.color}/>
+            <FCards img = "https://pocproject.000webhostapp.com/images/QRScan.png" title="QR Scan" address="/qrcodescan"  color={card1.color}/>
+            <FCards img = "https://pocproject.000webhostapp.com/images/AddUser.png" title="ADD User" address="/adduser" color={card2.color} onclick={()=><AddUser/>}/>
+            <FCards img = "https://pocproject.000webhostapp.com/images/Employee_Data.png" title="Employee data" address="/empdata" color={card3.color}/>
           </div>
         </div>
-      </div>
     </div>
   );
 }
