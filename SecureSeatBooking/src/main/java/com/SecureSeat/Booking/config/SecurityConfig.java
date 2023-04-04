@@ -72,7 +72,9 @@ public class SecurityConfig {
                 @Override
                 public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Collections.singletonList("http://10.191.80.120:3000"));
+                    // config.setAllowedOrigins(Collections.singletonList("http://10.191.80.120:3000"));
+                    config.setAllowedOrigins(Arrays.asList("http://164.164.48.46", "http://10.191.80.118:3000", "http://164.164.48.46:3000", "http://164.164.48.46:80"));
+
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(Collections.singletonList("*"));
