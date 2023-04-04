@@ -109,6 +109,13 @@
    <version>1.2.6</version>
 </dependency>
 
+<dependency>
+			<groupId>io.57blocks</groupId>
+			<artifactId>twilio-spring-boot-starter</artifactId>
+			<version>0.1.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

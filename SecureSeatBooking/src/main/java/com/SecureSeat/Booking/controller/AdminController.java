@@ -1,6 +1,7 @@
 package com.SecureSeat.Booking.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
+import com.SecureSeat.Booking.service.SendSMS;
 import com.SecureSeat.Booking.service.UserServiceImpl;
 
 import jakarta.annotation.PostConstruct;
@@ -32,17 +35,18 @@ public class AdminController {
 	private UserServiceImpl userServiceImpl;
 	
 	
-
+	@Autowired
+	private SendSMS smsImpl;
 	
 	
 	@PostMapping("/addUser/{id}")
-	public String addUser(@PathVariable int id) {
+	public ResponseEntity<Map<String, String>> addUser(@PathVariable int id) {
 		
 		return userServiceImpl.addUser(id);
 	}
 	
 	
-	@GetMapping("/validateToken/")
+	@PutMapping("/validateToken/")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		
 		return userServiceImpl.validateToken(token);
@@ -72,5 +76,7 @@ public class AdminController {
 		
 		return userServiceImpl.listOfEmployeeNotRegistered();
 	}
+	
+	
 
 }
