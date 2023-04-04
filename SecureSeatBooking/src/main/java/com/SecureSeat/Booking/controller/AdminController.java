@@ -1,6 +1,7 @@
 package com.SecureSeat.Booking.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class AdminController {
 	
 	
 	@PostMapping("/addUser/{id}")
-	public String addUser(@PathVariable int id) {
+	public ResponseEntity<Map<String, String>> addUser(@PathVariable int id) {
 		
 		return userServiceImpl.addUser(id);
 	}
