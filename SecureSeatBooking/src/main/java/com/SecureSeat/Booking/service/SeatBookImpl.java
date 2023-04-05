@@ -41,6 +41,12 @@ public class SeatBookImpl implements SeatBook {
 	
 	@Autowired
 	private SeatBookDAO seatBookDAO;
+	
+	@Autowired
+	private MailTemplates mailTemplates; 
+	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public String savebookeddetails(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
@@ -57,6 +63,7 @@ public class SeatBookImpl implements SeatBook {
 
 	@Override
 	public String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from) {
+		System.out.println(bookingDetails);
 		int flag = 0;
 		int checkholiday = checkholiday(from);
 		System.out.println(checkholiday);
@@ -190,19 +197,13 @@ public class SeatBookImpl implements SeatBook {
 	}
 
 	@Override
-	public String checkseatalreadybooked(String seatNo, LocalDate date1) {
-		int flag = 0;
-		List<BookingDetails> bookDetails = bookingDetailsRepo.findAll();
-		for (BookingDetails book : bookDetails) {
-			if (seatNo.equals(book.getSeatNo()) && date1.equals(book.getDate())) {
-				flag = 1;
-			}
+	public int checkseatalreadybooked(String seatNo, LocalDate date1) {
+		
+		BookingDetails booked=bookingDetailsRepo.findByBookedDateAndSeatNo(date1, seatNo);
+		if(booked== null) {
+			return 1;
 		}
-		if (flag == 1) {
-			return "seat Booked";
-		} else {
-			return "seat not booked";
-		}
+		return 0;
 
 	}
 	
@@ -234,6 +235,8 @@ public class SeatBookImpl implements SeatBook {
 	public void updatecanceledetails(String token) {
 		int booking_id=seatBookDAO.getbookingidfromtoken(token);
 		seatBookDAO.updatebookingstatus(booking_id);
+		BookingDetails bookingDetails = bookingDetailsRepo.findById(booking_id).get();
+		mailTemplates.cancledYourBooking(bookingDetails);
 		
 	}
 	
@@ -251,9 +254,24 @@ public class SeatBookImpl implements SeatBook {
 	@Override
 	public void updateseatbooking(String token,Boolean foodstatus,String seatno) {
 		int bookingid=seatBookDAO.getbookingidfromtoken(token);
-		Optional<BookingDetails> oldbookingdetail = bookingDetailsRepo.findById(bookingid);
-		seatBookDAO.updateseatbooking(foodstatus, seatno, bookingid);
-		Optional<BookingDetails> newbookingdetail = bookingDetailsRepo.findById(bookingid);
+		BookingDetails oldbookingdetail = bookingDetailsRepo.findById(bookingid).get();
+		BookingDetails oldBookingDetails1 = new BookingDetails();
+		oldBookingDetails1.setBookingId(oldbookingdetail.getBookingId());
+		oldBookingDetails1.setBookedTimings(oldbookingdetail.getBookedTimings());
+		oldBookingDetails1.setBookingStatus(oldbookingdetail.getBookingStatus());
+		oldBookingDetails1.setDate(oldbookingdetail.getDate());
+		oldBookingDetails1.setFoodStatus(oldbookingdetail.isFoodStatus());
+		oldBookingDetails1.setLoginTime(oldbookingdetail.getLoginTime());
+		oldBookingDetails1.setSeatNo(oldbookingdetail.getSeatNo());
+		oldBookingDetails1.setShiftDetails(oldbookingdetail.getShiftDetails());
+		oldBookingDetails1.setToken(oldbookingdetail.getToken());
+		oldBookingDetails1.setUserDeatils(oldbookingdetail.getUserDeatils());
+    	seatBookDAO.updateseatbooking(foodstatus, seatno, bookingid);
+		BookingDetails newbookingdetail = bookingDetailsRepo.findById(bookingid).get();
+		newbookingdetail.setSeatNo(seatno);
+		newbookingdetail.setFoodStatus(foodstatus);
+		mailService.updateBookingDetails(oldBookingDetails1,newbookingdetail);
+		
 	}
 	
 	@Override
@@ -283,5 +301,27 @@ public class SeatBookImpl implements SeatBook {
 	public BookingDetails getlatestbookingdetailsofid(int id) {
 		return seatBookDAO.getlatestbookingdetailsofid(id);
 	}
+	 
+	@Override
+	public String checkseatfordate(BookingDetails bookingDetails,LocalDate from,LocalDate to) {
+		LocalDate to1=to.plusDays(1);
+			for(LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
+				System.out.println(i);
+				int checkseatstatus = checkseatalreadybooked(bookingDetails.getSeatNo(), i);
+				if(checkseatstatus == 1) {
+					savebookeddetails(bookingDetails,i,i);
+				}
+				else {
+					return "seat has already booked for "+i;
+				}
+			}
+			
+			return "seat booked";
+		}
+		
+		
+		
+		
+	
 
 }

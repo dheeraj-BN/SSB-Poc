@@ -36,7 +36,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	
 	@Override
 	public List<String> getseatNoByBookedDate(LocalDate bookedDate) {
-		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status='PENDING'";
+		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status!='CANCELLED'";
 		List<String> seatNo = jdbcTemplate.queryForList(sql, new Object[] {bookedDate},String.class);
 		return seatNo;
 	}
@@ -193,7 +193,7 @@ book.setBookedTimings( bookedtime);
   		book.setDate(bookeddate);
 	book.setBookedTimings( bookedtime);
 			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
 			book.setLoginTime(logintime);
 			book.setSeatNo((String) row.get("SEAT_NO"));
 			book.setToken((String) row.get("TOKEN"));

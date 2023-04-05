@@ -60,16 +60,15 @@ public class SeatBookController {
 	}
 	
 	@GetMapping("api/employee/seatnumber/{seatno}/{date1}")
-	public String seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
+	public int seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
 
-	String message = seatBook.checkseatalreadybooked(seatno, date1);
+	int message = seatBook.checkseatalreadybooked(seatno, date1);
 	return message;
 		
 	}
 	
-	@GetMapping("api/employee/seatnumber")
-	public List<String> seatnumberbookedfordate(){
-		LocalDate date1 = LocalDate.now();
+	@GetMapping("api/employee/seatnumber/{date1}")
+	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
