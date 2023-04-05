@@ -11,10 +11,7 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface SeatBook {
 
-
-
-
-	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from) ;
+	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from);
 
 	String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to);
 
@@ -50,5 +47,9 @@ public interface SeatBook {
 	BookingDetails getlatestbookingdetailsofid(int id);
 
 	String checkseatfordate(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+
+	List<UserDeatils> getuserdetails();
+
+	List<ShiftDetails> getshift();
 
 }
