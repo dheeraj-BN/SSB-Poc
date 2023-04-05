@@ -10,8 +10,6 @@ public interface LoginService {
 
 	Optional<UserDeatils> findUserByUsername(int id);
 
-	Employee findEmployeeByName(String name);
-
 	String loginResponse(String userName, String password);
 
 	List<Employee> findAllEmployees();
