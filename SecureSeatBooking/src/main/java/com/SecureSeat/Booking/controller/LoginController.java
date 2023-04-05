@@ -105,21 +105,25 @@ public class LoginController {
 	
 
 
+	//test api for checking authorization for admin
 	@GetMapping("/api/admin/test/{userId}")
 	public String adminHome(@PathVariable int userId) {
 		return "ADMIN HOME";
 	}
 
+	//test api for checking authorization for employee
 	@GetMapping("/api/employee/test/{userId}")
 	public String userHome(@PathVariable int userId) {
 		return "USER HOME";
 	}
 
+	//test api for checking authorization for developer
 	@GetMapping("/api/developer/test/{userId}")
 	public String developerHome(@PathVariable int userId) {
 		return "Developer HOME";
 	}
 	
+	//mapping when the logout is successful
 	@GetMapping("/clear/logout")
 	public String login() {
 		return "return to Login Page";
