@@ -60,9 +60,9 @@ public class SeatBookController {
 	}
 	
 	@GetMapping("api/employee/seatnumber/{seatno}/{date1}")
-	public String seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
+	public int seatBookedOrNot(@PathVariable String seatno,@PathVariable LocalDate date1) {
 
-	String message = seatBook.checkseatalreadybooked(seatno, date1);
+	int message = seatBook.checkseatalreadybooked(seatno, date1);
 	return message;
 		
 	}

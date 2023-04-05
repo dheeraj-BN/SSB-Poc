@@ -63,7 +63,7 @@ public class EmployeeController {
 	@PostMapping("/forgot/password")
 	public String generateOtp(@RequestParam String phoneNo) {
 		System.out.println("hii");
-		return employeeService.generateOtp(phoneNo);
+		return employeeService.generateOtp();
 	}
 	
 	
