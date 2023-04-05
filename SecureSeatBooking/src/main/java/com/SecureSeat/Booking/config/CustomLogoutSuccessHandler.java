@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 	
 
+	//custom logout success handler 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {

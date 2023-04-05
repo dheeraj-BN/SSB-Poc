@@ -16,7 +16,7 @@ import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
-import com.SecureSeat.Booking.service.UserServiceImpl;
+import com.SecureSeat.Booking.service.Userservice;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,7 +32,7 @@ public class UserDetailsTest {
 	
 	@Autowired
 	
-	private UserServiceImpl userServiceImpl;
+	private Userservice userServiceImpl;
 	
 
 	@Autowired

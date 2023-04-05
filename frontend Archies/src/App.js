@@ -22,6 +22,7 @@ import Developer from "./components/DeveloperDashboard/developer";
 import AddFloor from "./components/DeveloperDashboard/addfloor";
 import React, { useState } from "react";
 import ProfileAdmin from "./components/AdminDashboard/ProfileAdmin";
+import Holiday from "./components/AdminDashboard/Holiday";
 
 
 export const  TokenContext = React.createContext();
@@ -32,6 +33,7 @@ function App() {
     <BrowserRouter>
       <div>
         <Routes>
+          {/* Admin dash */}
           {/* <Route path="/" element={<SignIn />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/email" element={<EmailVer />} />
@@ -41,6 +43,7 @@ function App() {
           <Route path="/qrcodescan" element={<QRScan />} />
           <Route path="/profileadmin" element={<ProfileAdmin/>} />
           <Route path="/empdata" element={<EmployeeInfo />} />
+          <Route path="/holiday" element={<Holiday/>}/>
           {/* user dash */}
           <Route path="/"  element={<UserDashboard/>} />
           <Route path="/booking" element={<SeatBookingForm/>} />

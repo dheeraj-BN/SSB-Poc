@@ -11,16 +11,13 @@ import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface SeatBook {
 
-
-
-
-	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from) ;
+	String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from);
 
 	String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to);
 
 	String savebookeddetails(BookingDetails bookingDetails, LocalDate from, LocalDate to);
 
-	String checkseatalreadybooked(String seatNo, LocalDate date1);
+	int checkseatalreadybooked(String seatNo, LocalDate date1);
 
 	int checkbookingdetails(LocalDate date, BookingDetails bookingDetails1);
 
@@ -48,5 +45,11 @@ public interface SeatBook {
 //	List<BookingDetails> updatecancelforschedule();
 
 	BookingDetails getlatestbookingdetailsofid(int id);
+
+	String checkseatfordate(BookingDetails bookingDetails, LocalDate from, LocalDate to);
+
+	List<UserDeatils> getuserdetails();
+
+	List<ShiftDetails> getshift();
 
 }
