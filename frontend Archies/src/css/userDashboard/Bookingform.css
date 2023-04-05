@@ -1,4 +1,4 @@
- .seat-booking-form {
+.seat-booking-form {
   
   border: 1px solid rgb(143, 141, 141);
   margin: 100px auto;
@@ -17,7 +17,7 @@
   box-shadow: 1px 3px 25px 0px rgba(0,0,0,0.75);
 }
 
-.form-input {
+.form-input1 {
   
   width: 300px;
   padding: 5px;
@@ -31,7 +31,7 @@
   line-height: 50px;
   color: #0b0b0b;
   font-family: Arial, Helvetica, sans-serif;
-  gap: 1rem;
+  gap: 2rem;
   border-color: #535151;
   
 }
@@ -46,7 +46,7 @@
   margin-top: 10px;
   cursor: pointer;
 }
-button{
+.booking-btn{
   background-color: #535151;
   font-family: Arial, Helvetica, sans-serif;
   font-size: larger;
@@ -59,38 +59,37 @@ a{
   text-decoration: none;
   font-size: medium;
 }
+/* Styles for screens smaller than 768px */
+@media (max-width: 767px) {
+  .seat-booking-form {
+    margin: 50px auto;
+    width: 80%;
+    padding: 20px;
+  }
 
-@media screen and (max-width: 600px) {
-  .form-input {
+  .form-input1 {
     width: 100%;
   }
-
-  .form-button {
-    width: 100%;
-  }
-} 
-
-
-
-
-.seat-booking-form.animate .form-input, .seat-booking-form.animate .form-button {
-  opacity: 1;
-  transform: translateY(0);
 }
 
-.form-button:hover {
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
+/* Styles for screens between 768px and 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  .seat-booking-form {
+    margin: 75px auto;
+    width: 60%;
+    padding: 30px;
   }
 }
 
+/* Styles for screens larger than 991px */
+@media (min-width: 992px) {
+  .seat-booking-form {
+    margin: 100px auto;
+    width: 40%;
+    padding: 50px;
+  }
+
+  .form-input1 {
+    width: 300px;
+  }
+}

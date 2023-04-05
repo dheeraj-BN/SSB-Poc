@@ -29,7 +29,7 @@ const Sidebar1 = () => {
             <Link  to="/admin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
             </Link>
-            <Link to="/profileuser" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
+            <Link to="/profileadmin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="user">Profile</CDBSidebarMenuItem>
             </Link>
           </CDBSidebarMenu>

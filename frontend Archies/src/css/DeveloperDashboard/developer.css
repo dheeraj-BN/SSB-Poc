@@ -1,5 +1,5 @@
 /* Style for the navigation bar */
-nav {
+.nav1 {
     background-color: #0069d9;
     color: #fff;
     display: flex;
@@ -8,13 +8,21 @@ nav {
     padding: 30px 40px;
   }
   
-  nav ul {
+  .nav1 ul {
     list-style: none;
     display: flex;
     gap: 20px;
   }
+  .btn-profile,.btn-floor{
+    background-color: transparent;
+    border: none;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+  }
   
-  nav li button {
+  .nav li button {
     /* background-color: transparent; */
     /* background-color: rgb(111, 110, 110); */
     border: none;
@@ -26,7 +34,7 @@ nav {
     background-color: transparent;
   }
   
-  nav li button:hover {
+  .nav1 li button:hover {
     color: #f7eded;
   }
   
@@ -40,20 +48,20 @@ nav {
   
   /* Responsive styles */
   @media screen and (max-width: 768px) {
-    nav {
+    .nav1 {
       flex-direction: column;
       align-items: flex-start;
       padding: 10px;
     }
   
-    nav ul {
+    .nav1 ul {
       margin-top: 10px;
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
     }
   
-    nav li {
+    .nav1 li {
       margin-bottom: 0px;
     }
   }

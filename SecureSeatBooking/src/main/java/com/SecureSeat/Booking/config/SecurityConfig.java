@@ -20,105 +20,90 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.SecureSeat.Booking.filter.JwtAuthFilter;
 import com.SecureSeat.Booking.service.LoginServiceImpl;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	@Autowired
 	private CustomSucessHandler customSuccessHandler;
-	
-	 @Autowired
-	    private LoginServiceImpl userDetailsService;
-	 
-	    @Autowired
-	    private JwtAuthFilter authFilter;
-	
-	@Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return new ProviderManager(Collections.singletonList(authenticationProvider()));
-    }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
-    
-    @Bean
-	public LogoutSuccessHandler logoutSuccessHandler() {
-	    return new CustomLogoutSuccessHandler();
+	@Autowired
+	private LoginServiceImpl userDetailsService;
+
+	@Autowired
+	private JwtAuthFilter authFilter;
+
+	@Bean
+	public AuthenticationManager authenticationManager() throws Exception {
+		return new ProviderManager(Collections.singletonList(authenticationProvider()));
 	}
 
-	
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(passwordEncoder());
+		return provider;
+	}
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		return new CustomLogoutSuccessHandler();
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowedOrigins(Arrays.asList("*"));
+//	    config.setAllowedOrigins(Arrays.asList("http://10.191.80.120:3000", "http://10.191.80.118:3000"));
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		config.setAllowedHeaders(Arrays.asList("*"));
+		config.setAllowCredentials(true);
+		config.setExposedHeaders(Arrays.asList("Authorization"));
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+		return source;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //    	CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-//        requestHandler.setCsrfRequestAttributeName("_csrf");
-//        
-//          CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-// 
-        return http
-            .csrf().disable()
-            .cors().configurationSource(new CorsConfigurationSource() {
-                @Override
-                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Collections.singletonList("http://10.191.80.120:3000"));
-                    config.setAllowedMethods(Collections.singletonList("*"));
-                    config.setAllowCredentials(true);
-                    config.setAllowedHeaders(Collections.singletonList("*"));
-                    config.setExposedHeaders(Arrays.asList("Authorization","location","ROLE","DEVELOPER-ID","EMPLOYEE-ID","ADMIN-ID"));
-                    config.setMaxAge(7200L);
-                    return config;
-                }
-            })
-            .and()
-//            .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+//      requestHandler.setCsrfRequestAttributeName("_csrf");
+//      
+//        CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+		return http.csrf().disable().cors().configurationSource(corsConfigurationSource()).and()
+//	        .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
 //            		.ignoringRequestMatchers("/login")
 //                    .csrfTokenRepository(csrfTokenRepository))
 //            .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-            .authorizeHttpRequests()
-            .requestMatchers("/login").permitAll()
-            //.requestMatchers("/api/logout").permitAll() 
-//            .requestMatchers("/swagger-ui.html").permitAll()
-            .requestMatchers("/api/admin/**").hasRole("ADMIN")
-            .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
-            .requestMatchers("/api/developer/**").hasRole("DEVELOPER")
-            .requestMatchers("/swagger-ui.html").permitAll()
-            .anyRequest().permitAll()
-            .and()
-            .httpBasic()
-            .and()
-            .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/clear/logout")
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID")
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
-    }
-
-
-		
-		
-	
+				.authorizeHttpRequests()
+				.requestMatchers("/login").permitAll()
+				.requestMatchers("/api/admin/**").hasRole("ADMIN")
+				.requestMatchers("/api/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
+				.requestMatchers("/api/developer/**").hasAnyRole("DEVELOPER", "ADMIN")
+				.requestMatchers("/swagger-ui.html").authenticated()
+				.anyRequest().permitAll()
+				.and().httpBasic()
+				.and()
+				.logout().logoutUrl("/logout").logoutSuccessUrl("/clear/logout")
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
+	}
 
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
