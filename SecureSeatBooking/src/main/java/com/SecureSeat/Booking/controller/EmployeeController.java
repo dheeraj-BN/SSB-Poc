@@ -16,7 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.service.EmployeeService;
+import com.SecureSeat.Booking.service.FloorService;
 import com.SecureSeat.Booking.service.MailService;
 import com.SecureSeat.Booking.service.UserFirstTimeLoginService;
 
@@ -30,7 +32,8 @@ public class EmployeeController {
 	@Autowired
 	private MailService mailService;
 	
-	
+	@Autowired
+	private FloorService floorService;
 	
 	@Autowired
 	private UserFirstTimeLoginService userFirstTimeLoginService;
@@ -131,5 +134,10 @@ public class EmployeeController {
 		    return "An error occurred " + e.getMessage();
 		  }
 	}
+	
+	@GetMapping("/floors/{floorName}")
+    public FloorDetails getFloorDetailsByFloorName(@PathVariable String floorName) {
+        return floorService.getFloorDetailsByFloorName(floorName);
+    }
 	
 }
