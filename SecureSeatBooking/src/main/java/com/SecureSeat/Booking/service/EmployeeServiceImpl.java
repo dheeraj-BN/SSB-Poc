@@ -15,9 +15,11 @@ import com.SecureSeat.Booking.dao.EmployeeDAO;
 import com.SecureSeat.Booking.dao.SeatBookDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
+import com.SecureSeat.Booking.repo.FloorDetailsRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
 @Service
@@ -44,6 +46,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private SeatBookDAO seatBookDAO;
+	
+	@Autowired
+	private SendSMS sendSMS;
+	
+	@Autowired
+	private FloorDetailsRepo floorDetailsRepo;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
@@ -95,6 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public String generateOtp() {
 		String otp1=getRandomNumberString();
+		
 		System.out.println(otp1);
 		return otp1;
 	
@@ -155,8 +164,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return e;
 	}
 
-
-
+	@Override
+	public List<FloorDetails> getAll() {
+		List<FloorDetails> floor= floorDetailsRepo.findAll();
+		return floor;
+		
+	}
 
 	
 

@@ -135,6 +135,11 @@ public class EmployeeController {
 		  }
 	}
 	
+	@GetMapping("/floors")
+    public List<FloorDetails> getFloors() {
+        return employeeService.getAll();
+    }
+	
 	@GetMapping("/floors/{floorName}")
     public FloorDetails getFloorDetailsByFloorName(@PathVariable String floorName) {
         return floorService.getFloorDetailsByFloorName(floorName);
