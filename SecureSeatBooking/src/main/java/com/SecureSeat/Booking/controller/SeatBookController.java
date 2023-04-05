@@ -67,9 +67,8 @@ public class SeatBookController {
 		
 	}
 	
-	@GetMapping("api/employee/seatnumber")
-	public List<String> seatnumberbookedfordate(){
-		LocalDate date1 = LocalDate.now();
+	@GetMapping("api/employee/seatnumber/{date1}")
+	public List<String> seatnumberbookedfordate(@PathVariable LocalDate date1){
 		List<String> seatNos = seatBook.getSeatNoByDate(date1);
 		return seatNos;
 		}
