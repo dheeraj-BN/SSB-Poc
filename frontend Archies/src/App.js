@@ -20,9 +20,11 @@ import ResetPassword from "./routes/ResetPassword"
 import Login from "./routes/LoginForm";
 import Developer from "./components/DeveloperDashboard/developer";
 import AddFloor from "./components/DeveloperDashboard/addfloor";
-import React, { useState } from "react";
 import ProfileAdmin from "./components/AdminDashboard/ProfileAdmin";
 import Holiday from "./components/AdminDashboard/Holiday";
+import AddShift from "./components/AdminDashboard/AddShift";
+import React from "react";
+import Token from "./components/AdminDashboard/Token";
 
 
 export const  TokenContext = React.createContext();
@@ -44,6 +46,8 @@ function App() {
           <Route path="/profileadmin" element={<ProfileAdmin/>} />
           <Route path="/empdata" element={<EmployeeInfo />} />
           <Route path="/holiday" element={<Holiday/>}/>
+          <Route path="/addshift" element={<AddShift/>}/>
+          <Route path="/generatetoken" element={<Token/>}/>
           {/* user dash */}
           <Route path="/"  element={<UserDashboard/>} />
           <Route path="/booking" element={<SeatBookingForm/>} />
