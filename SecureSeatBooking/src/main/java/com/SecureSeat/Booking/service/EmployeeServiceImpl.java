@@ -62,15 +62,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return seatBookDAO.getlatestbookingdetailsofid(id);
 	}
 	
+	
+	//This method saves the details of the last booking made by a user, for a given ID, and checks if the seat is available
 	@Override
 	public String savelastbookingdetails(int id,LocalDate from,LocalDate to) {
+		
+		// Get the details of the last booking made by the user
 		BookingDetails bookingDetails = seatBookDAO.getlatestbookingdetailsofid(id);
 		System.out.println(bookingDetails);
+		
+		// Create a new BookingDetails object with the same details as the last booking
 		BookingDetails book = new BookingDetails();
 		book.setSeatNo(bookingDetails.getSeatNo());
 		book.setFoodStatus(bookingDetails.isFoodStatus());
 		book.setUserDeatils(bookingDetails.getUserDeatils());
 		book.setShiftDetails(bookingDetails.getShiftDetails());
+		// Check if the seat is available for the given date range
+		logger.info("Seat availability status for user ID  {}", id);
 		return seatBook.checkseatfordate(book, from, to);
 		
 	}
@@ -101,9 +109,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public String generateOtp() {
+	public String generateOtp(String phoneNo) {
 		String otp1=getRandomNumberString();
-		
+	Employee emp=employeeRepo.findByEmployeePhoneNo(phoneNo);
+		sendSMS.SendSms(emp, otp1);
 		System.out.println(otp1);
 		return otp1;
 	
@@ -166,7 +175,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<FloorDetails> getAll() {
+		logger.info("List of all the floors");
 		List<FloorDetails> floor= floorDetailsRepo.findAll();
+		logger.info("loaded" +floor.size() + "floors");
 		return floor;
 		
 	}

@@ -16,7 +16,7 @@ public interface EmployeeRepo  extends JpaRepository<Employee, Integer>{
 	
 	List<Employee> findAll();
 	
-	
+	Employee findByEmployeePhoneNo(String phoneNo);
 
 
 }
