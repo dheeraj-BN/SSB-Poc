@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.FloorDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 
 public interface EmployeeService {
@@ -27,7 +28,7 @@ public interface EmployeeService {
 
 	String getRandomNumberString();
 
-	String generateOtp(String phoneNo);
+
 
 	String forgotPasword(int id, String password);
 
@@ -35,6 +36,10 @@ public interface EmployeeService {
 	BookingDetails getbookingdetailsbyid(int id);
 
 	String savelastbookingdetails(int id, LocalDate from, LocalDate to);
+
+	List<FloorDetails> getAll();
+
+	String generateOtp(String phoneNo);
 
 
 
