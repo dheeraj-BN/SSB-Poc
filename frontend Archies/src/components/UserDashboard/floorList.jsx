@@ -11,7 +11,7 @@ function FloorList() {
   
 
   useEffect(() => {
-    fetch("http://10.191.80.98:9090/api/developer/floordetails", {
+    fetch("http://10.191.80.98:9090/api/employee/floors", {
       method: "GET",
 
       headers: {
@@ -41,7 +41,9 @@ function FloorList() {
             let a1 = "/floor"+idx
       return <div className="floor0">
         <Link to={a1}>
-          <button className="floorbtn">{val.floorName}</button>
+          <button onClick={localStorage.setItem("floorid",val.floorName
+          
+          )} className="floorbtn">{val.floorName}</button>
         </Link>
       </div>
            

@@ -54,71 +54,76 @@ public class LoginController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
-		
-		try {
-			Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-			//System.out.println("Login-Controller " + authenticationRequest.getUsername());
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			// String token = JwtUtils.generateToken(authentication);
-
-			String name = authentication.getName();
-			int id = 0;
-			String token;
-			boolean passwordStatus = false;
-			List<Employee> employee = empRepo.findByEmployeeEmail(name);
-			if (employee.size() > 0) {
-				UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
-				id = user.getUserId();
-				passwordStatus=user.isStatus();
-			}
-			//
-
-			//System.out.println("Login-Controller" + authentication.getName());
-			List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-					.collect(Collectors.toList());
-
-			if (authentication.isAuthenticated()) {
-				token = jwtService.generateToken(name, roles);
-				logger.info("Generated token for user: "+authenticationRequest.getUsername());
-				//System.out.println("Login-Controller" + token);
-			} else {
-				throw new UsernameNotFoundException("Invalid User !");
-			}
-
-			String roless = "ROLE_" + roles.get(0);
+	// Handles the POST request for user login
+		@PostMapping("/login")
+		public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
 			
-			
+			try {
+				// Authenticates the user using the provided username and password
+				Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+						authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+				// Sets the authentication object to the security context holder
+				SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			AuthenticationResponse authenticationResponse = new AuthenticationResponse(id, name, roless, token,passwordStatus);
-			logger.info("Generated response for login request ");
-			return ResponseEntity.ok(authenticationResponse);
+				String name = authentication.getName();
+				int id = 0;
+				String token;
+				boolean passwordStatus = false;
+				// Retrieves the employee details using the authenticated user's email
+				List<Employee> employee = empRepo.findByEmployeeEmail(name);
+				if (employee.size() > 0) {
+					// Retrieves the user details using the retrieved employee
+					UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
+					id = user.getUserId();
+					passwordStatus=user.isStatus();
+				}
 
-		} catch (BadCredentialsException e) {
-			logger.error("Exception occurred while authenticating user", e);
-			throw new RuntimeException("Incorrect email or password", e);
+				// Retrieves the user's roles from the authentication object
+				List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+						.collect(Collectors.toList());
+
+				if (authentication.isAuthenticated()) {
+					// Generates a JWT token using the user's email and roles
+					token = jwtService.generateToken(name, roles);
+					logger.info("Generated token for user: "+authenticationRequest.getUsername());
+				} else {
+					throw new UsernameNotFoundException("Invalid User !");
+				}
+
+				String roless = "ROLE_" + roles.get(0);
+				
+				// Creates an AuthenticationResponse object containing the user's details and JWT token
+				AuthenticationResponse authenticationResponse = new AuthenticationResponse(id, name, roless, token,passwordStatus);
+				logger.info("Generated response for login request ");
+				return ResponseEntity.ok(authenticationResponse);
+
+			} catch (BadCredentialsException e) {
+				logger.error("Exception occurred while authenticating user", e);
+				throw new RuntimeException("Incorrect email or password", e);
+			}
 		}
-	}
 	
 
 
+	//test api for checking authorization for admin
 	@GetMapping("/api/admin/test/{userId}")
 	public String adminHome(@PathVariable int userId) {
 		return "ADMIN HOME";
 	}
 
+	//test api for checking authorization for employee
 	@GetMapping("/api/employee/test/{userId}")
 	public String userHome(@PathVariable int userId) {
 		return "USER HOME";
 	}
 
+	//test api for checking authorization for developer
 	@GetMapping("/api/developer/test/{userId}")
 	public String developerHome(@PathVariable int userId) {
 		return "Developer HOME";
 	}
 	
+	//mapping when the logout is successful
 	@GetMapping("/clear/logout")
 	public String login() {
 		return "return to Login Page";
