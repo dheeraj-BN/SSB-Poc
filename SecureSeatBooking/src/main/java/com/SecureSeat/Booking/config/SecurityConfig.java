@@ -63,7 +63,7 @@ public class SecurityConfig {
 //	    config.setAllowedOrigins(Arrays.asList("http://10.191.80.120:3000", "http://10.191.80.118:3000"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		config.setAllowedHeaders(Arrays.asList("*"));
-		config.setAllowCredentials(true);
+		//config.setAllowCredentials(true);
 		config.setExposedHeaders(Arrays.asList("Authorization"));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
