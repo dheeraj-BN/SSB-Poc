@@ -27,7 +27,7 @@ public interface EmployeeService {
 
 	String getRandomNumberString();
 
-	String generateOtp(String phoneNo);
+	String generateOtp( );
 
 	String forgotPasword(int id, String password);
 

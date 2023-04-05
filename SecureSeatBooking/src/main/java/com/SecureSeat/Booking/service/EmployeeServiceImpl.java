@@ -63,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		book.setFoodStatus(bookingDetails.isFoodStatus());
 		book.setUserDeatils(bookingDetails.getUserDeatils());
 		book.setShiftDetails(bookingDetails.getShiftDetails());
-		return seatBook.savebookeddetails(book, from, to);
+		return seatBook.checkseatfordate(book, from, to);
 		
 	}
 	
@@ -93,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public String generateOtp(String phoneNo) {
+	public String generateOtp() {
 		String otp1=getRandomNumberString();
 		System.out.println(otp1);
 		return otp1;
