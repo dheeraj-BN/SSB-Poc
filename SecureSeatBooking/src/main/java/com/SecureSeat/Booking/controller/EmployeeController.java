@@ -38,20 +38,25 @@ public class EmployeeController {
 	private UserFirstTimeLoginService userFirstTimeLoginService;
 	
 	
-//	
+	
+
+
+	// This method handles GET requests for retrieving the last booking details of an employee by ID.
 	@GetMapping("/api/employee/lastbookingdetails/{id}")
 	public BookingDetails getbookingdetails(@PathVariable int id) {
 		System.out.println(id);
 		return employeeService.getbookingdetailsbyid(id);
 	}
 	
+	
+	// This method handles POST requests for saving the last booking details of an employee by ID.
 	@PostMapping("/api/employee/savelastbooking/{id}")
     public String savelastbookingdetails(@PathVariable int id,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
 		return employeeService.savelastbookingdetails(id, from, to);
 		
 	}
 	
-	
+	// This method handles POST requests for saving new password.
 	@PostMapping("/api/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
 		String message=	employeeService.forgotPasword( id,newPassword);
@@ -59,9 +64,9 @@ public class EmployeeController {
 		
 	}
 	
-	
 
-	
+
+	// This method handles POST requests getting OTP
 	@PostMapping("/api/forgot/password")
 	public String generateOtp(@RequestParam String phoneNo) {
 		System.out.println("hii");
@@ -70,11 +75,11 @@ public class EmployeeController {
 	}
 	
 	
-	
+
+	// This method handles PUT requests for saving new password.
 	@PutMapping("/api/employee/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
-//		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfirmMail(id);
 		return message;
@@ -85,6 +90,9 @@ public class EmployeeController {
 		  }
 	}
 	
+	
+
+	// This method handles GET requests for retrieving the todays booked details of an employee by ID.
 	@GetMapping("/api/employee/booked/details/{id}")
 	public BookingDetails bookedInfo(@PathVariable int id)throws NullPointerException  {
 		try {
@@ -99,6 +107,8 @@ public class EmployeeController {
 		
 	}
 	 
+	
+	// This method handles GET requests for retrieving the next booked details of an employee by ID.
 	@GetMapping("/api/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
 		System.out.println("hi");
@@ -110,6 +120,8 @@ public class EmployeeController {
 //        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
 //    }
 	
+	
+	// This method handles GET requests for retrieving the employee details of an employee by ID.
 	@GetMapping("/api/employee/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
 		try {
@@ -123,12 +135,14 @@ public class EmployeeController {
 	  }
 	}
 	
-	
+	// This method handles GET requests for retrieving the list of employee details 
 	@GetMapping("/api/employee/employeeList")
 	public List<Employee> getAllEmployees(){
 		return employeeService.getAllEmployee();
 	}
 	
+	
+	// This method handles PUT requests for changing one time password
 	@PutMapping("/api/employee/change/FTChangepassword/{id}")
 	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
@@ -143,11 +157,13 @@ public class EmployeeController {
 		  }
 	}
 	
+	// This method handles GET requests retrieving the floor details 
 	@GetMapping("/api/employee/floors")
     public List<FloorDetails> getFloors() {
         return employeeService.getAll();
     }
 	
+	// This method handles GET requests retrieving the list of floor details 
 	@GetMapping("/api/employee/floors/{floorName}")
     public FloorDetails getFloorDetailsByFloorName(@PathVariable String floorName) {
         return floorService.getFloorDetailsByFloorName(floorName);

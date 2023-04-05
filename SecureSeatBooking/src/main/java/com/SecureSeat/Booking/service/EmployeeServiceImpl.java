@@ -56,9 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	
-	
+	//Get the details of the last booking made by the user with the given ID
 	@Override
 	public BookingDetails getbookingdetailsbyid(int id) {
+		logger.info("Last booking details for user ID ", id);
 		return seatBookDAO.getlatestbookingdetailsofid(id);
 	}
 	
@@ -111,23 +112,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public String generateOtp(String phoneNo) {
 		String otp1=getRandomNumberString();
-	Employee emp=employeeRepo.findByEmployeePhoneNo(phoneNo);
-		sendSMS.SendSms(emp, otp1);
+//	Employee emp=employeeRepo.findByEmployeePhoneNo(phoneNo);
+//		sendSMS.SendSms(emp, otp1);
 		System.out.println(otp1);
 		return otp1;
 	
 	}
 	
-	
+	//This method is used to change the password for a user
 	@Override
 	public String changePassword(int id,String oldPassword,String newPassword) {
 		logger.info("getting the user_id and user details for change password");
 		logger.debug("user_id is" +id);
+		// retrieving the user details from the database using user_id
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
 		logger.debug("userInfo" +user);
-//		System.out.println(config.passwordEncoder().matches(oldPassword,user.getPassword()));
+		// checking if the old password entered by the user is correct
 		if(config.passwordEncoder().matches(oldPassword,user.getPassword())) {
-			
+			// if the old password is correct, encoding the new password and updating the password in the database
 			employeeDAO.changePasswor(config.passwordEncoder().encode(newPassword),id);
 			return "Password changed";
 		}else {
@@ -137,33 +139,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	
+	
+	//This method is used to retrieve the booking details of an employee for today.
 	@Override
 	public BookingDetails getEmpBookedInfo(int id) {
 		logger.info("Fetching booking details of employee booked for today");
+		// retrieving the user details from the database using the user id
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
 		logger.debug("employee "+user);
 		System.out.println(user);
+		// retrieving the booking details of the employee for today
 		BookingDetails info=bookingDetailsRepo.findByUserDeatilsAndBookedDateEquals(user, LocalDate.now());
 		return info;	
 	}
 	
+	
+	//This method retrieves a list of BookingDetails for an employee booked for the next days
 	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id) {
 		logger.info("Fetching booking details of employee booked for next days");
 		UserDeatils user=userDetailsRepo.findByUserId(id).get();
 		logger.debug("employee "+user);
+		 // retrieve a list of BookingDetails objects for the given employee id and for the next days 
 		List<BookingDetails> info=employeeDAO.getEmpBookedInfoBookedNext(id, LocalDate.now());
 		return info;	
 	}
 	
+	
+	// This method retrieves the details of an employee by their ID
 	@Override
 	public Employee getEmployee(int id) {
 		logger.info("Retreving the particular employee details");
+		 // Use the employee repository to find the employee with the given ID
 		Employee e= employeeRepo.findById(id);
 		logger.debug("employee details" +e);
 		return e;
 	}
 	
+	
+	// This method retrieves the details of an list employee by their ID
 	@Override
 	public List<Employee> getAllEmployee(){
 		logger.info("List of all employee");
@@ -173,6 +187,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return e;
 	}
 
+	
+	// This method retrieves the details of an list floor details by their ID
 	@Override
 	public List<FloorDetails> getAll() {
 		logger.info("List of all the floors");
