@@ -171,10 +171,10 @@ public class UserServiceImpl implements Userservice {
 			LOGGER.debug("Holiday added: {}", holidayDetails.getHolidayDate());
 			return "Holiday added";
 		}
-
+		holidayDetailsRepo.save(holidayDetails);
 		// If the holiday already exists, return an appropriate message
 		LOGGER.debug("Holiday already exists: {}", holidayDetails.getHolidayDate());
-		return "Holiday already added";
+		return "Holiday added";
 	}
 	@Override
 	public List<HolidayDetails> allHolidays() {

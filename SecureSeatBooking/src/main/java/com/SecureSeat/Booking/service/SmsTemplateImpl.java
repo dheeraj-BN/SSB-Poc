@@ -1,5 +1,7 @@
 package com.SecureSeat.Booking.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,8 @@ import com.SecureSeat.Booking.entity.Employee;
 
 @Service
 public class SmsTemplateImpl implements SmsTemplate {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SmsTemplateImpl.class);
 
 	@Autowired
 	private SendSMS sendSMS;
@@ -24,14 +28,15 @@ public class SmsTemplateImpl implements SmsTemplate {
 	 */
 	@Override
 	public void sentOTP(Employee employee, String otp) {
-	// Compose the message with the OTP and the employee's name
-	String message = "Hello " + employee.getEmployeeName() + ",\r\n" + "\r\n"
-	+ "Your OTP for resetting your password is " + otp
-	+ ". Please enter this code in the password reset page to complete the process.\r\n" + "\r\n"
-	+ "Thank you,\r\n" + "Secure Seat Booking";
-	// Send the message to the employee using the sendSMS object's SendSms method
-	//logger.info("Sending OTP to the employee with name {} using SendSms method of sendSMS object.", employee.getEmployeeName());
-	sendSMS.SendSms(employee, message);
+		// Compose the message with the OTP and the employee's name
+		String message = "Hello " + employee.getEmployeeName() + ",\r\n" + "\r\n"
+				+ "Your OTP for resetting your password is " + otp
+				+ ". Please enter this code in the password reset page to complete the process.\r\n" + "\r\n"
+				+ "Thank you,\r\n" + "Secure Seat Booking";
+		// Send the message to the employee using the sendSMS object's SendSms method
+		LOGGER.info("Sending OTP to the employee with name {} using SendSms method of sendSMS object.",
+				employee.getEmployeeName());
+		sendSMS.SendSms(employee, message);
 	}
 
 	/**
@@ -60,6 +65,7 @@ public class SmsTemplateImpl implements SmsTemplate {
 				+ "\r\n" + "Best regards,\r\n" + "Valtech Company";
 		// Send the message to the employee using the sendSMS object's SendSms method
 		sendSMS.SendSms(employee, message);
+		LOGGER.info("Success notification message sent to employee: " + employee.getEmployeeName());
 	}
 
 	/**
@@ -84,6 +90,8 @@ public class SmsTemplateImpl implements SmsTemplate {
 				+ "\r\n" + "Thank you for your understanding.\r\n" + "\r\n" + "Best regards,\r\n"
 				+ "Valtech Seat Booking Team.";
 		// Send the SMS message to the employee using the sendSMS object
+		LOGGER.info("Sending cancellation message to the employee with name {} using SendSms method of sendSMS object.",
+				employee.getEmployeeName());
 		sendSMS.SendSms(employee, message);
 	}
 
