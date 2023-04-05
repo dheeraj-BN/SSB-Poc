@@ -5,6 +5,7 @@
 
   padding: 20px;
   color: rgb(136, 136, 133);
+  
 }
 
 .seat-map {
@@ -95,4 +96,7 @@ appearance: none;
 input[type=radio]:checked{
   background-color: #87ff96;
    
+}
+.Nextbtn{
+  display: inline-block;
 }

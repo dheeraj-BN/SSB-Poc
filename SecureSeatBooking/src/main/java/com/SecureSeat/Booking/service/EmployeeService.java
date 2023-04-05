@@ -28,7 +28,7 @@ public interface EmployeeService {
 
 	String getRandomNumberString();
 
-	String generateOtp( );
+
 
 	String forgotPasword(int id, String password);
 
@@ -38,6 +38,8 @@ public interface EmployeeService {
 	String savelastbookingdetails(int id, LocalDate from, LocalDate to);
 
 	List<FloorDetails> getAll();
+
+	String generateOtp(String phoneNo);
 
 
 
