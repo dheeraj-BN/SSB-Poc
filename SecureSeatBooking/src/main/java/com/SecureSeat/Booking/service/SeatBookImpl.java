@@ -51,6 +51,9 @@ public class SeatBookImpl implements SeatBook {
 
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private SmsTemplate smsTemplate;
 
 	private static final Logger logger = LoggerFactory.getLogger(SeatBookImpl.class);
 
@@ -99,6 +102,7 @@ public class SeatBookImpl implements SeatBook {
 				bookingDetails.setBookingStatus("PENDING");
 				bookingDetailsRepo.save(bookingDetails);
 				logger.info("seat has been booked for user {} for date {}", employee, from);
+				smsTemplate.SuccessfulSeatBooking(employee, bookingDetails, tokenvalue);
 				return "Seat has been booked for today";
 
 			} else {
@@ -126,6 +130,7 @@ public class SeatBookImpl implements SeatBook {
 	public String seatbookingforweek(BookingDetails bookingDetails, LocalDate from, LocalDate to) {
 		logger.info("seat booking details for date{} to {}", from, to);
 		int flag = 0;
+		String tokenvalue = null;
 		LocalDate to1 = to.plusDays(1);
 		for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
 			logger.info("checking weekends for date { }", i);
@@ -144,7 +149,7 @@ public class SeatBookImpl implements SeatBook {
 						UserDeatils user = bookingDetails.getUserDeatils();
 						Employee employee = user.getEmployee();
 						int employeeid = employee.getEmployeeId();
-						String tokenvalue = date1 + employeeid;
+						tokenvalue = date1 + employeeid;
 						bookingDetails.setToken(tokenvalue);
 
 						BookingDetails book = new BookingDetails(bookingDetails.getSeatNo(),
@@ -161,6 +166,7 @@ public class SeatBookImpl implements SeatBook {
 
 		if (flag == 1) {
 			logger.info("seat has been booked for week");
+			smsTemplate.SuccessfulSeatBooking(bookingDetails.getUserDeatils().getEmployee(), bookingDetails,tokenvalue);
 			return "seat has been booked for week";
 		} else {
 			logger.info("seat has been already booked for that week");
@@ -381,12 +387,13 @@ public class SeatBookImpl implements SeatBook {
 			LocalTime time = LocalTime.now();
 			int hour = time.getHour();
 			int j = i + 5;
-			System.out.println(j);
 			if (j >= 24) {
 				j = j - 24;
 			}
 			if (j >= hour) {
 				seatBookDAO.updatebookingstatus(book.getBookingId());
+				smsTemplate.CanceledBooking(book.getUserDeatils().getEmployee(), book);
+				mailTemplates.dailyBookedSeatCancled(book);
 			}
 		}
 	}
@@ -408,7 +415,12 @@ public class SeatBookImpl implements SeatBook {
 		for (LocalDate i = from; i.isBefore(to1); i = i.plusDays(1)) {
 			int checkseatstatus = checkseatalreadybooked(bookingDetails.getSeatNo(), i);
 			if (checkseatstatus == 1) {
-				savebookeddetails(bookingDetails, i, i);
+				BookingDetails book = new BookingDetails();
+				book.setSeatNo(bookingDetails.getSeatNo());
+				book.setFoodStatus(bookingDetails.isFoodStatus());
+				book.setShiftDetails(bookingDetails.getShiftDetails());
+				book.setUserDeatils(bookingDetails.getUserDeatils());
+				saveBookedDetailsforday(book, i);
 			} else {
 				return "seat has already booked for " + i;
 			}
