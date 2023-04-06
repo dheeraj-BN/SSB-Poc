@@ -1,0 +1,46 @@
+.tokenform {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+.tokenform  label {
+    margin-bottom: 5px;
+  }
+  
+.tokenform  input[type="text"],
+  input[type="email"],
+  input[type="tel"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  
+.tokenfo.tokenformrm button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+.tokenform  button[type="submit"] {
+    margin-right: 10px;
+  }
+  
+.tokenform  button[type="button"] {
+    background-color: #ccc;
+    margin-right: 10px;
+  }
+  
+.tokenform  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  

@@ -7,28 +7,22 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Configuration;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
-import com.SecureSeat.Booking.entity.SMSconfiguration;
 import com.SecureSeat.Booking.service.SMSServiceConfiguration;
 import com.SecureSeat.Booking.service.SendSMS;
 import com.SecureSeat.Booking.service.Userservice;
-
-import jakarta.annotation.PostConstruct;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -91,10 +85,23 @@ public class AdminController {
 	}
 	
 	@PutMapping("/configSMS")
-	public void smsConfig(@RequestBody SMSconfiguration sconfiguration) {
+	public void smsConfig(@RequestBody Configuration sconfiguration) {
 		// Method to configure SMS service
 		smsServiceConfiguration.SMSConfigsave(sconfiguration);
 	}
+	
+	@PutMapping("/configEmail")
+	public void emailConfig(@RequestBody Configuration sconfiguration) {
+		// Method to configure SMS service
+		smsServiceConfiguration.emailChange(sconfiguration);
+	}
+	
+	@PutMapping("/confighours")
+	public void hourConfig(@RequestBody Configuration sconfiguration) {
+		// Method to configure SMS service
+		smsServiceConfiguration.hourChange(sconfiguration);
+	}
+	
 	
 	@GetMapping("/checkSMS")
 	public String chechSMS() {
