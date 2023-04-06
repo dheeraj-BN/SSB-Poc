@@ -65,6 +65,7 @@ public class SendMailImpl implements SendMail {
 				logger.debug("Successfully Authenticated Password!"); 
 				String username = econfiguration.getEmail_Id();
 				String password = econfiguration.getEamil_password();
+				System.out.println(username+"     "+password);
 //				String username = prop.getProperty("mail.username");
 //				String password = prop.getProperty("mail.password");
 				return new PasswordAuthentication(username, password);
@@ -73,7 +74,9 @@ public class SendMailImpl implements SendMail {
 
 		try {
 			Message message = new MimeMessage(session);
-			String username = prop.getProperty("mail.username");
+//			String username = prop.getProperty("mail.username");
+			Configuration econfiguration=  emailConfigurationRepo.findById(1).get();
+			String username = econfiguration.getEmail_Id();
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			message.setSubject(subject);
