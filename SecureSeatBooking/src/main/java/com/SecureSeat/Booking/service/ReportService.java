@@ -23,10 +23,14 @@ public interface ReportService {
 
 	List<BookingDetails> getBookingBySpecificWeek(int week);
 
+	List<BookingDetails> getEmployeeBookingDetails(int userId);
+
+	List<BookingDetails> getMonthlyBookingDetailsForUser(int userId, int month, int year);
+
 	//List<BookingDetails> getEmployeeBookings(int employeeId);
 
 
-	List<BookingDetails> getEmployeeMonthlyBookingDetails(int userId, LocalDate month);
+	//List<BookingDetails> getEmployeeMonthlyBookingDetails(int userId, LocalDate month);
 
 
 

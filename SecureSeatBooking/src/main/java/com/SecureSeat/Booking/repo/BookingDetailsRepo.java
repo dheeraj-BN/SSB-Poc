@@ -31,16 +31,21 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 	BookingDetails findByBookedDateAndSeatNo(LocalDate bookedDate,String seatNo);
 	
 
-	List<BookingDetails> findByBookedDateAndBookingStatus(LocalDate date, String status);
+//	List<BookingDetails> findByBookedDateAndBookingStatus(LocalDate date, String status);
+//
+//	List<BookingDetails> findByBookedDateBetween(LocalDate startDate, LocalDate endDate);
+//
+//	List<BookingDetails> findByUserDetailsUserId(int userId);
+//
+//	List<BookingDetails> findByUserDeatilsByUserId(int userId);
+//
+//	List<BookingDetails> findByEmployeeDeatilsByUserIdAndBookedDateBetween(int userId, LocalDate startDate,
+//			LocalDate endDate);
 
-	List<BookingDetails> findByBookedDateBetween(LocalDate startDate, LocalDate endDate);
-
-	List<BookingDetails> findByUserDeatilsEmployeeIdAndBookedDateBetween(int employeeId, LocalDate startDate,
-			LocalDate endDate);
 
 
-	List<BookingDetails> findByUserDetailsUserIdAndBookedDateBetween(int userId, LocalDate startOfMonth,
-			LocalDate endOfMonth);
+
+
 
 	
 	
