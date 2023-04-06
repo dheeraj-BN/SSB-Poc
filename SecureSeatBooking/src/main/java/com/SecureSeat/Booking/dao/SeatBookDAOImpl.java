@@ -50,7 +50,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 				+ " ON ur.user_id=ud.user_id\r\n"
 				+ "INNER JOIN employee em ON em.employee_id = ud.employee_id\r\n"
 				+ " ON ud.user_id=bd.user_id\r\n"
-				+ "where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
+				+ "where bd.user_id=? ORDER BY booked_date DESC LIMIT 1 ";
 
 	BookingDetails bookingDetails = jdbcTemplate.queryForObject(sql,new Object[] {id},(rs,rowNum) -> {
 		BookingDetails book  = new BookingDetails();
