@@ -63,12 +63,12 @@ public class UserServiceImpl implements Userservice {
 	@Override
 	@PostConstruct
 	public void init() {
-//		LOGGER.info("Initializing UserServiceImpl class");
-//		Employee employee = userDetailDao.getAdminInfo();
-//		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
-//		
-//		
-//		LOGGER.info("User Added with the result: " + result);
+		LOGGER.info("Initializing UserServiceImpl class");
+		Employee employee = userDetailDao.getAdminInfo();
+		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
+		
+		
+		LOGGER.info("User Added with the result: " + result);
 	}
 
 	/**
@@ -209,4 +209,10 @@ public class UserServiceImpl implements Userservice {
 	return userDetailDao.getemployee();
 	}
 
+	@Override
+	public void deleteHoliday(HolidayDetails holidayDetails) {
+		
+		holidayDetailsRepo.delete(holidayDetails);
+		
+	}
 }
