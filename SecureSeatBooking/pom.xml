@@ -114,6 +114,23 @@
 			<artifactId>twilio-spring-boot-starter</artifactId>
 			<version>0.1.1</version>
 		</dependency>
+		
+	<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-webmvc-core</artifactId>
+    <version>1.5.12</version>
+</dependency>
+
+
+<dependency>
+  <groupId>org.springdoc</groupId>
+  <artifactId>springdoc-openapi-security</artifactId>
+  <version>1.5.12</version>
+</dependency>
+
+
+
+	
 
 
 	</dependencies>
