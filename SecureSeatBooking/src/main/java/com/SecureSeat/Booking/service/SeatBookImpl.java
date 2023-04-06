@@ -94,12 +94,16 @@ public class SeatBookImpl implements SeatBook {
 				bookingDetails.setDate(from);
 				bookingDetails.setBookedTimings(LocalTime.now());
 				String date1 = d1.format(DateTimeFormatter.ofPattern("ddMMYYYY"));
-				UserDeatils user = bookingDetails.getUserDeatils();
+				ShiftDetails shift = shiftDetailsRepo.findByShiftTimings(bookingDetails.getShiftDetails().getShiftTimings());
+				bookingDetails.setShiftDetails(shift);
+				UserDeatils user = userDetailsRepo.findById(bookingDetails.getUserDeatils().getUserId()).get();
+				bookingDetails.setUserDeatils(user);
 				Employee employee = user.getEmployee();
 				int employeeid = employee.getEmployeeId();
 				String tokenvalue = date1 + employeeid;
 				bookingDetails.setToken(tokenvalue);
 				bookingDetails.setBookingStatus("PENDING");
+	
 				bookingDetailsRepo.save(bookingDetails);
 				logger.info("seat has been booked for user {} for date {}", employee, from);
 				smsTemplate.SuccessfulSeatBooking(employee, bookingDetails, tokenvalue);
@@ -282,6 +286,8 @@ public class SeatBookImpl implements SeatBook {
 		List<BookingDetails> bookingdetails = seatBookDAO.getbookingdetailsbydate(bookeddate);
 		return bookingdetails;
 	}
+	
+
 
 //	Fetching user details from user id
 	@Override

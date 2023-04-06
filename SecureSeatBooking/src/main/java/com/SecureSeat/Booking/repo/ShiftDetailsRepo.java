@@ -7,5 +7,6 @@ import com.SecureSeat.Booking.entity.ShiftDetails;
 
 @Repository
 public interface ShiftDetailsRepo extends JpaRepository<ShiftDetails, Integer>{
+	ShiftDetails findByShiftTimings(String shifttimings);
 
 }
