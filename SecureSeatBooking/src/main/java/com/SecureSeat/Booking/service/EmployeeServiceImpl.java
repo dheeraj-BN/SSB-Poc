@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private SeatBookDAO seatBookDAO;
 	
 	@Autowired
-	private SendSMS sendSMS;
+	private SmsTemplate smsTemplate;
 	
 	@Autowired
 	private FloorDetailsRepo floorDetailsRepo;
@@ -111,9 +111,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public String generateOtp(String phoneNo) {
+		System.out.println("hi");
 		String otp1=getRandomNumberString();
-//	Employee emp=employeeRepo.findByEmployeePhoneNo(phoneNo);
-//		sendSMS.SendSms(emp, otp1);
+	Employee emp1=employeeRepo.findByEmployeePhoneNo(phoneNo);
+	System.out.println(emp1.getEmployeePhoneNo());
+//	String emp=emp1.getEmployeePhoneNo();
+	smsTemplate.sentOTP(emp1, otp1);
 		System.out.println(otp1);
 		return otp1;
 	
