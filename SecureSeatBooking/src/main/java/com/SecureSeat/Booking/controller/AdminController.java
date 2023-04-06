@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,10 +74,9 @@ public class AdminController {
 		return s;
 	}
 	
-	@PutMapping("/modifiHoliday")
-	public void editHoliday(@RequestParam LocalDate date, @RequestBody HolidayDetails holidayDetails) {
-		// Method to edit holiday details
-	}
+	
+	
+	
 	
 	@GetMapping("/notRegistered")
 	public List<Employee> listOfEmployeeNotRegistered(){
@@ -108,11 +108,17 @@ public class AdminController {
 		// Method to send SMS to admin
 		Employee employee = userService.adminInfo();
 		
-		return smsImpl.SendSms(employee, "Checking the Token value experied");
+		return smsImpl.SendSms(employee, "Checking the Token value experied 1");
 	}
 
 	@GetMapping("/allHolidays")
 	public List<HolidayDetails> listofHolidays() {
 		return userService.allHolidays();
+	}
+	
+	@DeleteMapping("/deleteHoliday")
+	public void deleteHoliday(@RequestBody HolidayDetails holidayDetails) {
+		userService.deleteHoliday(holidayDetails);
+		
 	}
 }
