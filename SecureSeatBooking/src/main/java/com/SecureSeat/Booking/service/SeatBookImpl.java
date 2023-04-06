@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.dao.SeatBookDAO;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Configuration;
 import com.SecureSeat.Booking.entity.Employee;
 import com.SecureSeat.Booking.entity.HolidayDetails;
 import com.SecureSeat.Booking.entity.ShiftDetails;
 import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
+import com.SecureSeat.Booking.repo.ConfigurationRepo;
 import com.SecureSeat.Booking.repo.HolidayDetailsRepo;
 import com.SecureSeat.Booking.repo.ShiftDetailsRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
@@ -54,6 +56,9 @@ public class SeatBookImpl implements SeatBook {
 	
 	@Autowired
 	private SmsTemplate smsTemplate;
+	
+	@Autowired
+	private  ConfigurationRepo configurationRepo;
 
 	private static final Logger logger = LoggerFactory.getLogger(SeatBookImpl.class);
 
@@ -103,7 +108,6 @@ public class SeatBookImpl implements SeatBook {
 				String tokenvalue = date1 + employeeid;
 				bookingDetails.setToken(tokenvalue);
 				bookingDetails.setBookingStatus("PENDING");
-	
 				bookingDetailsRepo.save(bookingDetails);
 				logger.info("seat has been booked for user {} for date {}", employee, from);
 				smsTemplate.SuccessfulSeatBooking(employee, bookingDetails, tokenvalue);
@@ -150,12 +154,14 @@ public class SeatBookImpl implements SeatBook {
 						bookingDetails.setDate(i);
 						bookingDetails.setBookedTimings(LocalTime.now());
 						String date1 = bookeddate.format(DateTimeFormatter.ofPattern("ddMMYYYY"));
-						UserDeatils user = bookingDetails.getUserDeatils();
+						ShiftDetails shift = shiftDetailsRepo.findByShiftTimings(bookingDetails.getShiftDetails().getShiftTimings());
+						bookingDetails.setShiftDetails(shift);
+						UserDeatils user = userDetailsRepo.findById(bookingDetails.getUserDeatils().getUserId()).get();
+						bookingDetails.setUserDeatils(user);
 						Employee employee = user.getEmployee();
 						int employeeid = employee.getEmployeeId();
 						tokenvalue = date1 + employeeid;
 						bookingDetails.setToken(tokenvalue);
-
 						BookingDetails book = new BookingDetails(bookingDetails.getSeatNo(),
 								bookingDetails.isFoodStatus(), bookeddate, LocalTime.now(), null, "PENDING", tokenvalue,
 								user, bookingDetails.getShiftDetails());
@@ -392,7 +398,9 @@ public class SeatBookImpl implements SeatBook {
 			int i = Integer.parseInt(n[0]);
 			LocalTime time = LocalTime.now();
 			int hour = time.getHour();
-			int j = i + 5;
+			Configuration config = configurationRepo.findById(1).get();
+            int scheduletime = config.getSeat_Cancelation_time();
+			int j = i + scheduletime;
 			if (j >= 24) {
 				j = j - 24;
 			}
