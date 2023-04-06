@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.SecureSeat.Booking.entity.Configuration;
 import com.SecureSeat.Booking.entity.MailDetails;
+import com.SecureSeat.Booking.repo.ConfigurationRepo;
 import com.SecureSeat.Booking.repo.MailDetailsRepo;
 
 @Service
@@ -32,6 +34,9 @@ public class SendMailImpl implements SendMail {
 	
 	@Autowired
 	private MailDetailsRepo mailDetailsRepo;
+	
+	@Autowired
+	private ConfigurationRepo emailConfigurationRepo;
 
 	@Override
 	public void sendMail(String email, String subject, String body) {
@@ -55,10 +60,13 @@ public class SendMailImpl implements SendMail {
 
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
+				Configuration econfiguration=  emailConfigurationRepo.findById(1).get();
 				logger.info("Getting Password Authenticated....");
 				logger.debug("Successfully Authenticated Password!"); 
-				String username = prop.getProperty("mail.username");
-				String password = prop.getProperty("mail.password");
+				String username = econfiguration.getEmail_Id();
+				String password = econfiguration.getEamil_password();
+//				String username = prop.getProperty("mail.username");
+//				String password = prop.getProperty("mail.password");
 				return new PasswordAuthentication(username, password);
 			}
 		});
