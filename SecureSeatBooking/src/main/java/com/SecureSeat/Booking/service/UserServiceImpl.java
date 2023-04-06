@@ -63,12 +63,12 @@ public class UserServiceImpl implements Userservice {
 	@Override
 	@PostConstruct
 	public void init() {
-		LOGGER.info("Initializing UserServiceImpl class");
-		Employee employee = userDetailDao.getAdminInfo();
-		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
-		
-		
-		LOGGER.info("User Added with the result: " + result);
+//		LOGGER.info("Initializing UserServiceImpl class");
+//		Employee employee = userDetailDao.getAdminInfo();
+//		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
+//		
+//		
+//		LOGGER.info("User Added with the result: " + result);
 	}
 
 	/**
