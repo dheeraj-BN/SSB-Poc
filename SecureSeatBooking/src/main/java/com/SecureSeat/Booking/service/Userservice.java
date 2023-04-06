@@ -52,4 +52,6 @@ public interface Userservice {
 
 	List<HolidayDetails> allHolidays();
 
+	void deleteHoliday(HolidayDetails holidayDetails);
+
 }
