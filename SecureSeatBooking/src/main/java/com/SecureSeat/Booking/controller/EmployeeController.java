@@ -23,7 +23,6 @@ import com.SecureSeat.Booking.service.MailService;
 import com.SecureSeat.Booking.service.UserFirstTimeLoginService;
 
 @RestController
-@RequestMapping("/api/employee")
 public class EmployeeController {
 	
 	@Autowired
@@ -39,42 +38,48 @@ public class EmployeeController {
 	private UserFirstTimeLoginService userFirstTimeLoginService;
 	
 	
-//	
-	@GetMapping("/lastbookingdetails/{id}")
+	
+
+
+	// This method handles GET requests for retrieving the last booking details of an employee by ID.
+	@GetMapping("/api/employee/lastbookingdetails/{id}")
 	public BookingDetails getbookingdetails(@PathVariable int id) {
 		System.out.println(id);
 		return employeeService.getbookingdetailsbyid(id);
 	}
 	
-	@PostMapping("/savelastbooking/{id}")
+	
+	// This method handles POST requests for saving the last booking details of an employee by ID.
+	@PostMapping("/api/employee/savelastbooking/{id}")
     public String savelastbookingdetails(@PathVariable int id,@RequestParam("from") LocalDate from,@RequestParam("to") LocalDate to) {
 		return employeeService.savelastbookingdetails(id, from, to);
 		
 	}
 	
-	
-	@PostMapping("/new/password/{id}")
+	// This method handles POST requests for saving new password.
+	@PostMapping("/api/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
 		String message=	employeeService.forgotPasword( id,newPassword);
 		return message;
 		
 	}
 	
-	
 
-	
-	@PostMapping("/forgot/password")
+
+	// This method handles POST requests getting OTP
+	@PostMapping("/api/forgot/password")
 	public String generateOtp(@RequestParam String phoneNo) {
 		System.out.println("hii");
-		return employeeService.generateOtp();
+		employeeService.findUserIdByPhoneNo(phoneNo);
+		return employeeService.generateOtp(phoneNo);
 	}
 	
 	
-	
-	@PutMapping("/change/password/{id}")
+
+	// This method handles PUT requests for saving new password.
+	@PutMapping("/api/employee/change/password/{id}")
 	public String changePassword(@PathVariable int id,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
-//		System.out.println("controller "+id);
 		String message=employeeService.changePassword(id,oldPassword,newPassword);
     	mailService.passwordChangeConfirmMail(id);
 		return message;
@@ -85,14 +90,27 @@ public class EmployeeController {
 		  }
 	}
 	
-	@GetMapping("/employee/booked/details/{id}")
-	public BookingDetails bookedInfo(@PathVariable int id) {
-		return employeeService.getEmpBookedInfo(id);
+	
+
+	// This method handles GET requests for retrieving the todays booked details of an employee by ID.
+	@GetMapping("/api/employee/booked/details/{id}")
+	public BookingDetails bookedInfo(@PathVariable int id)throws NullPointerException  {
+		try {
+			return employeeService.getEmpBookedInfo(id);
+			
+		}catch (NullPointerException e) {
+			 throw new ResponseStatusException(HttpStatus.OK, "Employee not found", e);
+		  } catch (Exception e) {
+		    e.printStackTrace();
+		    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred", e);
+		  }
+		
 	}
 	 
-	@GetMapping("/employee/next/booked/details/{id}")
+	
+	// This method handles GET requests for retrieving the next booked details of an employee by ID.
+	@GetMapping("/api/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
-//		sySystem.out.println("hi");
 		System.out.println("hi");
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
@@ -102,7 +120,9 @@ public class EmployeeController {
 //        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
 //    }
 	
-	@GetMapping("/employee/{id}")
+	
+	// This method handles GET requests for retrieving the employee details of an employee by ID.
+	@GetMapping("/api/employee/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
 		try {
 			System.out.println("hii");
@@ -115,13 +135,15 @@ public class EmployeeController {
 	  }
 	}
 	
-	
-	@GetMapping("/employeeList")
+	// This method handles GET requests for retrieving the list of employee details 
+	@GetMapping("/api/employee/employeeList")
 	public List<Employee> getAllEmployees(){
 		return employeeService.getAllEmployee();
 	}
 	
-	@PutMapping("/change/FTChangepassword/{id}")
+	
+	// This method handles PUT requests for changing one time password
+	@PutMapping("/api/employee/change/FTChangepassword/{id}")
 	public String changePassword(@PathVariable("id") int userId,@RequestParam("newPassword") String newPassword)throws Exception {
 		try {
 		
@@ -135,12 +157,14 @@ public class EmployeeController {
 		  }
 	}
 	
-	@GetMapping("/floors")
+	// This method handles GET requests retrieving the floor details 
+	@GetMapping("/api/employee/floors")
     public List<FloorDetails> getFloors() {
         return employeeService.getAll();
     }
 	
-	@GetMapping("/floors/{floorName}")
+	// This method handles GET requests retrieving the list of floor details 
+	@GetMapping("/api/employee/floors/{floorName}")
     public FloorDetails getFloorDetailsByFloorName(@PathVariable String floorName) {
         return floorService.getFloorDetailsByFloorName(floorName);
     }
