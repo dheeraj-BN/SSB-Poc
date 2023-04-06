@@ -89,19 +89,10 @@ public class ReportServiceImpl implements ReportService {
 
 	        return bookingDetailsList;
 	    }
+	   
+	
 
 
-//	   @Override
-//	   public List<BookingDetails> getEmployeeBookings(int userId) {
-//	        Optional<UserDeatils> userDetails = detailsRepo.findByUserId(userId);
-//	        if (userDetails.isPresent()) {
-//	            LocalDate startDate = LocalDate.now();
-//	            LocalDate endDate = startDate.plusDays(7);
-//	            List<BookingDetails> bookings = bookingDetailsRepo.findByUserDetailsAndBookedDateBetween(userDetails.get(), startDate, endDate);
-//	            return bookings;
-//	        } else {
-//	            throw new EntityNotFoundException("User not found with id: " + userId);
-//	        }
-//	    }
+
 	   
 }

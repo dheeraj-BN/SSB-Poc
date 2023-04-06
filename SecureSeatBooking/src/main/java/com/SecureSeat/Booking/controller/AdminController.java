@@ -74,10 +74,6 @@ public class AdminController {
 		return s;
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/notRegistered")
 	public List<Employee> listOfEmployeeNotRegistered(){
 		// Method to retrieve a list of employees not registered

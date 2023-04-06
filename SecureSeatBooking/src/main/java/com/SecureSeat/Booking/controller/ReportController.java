@@ -3,8 +3,11 @@ package com.SecureSeat.Booking.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +91,7 @@ public class ReportController {
 	    }
 	   
 	   
+
 	  
 	   @GetMapping("/date/{bookedDate}")
 		public List<BookingDetails> getBookingByDate(@PathVariable String bookedDate) {
@@ -140,18 +144,6 @@ public class ReportController {
 
 
 	   
-	   
-//	   @GetMapping("/bookings/employee/{emp_id}")
-//	   public List<BookingDetails> getEmployeeBookings(@PathVariable int emp_id, @RequestParam int year, @RequestParam int month) {
-//	       LocalDate startDate = LocalDate.of(year, month, 1);
-//	       LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-//	       
-//	       Employee employee = employeeRepo.findById(emp_id);
-//	       UserDeatils userDetails = detailsRepo.findByEmployee(employee).orElseThrow(EntityNotFoundException::new);
-//	       List<BookingDetails> bookingDetails = bookingDetailsRepo.findByUserDeatilsAndBookedDateBetween(userDetails, startDate, endDate);
-//	       
-//	       return bookingDetails;
-//	   }
 
 
 	   @GetMapping("/bookings/employee/{emp_id}/{year}/{month}")
@@ -166,6 +158,55 @@ public class ReportController {
 
 
 
-	  
+
+    
+	   
+	   @GetMapping("/bookings/employee/{emp_id}/{year}/{month}/{week}")
+	   public List<BookingDetails> getEmployeeBookingsForWeek(@PathVariable int emp_id, @PathVariable int year, @PathVariable int month, @PathVariable int week) {
+	       Employee employee = employeeRepo.findById(emp_id);
+	       UserDeatils userDetails = detailsRepo.findByEmployee(employee).orElseThrow(EntityNotFoundException::new);
+	       LocalDate startDate = LocalDate.of(year, month, 1).with(TemporalAdjusters.firstDayOfMonth()).plusWeeks(week - 1);
+	       LocalDate endDate = startDate.plusDays(6);
+	       return bookingDetailsRepo.findByUserDeatilsAndBookedDateBetween(userDetails, startDate, endDate);
+	   }
+	   
+	   
+	   
+
+		@GetMapping("/booking-count")
+		public Long getTotalBookingCounts() {
+			return bookingDetailsRepo.count();
+		}
+		
+		
+//		
+//		@GetMapping("/bookings/count/{date}")
+//		public Long getBookingCountByDate(
+//		    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+//		) {
+//		    return bookingDetailsRepo.countByBookedDate(date);
+//		}
+
+	
+		
+		@GetMapping("/bookings/count/{date}")
+		public Long getBookingCountByDate(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+		    return bookingDetailsRepo.countByBookedDate(date);
+		}
+		
+		
+		@GetMapping("/employee-count/{date}/{foodStatus}")
+		public long getEmployeeCount(@PathVariable String date, @PathVariable boolean foodStatus) {
+		    LocalDate bookingDate = LocalDate.parse(date);
+		    List<BookingDetails> bookingDetailsList = bookingDetailsRepo.findByBookedDate(bookingDate);
+		    if (foodStatus) {
+		        return bookingDetailsList.stream().filter(bookingDetails -> bookingDetails.isFoodStatus()).count();
+		    } else {
+		        return bookingDetailsList.stream().filter(bookingDetails -> !bookingDetails.isFoodStatus()).count();
+		    }
+		}
+
+		
+		
 
 }
