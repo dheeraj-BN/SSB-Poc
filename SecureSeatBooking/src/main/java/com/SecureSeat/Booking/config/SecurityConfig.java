@@ -64,6 +64,7 @@ public class SecurityConfig {
 		// Configuring CORS policy
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(Arrays.asList("*"));
+		//config.setAllowedOrigins(Arrays.asList("http://10.191.80.120:3000", "http://10.191.80.118:3000"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		config.setAllowedHeaders(Arrays.asList("*"));
 		config.setExposedHeaders(Arrays.asList("Authorization"));
@@ -76,9 +77,17 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Configuring HttpSecurity for security filter chain
+		//    	CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//      requestHandler.setCsrfRequestAttributeName("_csrf");
+//      
+//        CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
 		return http
 			.csrf().disable()
 			.cors().configurationSource(corsConfigurationSource()).and()
+//	        .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+//    		.ignoringRequestMatchers("/login")
+//            .csrfTokenRepository(csrfTokenRepository))
+//    .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.authorizeHttpRequests()
 				.requestMatchers("/login").permitAll()
 				.requestMatchers("/api/forgot/**").permitAll()
