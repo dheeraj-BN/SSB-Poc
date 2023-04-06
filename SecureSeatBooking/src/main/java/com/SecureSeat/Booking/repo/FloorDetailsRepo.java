@@ -16,9 +16,7 @@ public interface FloorDetailsRepo extends JpaRepository<FloorDetails ,Integer>{
 
 	List<FloorDetails> findAllByFloorName(String floorName);
 
-	//FloorDetails save(List<FloorDetails> existingFloor);
-
-	//Optional<FloorDetails> findByFloorname(String floorName);
+	
 
 	
 	  
