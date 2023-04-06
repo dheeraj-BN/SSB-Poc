@@ -24,20 +24,20 @@ import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 
 @Service
-public class LoginServiceImpl implements LoginService,UserDetailsService {
+public class LoginServiceImpl implements LoginService, UserDetailsService {
 
 	@Autowired
 	private UserDetailsRepo userRepo;
 
 	@Autowired
 	private EmployeeRepo empRepo;
-	
+
+	// Initialize logger
 	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
-	
-	
 
 	@Override
 	public Optional<UserDeatils> findUserByUsername(int id) {
+		// Get user details by id
 		UserDeatils user = userRepo.findByUserId(id).get();
 
 		Set<Role> roles = user.getRoles();
@@ -52,15 +52,16 @@ public class LoginServiceImpl implements LoginService,UserDetailsService {
 		return userRepo.findByUserId(id);
 	}
 
-
 	@Override
 	public List<Employee> findAllEmployees() {
+		// Retrieving all employee details from database
 		return empRepo.findAll();
 	}
 
+	// This method is currently not implemented. This i have implemented for test purpose
 	@Override
 	public String loginResponse(String userName, String password) {
-		
+
 		return "";
 
 //		List<Employee> emps = empRepo.findAll();
@@ -115,38 +116,32 @@ public class LoginServiceImpl implements LoginService,UserDetailsService {
 //		}
 	}
 
-	@Override
-	public Employee findEmployeeByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		String userNameAuth,password=null,role=null;
+		String userNameAuth, password = null, role = null;
 		List<GrantedAuthority> authorities = null;
-		
-	    List<Employee> employee =  empRepo.findByEmployeeEmail(username);
-	    if(employee.size() == 0) {
-	    	logger.warn("user details not found with email : "+username);
-	    	throw new UsernameNotFoundException("User details not found for the user : " + username);
-	    }else {
-	    	userNameAuth=employee.get(0).getEmployeeEmail();
-	    	UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
-	    	password=user.getPassword();
-	    	Set<Role> roles = user.getRoles();
-	    	for (Role role1 : roles) {
-	    		role=role1.getRoleName();
-	    	}
-	    	
-	    	authorities = new ArrayList<>();
-	    	authorities.add(new SimpleGrantedAuthority(role));
-	    	 
-	    }
-		logger.info("user has been loaded "+username);
-		return new User(username,password,authorities);
+
+		List<Employee> employee = empRepo.findByEmployeeEmail(username);
+		if (employee.size() == 0) {
+			logger.warn("user details not found with email : " + username);
+			throw new UsernameNotFoundException("User details not found for the user : " + username);
+		} else {
+			// Get user details by employee email
+			userNameAuth = employee.get(0).getEmployeeEmail();
+			UserDeatils user = userRepo.findByEmployee(employee.get(0)).get();
+			password = user.getPassword();
+			Set<Role> roles = user.getRoles();
+			for (Role role1 : roles) {
+				role = role1.getRoleName();
+			}
+
+			authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority(role));
+
+		}
+		logger.info("user has been loaded " + username);
+		return new User(username, password, authorities);
 	}
 
 }
-
-

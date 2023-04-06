@@ -20,8 +20,11 @@ import ResetPassword from "./routes/ResetPassword"
 import Login from "./routes/LoginForm";
 import Developer from "./components/DeveloperDashboard/developer";
 import AddFloor from "./components/DeveloperDashboard/addfloor";
-import React, { useState } from "react";
 import ProfileAdmin from "./components/AdminDashboard/ProfileAdmin";
+import Holiday from "./components/AdminDashboard/Holiday";
+import AddShift from "./components/AdminDashboard/AddShift";
+import React from "react";
+import Token from "./components/AdminDashboard/Token";
 
 
 export const  TokenContext = React.createContext();
@@ -32,6 +35,7 @@ function App() {
     <BrowserRouter>
       <div>
         <Routes>
+          {/* Admin dash */}
           {/* <Route path="/" element={<SignIn />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/email" element={<EmailVer />} />
@@ -41,13 +45,16 @@ function App() {
           <Route path="/qrcodescan" element={<QRScan />} />
           <Route path="/profileadmin" element={<ProfileAdmin/>} />
           <Route path="/empdata" element={<EmployeeInfo />} />
+          <Route path="/holiday" element={<Holiday/>}/>
+          <Route path="/addshift" element={<AddShift/>}/>
+          <Route path="/generatetoken" element={<Token/>}/>
           {/* user dash */}
           <Route path="/"  element={<UserDashboard/>} />
           <Route path="/booking" element={<SeatBookingForm/>} />
           <Route path="/floorlist" element={<FloorList/>}/>
-          <Route path="/groundfloor" element={<SeatMatrix/>}/>
-          <Route path="/firstfloor" element={<SeatMatrix1/>}/>
-          <Route path="/secondfloor" element={<SeatMatrix2/>}/>
+          <Route path="/floor0" element={<SeatMatrix/>}/>
+          <Route path="/floor1" element={<SeatMatrix1/>}/>
+          <Route path="/floor2" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
           <Route path="/profileuser" element={<Profile/>}/>  
           {/*Developer dash */}

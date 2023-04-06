@@ -36,7 +36,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 	
 	@Override
 	public List<String> getseatNoByBookedDate(LocalDate bookedDate) {
-		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status='PENDING'";
+		String sql="SELECT seat_no from booking_details where booked_date=? and booking_status!='CANCELLED'";
 		List<String> seatNo = jdbcTemplate.queryForList(sql, new Object[] {bookedDate},String.class);
 		return seatNo;
 	}
@@ -50,7 +50,7 @@ public class SeatBookDAOImpl implements SeatBookDAO {
 				+ " ON ur.user_id=ud.user_id\r\n"
 				+ "INNER JOIN employee em ON em.employee_id = ud.employee_id\r\n"
 				+ " ON ud.user_id=bd.user_id\r\n"
-				+ "where bd.user_id=? ORDER BY booking_id DESC LIMIT 1 ";
+				+ "where bd.user_id=? ORDER BY booked_date DESC LIMIT 1 ";
 
 	BookingDetails bookingDetails = jdbcTemplate.queryForObject(sql,new Object[] {id},(rs,rowNum) -> {
 		BookingDetails book  = new BookingDetails();
@@ -193,7 +193,7 @@ book.setBookedTimings( bookedtime);
   		book.setDate(bookeddate);
 	book.setBookedTimings( bookedtime);
 			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
 			book.setLoginTime(logintime);
 			book.setSeatNo((String) row.get("SEAT_NO"));
 			book.setToken((String) row.get("TOKEN"));

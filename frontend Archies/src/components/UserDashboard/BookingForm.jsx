@@ -7,7 +7,6 @@ import axios from "axios";
 function SeatBookingForm() {
   const [branchName, setBranchName] = useState("");
   const [buildingName, setBuildingName] = useState("");
-  // const [Date, setDate] = useState("");
   const [differenceDay, setDifferenceDay] = useState(0);
   const [toDate, setToDate] = useState("");
   const [firstDate, setFirstDate] = useState("");
@@ -15,11 +14,17 @@ function SeatBookingForm() {
 
   const [shiftTiming, setShiftTiming] = useState("");
   const [request, setRequest] = useState("");
+  const [data, setData] = useState([{}]);
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+  
+  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.location = "/floorlist";
   };
+  
 
   function todayDate() {
     const now = new window.Date();
@@ -42,11 +47,35 @@ function SeatBookingForm() {
     }
   }
 
-  useEffect(()=>{
-    axios.post("https://reqres.in/api/users").then((res)=>{
-      console.log(res.data)
+  useEffect(() => {
+    fetch("http://10.191.80.98:9090/api/employee/getshift", {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
     })
-  },[])
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        // console.log(text)
+        
+      });
+  },[]);
+
+  const savedata=()=>{
+    localStorage.setItem("from date",toDate)
+    localStorage.setItem("to date",toDate)
+    localStorage.setItem("Meal",meal)
+    localStorage.setItem("ShiftTiming",shiftTiming)
+  }
 
   return (
     <div>
@@ -61,6 +90,7 @@ function SeatBookingForm() {
         value={branchName}
         onChange={(e) => setBranchName(e.target.value)}
         className="form-input1"
+
       >
         <option value="Bangalore">Bangalore</option>
       </select>
@@ -99,10 +129,15 @@ function SeatBookingForm() {
         <option value="" disabled>
           Select
         </option>
-        <option value="Morning">Morning</option>
+        {
+          data.map((val,idx)=>{
+            return <option value={val.shiftTimings}>{val.shiftTimings}</option>
+          })
+        }
+        {/* <option value="Morning">Morning</option>
         <option value="Afternoon">Afternoon</option>
         <option value="Evening">Evening</option>
-        <option value="Night">Night</option>
+        <option value="Night">Night</option> */}
       </select>
       <label htmlFor="meal-name-input">Meal:</label>
       <select
@@ -167,10 +202,11 @@ function SeatBookingForm() {
         </>
       )}
 
-      <button type="submit" className="btn btn-primary booking-btn">
+      <button type="submit" onClick={savedata} className="btn btn-primary booking-btn">
         Next
       </button>
     </form>
+    
         </div>
     </div>
     

@@ -32,7 +32,7 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import jakarta.annotation.PostConstruct;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements Userservice {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
@@ -59,12 +59,16 @@ public class UserServiceImpl {
 	@Autowired
 	private HolidayDetailsRepo holidayDetailsRepo;
 
+
+	@Override
 	@PostConstruct
 	public void init() {
-		LOGGER.info("Initializing UserServiceImpl class");
-		Employee employee = userDetailDao.getAdminInfo();
-		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
-		LOGGER.info("User Added with the result: " + result);
+//		LOGGER.info("Initializing UserServiceImpl class");
+//		Employee employee = userDetailDao.getAdminInfo();
+//		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
+//		
+//		
+//		LOGGER.info("User Added with the result: " + result);
 	}
 
 	/**
@@ -75,6 +79,7 @@ public class UserServiceImpl {
 	 *         with employeeId is not found, and USER ALREADY EXIST if user with the
 	 *         given employee is already present
 	 */
+	@Override
 	public ResponseEntity<Map<String, String>> addUser(int employeeId) {
 	    LOGGER.info("Adding user with employeeId: " + employeeId);
 	    Employee employee = employeeRepo.findById(employeeId);
@@ -116,6 +121,7 @@ public class UserServiceImpl {
 	 * @throws Exception
 	 */
 
+	@Override
 	public Employee validateToken(String token) throws Exception {
 		LOGGER.debug("Validating token: {}", token);
 
@@ -147,6 +153,7 @@ public class UserServiceImpl {
 	 * @return A String indicating whether the holiday was successfully added or if
 	 *         it already existed.
 	 */
+	@Override
 	public String addHolidays(HolidayDetails holidayDetails) {
 		LOGGER.debug("Adding holiday: {}", holidayDetails.getHolidayDate());
 
@@ -164,16 +171,42 @@ public class UserServiceImpl {
 			LOGGER.debug("Holiday added: {}", holidayDetails.getHolidayDate());
 			return "Holiday added";
 		}
-
+		holidayDetailsRepo.save(holidayDetails);
 		// If the holiday already exists, return an appropriate message
 		LOGGER.debug("Holiday already exists: {}", holidayDetails.getHolidayDate());
-		return "Holiday already added";
+		return "Holiday added";
 	}
+	@Override
+	public List<HolidayDetails> allHolidays() {
+		
+		return holidayDetailsRepo.findAll();
+		
+	}
+	
+	
+	/**
 
+	This method returns the information of the admin employee.
+	It retrieves the information from the userDetailDao.
+	@return Employee object containing the information of the admin.
+	*/
+	@Override
+	public Employee adminInfo() {
+	// Retrieve the information of the admin employee from the userDetailDao
+		LOGGER.info("Retrieving the information of the admin employee from the userDetailDao.");
+	return userDetailDao.getAdminInfo();
+	}
+	/**
+
+	This method returns the list of employees who are not registered.
+	It retrieves the list from the userDetailDao.
+	@return List of Employee objects containing the information of the employees who are not registered.
+	*/
+	@Override
 	public List<Employee> listOfEmployeeNotRegistered() {
-
-		return userDetailDao.getemployee();
-
+	// Retrieve the list of employees who are not registered from the userDetailDao
+		LOGGER.info("Retrieving the list of employees who are not registered from the userDetailDao.");
+	return userDetailDao.getemployee();
 	}
 
 }
