@@ -46,9 +46,6 @@ public class FloorController {
 	        return floorService.getFloorDetailsByFloorName(floorName);
 	    }
 	    
-
-	    
- 
 	    
     
 	    
@@ -82,11 +79,6 @@ public class FloorController {
 
 	    
 
-	    
-	    
-	    
-	    
-	    
 
 
 	    

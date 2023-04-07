@@ -30,6 +30,8 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 	
 	BookingDetails findByBookedDateAndSeatNo(LocalDate bookedDate,String seatNo);
 	
+	
+	
 
 	List<BookingDetails> findByBookedDateAndBookingStatus(LocalDate date, String status);//
 
