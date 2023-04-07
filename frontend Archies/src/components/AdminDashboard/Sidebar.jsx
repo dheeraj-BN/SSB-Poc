@@ -8,15 +8,13 @@ import {
   CDBSidebarMenuItem,
 } from "cdbreact";
 import { Link, NavLink } from "react-router-dom";
+import Logout from "../../routes/Logout";
 
 
 const Sidebar1 = () => {
 
   const [user, setuser] = useState(null)
-  const handleSignout = ()=>{
-    setuser(null)
-    localStorage.removeItem("token")
-  }
+ 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}>
       <CDBSidebar textColor="#fff" backgroundColor="#333">
@@ -44,10 +42,9 @@ const Sidebar1 = () => {
             <Link to="/profileadmin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="user">Profile</CDBSidebarMenuItem>
             </Link>
-            <Link to="/" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')} onClick={()=>handleSignout}>
-              <CDBSidebarMenuItem icon="exclamation-circle">SignOut</CDBSidebarMenuItem>
-            </Link>
+           
           </CDBSidebarMenu>
+          <h3><Logout/></h3>
         </CDBSidebarContent>
 
         <CDBSidebarFooter style={{ textAlign: "center" }}>
