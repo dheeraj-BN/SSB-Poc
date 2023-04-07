@@ -1,30 +1,26 @@
 package com.SecureSeat.Booking;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.aspectj.lang.annotation.Before;
+import java.time.LocalDate;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.SecureSeat.Booking.config.SecurityConfig;
+import com.SecureSeat.Booking.entity.BookingDetails;
 import com.SecureSeat.Booking.entity.Employee;
-import com.SecureSeat.Booking.entity.Role;
-import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
 import com.SecureSeat.Booking.repo.EmployeeRepo;
 import com.SecureSeat.Booking.repo.RoleRepo;
 import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.Userservice;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 public class UserDetailsTest {
@@ -65,12 +61,39 @@ public class UserDetailsTest {
 	public void testAddUser_UserNotFound() {
 		int employeeId = 99999;
 		
-		ResponseEntity<Map<String, String>> response = userService.addUser(employeeId);
+		String response = userService.addUser(employeeId);
 		
-		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-		assertEquals("USER NOT FOUND", response.getBody().get("message"));
+		assertEquals("USER NOT FOUND", response);
 	}
 	
-	
+//	@Test
+//	public void testValidateToken() throws Exception {
+//		// Create a booking and save it to the repository
+//		String token = "1234567890";
+//		BookingDetails bookingDetails = new BookingDetails();
+//		bookingDetails.setToken(token);
+//		bookingDetailsRepo.save(bookingDetails);
+//		
+//		// Call validateToken with the token
+//		Employee employee = userService.validateToken(token);
+//		
+//		// Assert that the employee returned is not null
+//		assertNotNull(employee);
+//		
+//		// Assert that the employee is associated with the booking
+//		assertEquals(employee.getBookingDetails().getToken(), token);
+//		
+//		// Assert that the booking details were updated
+//		LocalDate currentDate = LocalDate.now();
+//		BookingDetails updatedBookingDetails = bookingDetailsRepo.findByToken(token);
+//		assertEquals(updatedBookingDetails.getStatus(), "LOGGED-IN");
+//		assertTrue(updatedBookingDetails.getLoginTime().toLocalDate().isEqual(currentDate));
+//	}
+//}
+
+
+
+
+
 
 }

@@ -50,14 +50,24 @@ public class FloorController {
 	    
  
 	    
+//	    @PostMapping("/addfloor")
+//	    public ResponseEntity<FloorDetails> addFloorWithdetails(@RequestBody FloorDetails floorDetails) {
+//	        FloorDetails newFloorDetails = floorService.addFloor(floorDetails.getFloorName(), floorDetails.getNoOfSeats());
+//	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloorDetails);
+//	    }
+//	    
+	    
 	    @PostMapping("/addfloor")
 	    public ResponseEntity<FloorDetails> addFloorWithdetails(@RequestBody FloorDetails floorDetails) {
-	        FloorDetails newFloorDetails = floorService.addFloor(floorDetails.getFloorName(), floorDetails.getNoOfSeats());
-	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloorDetails);
+	        try {
+	            FloorDetails newFloorDetails = floorService.addFloor(floorDetails.getFloorName(), floorDetails.getNoOfSeats());
+	            mailService.addedFloor(floorDetails);
+	            return ResponseEntity.status(HttpStatus.CREATED).body(newFloorDetails);
+	        } catch (RuntimeException ex) {
+	            return ResponseEntity.badRequest().body(null);
+	        }
 	    }
-	    
-	    
-	    
+
 	    
 
 	    @DeleteMapping("/{floorName}")

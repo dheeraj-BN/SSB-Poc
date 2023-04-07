@@ -6,8 +6,8 @@ function Holiday() {
   const [holidays, setHolidays] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
-  const [date, setDate] = useState();
-  const [desc, setDesc] = useState();
+  const [date, setDate] = useState()
+  const [desc,setDesc] = useState()
 
   useEffect(() => {
     fetch("http://10.191.80.98:9090/api/admin/allHolidays", {
@@ -25,7 +25,6 @@ function Holiday() {
       })
       .then((data) => {
         setHolidays(JSON.parse(data));
-        // console.log(JSON.parse(data))
       })
       .catch((error) => console.log(error));
   }, [token]);
@@ -39,14 +38,17 @@ function Holiday() {
       description: formData.get("description"),
     };
 
-    fetch(`http://10.191.80.98:9090/api/admin/addholiday`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(holiday),
-    })
+    fetch(
+      `http://10.191.80.98:9090/api/admin/addholiday`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(holiday),
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -55,9 +57,8 @@ function Holiday() {
         return response.text();
       })
       .then((data) => {
-        // setHolidays([...holidays, JSON.parse(data)]);
-        // event.target.reset();
-        console.log(data)
+        setHolidays([...holidays, JSON.parse(data)]);
+        event.target.reset();
       })
       .catch((error) => console.log(error));
 
@@ -72,13 +73,13 @@ function Holiday() {
     // event.target.reset();
   }
 
-  const handledateChange = (event) => {
-    setDate(event.target.value);
-  };
+  const handledateChange = (event)=>{
+    setDate(event.target.value)
+  }
 
-  const descriptionChange = (event) => {
-    setDesc(event.target.value);
-  };
+  const descriptionChange = (event)=>{
+    setDesc(event.target.value)
+  }
 
   //http://10.191.80.98:9090/api/admin/modifiHoliday?date=2023-05-06
   // function handleEdit(index) {
@@ -88,20 +89,18 @@ function Holiday() {
   //   // form.elements.name.value = holiday.name;
   //   form.elements.date.value = holiday.date;
   //   form.elements.description.value = holiday.description;
-
+    
   // }
   function handleEdit(index) {
     setEditingIndex(index);
-    try {
-      const response = fetch(
-        `http://10.191.80.98:9090/api/admin/modifiHoliday?date=$`
-      );
+    try{
+      const response = fetch(`http://10.191.80.98:9090/api/admin/modifiHoliday?date=$`)
       const holiday = response.json();
       const form = document.querySelector("form");
       form.elements.date.value = holiday.date;
       form.elements.description.value = holiday.description;
-    } catch (error) {
-      console.error(error);
+    }catch(error){
+      console.error(error)
     }
     // const holiday = holidays[index];
     // form.elements.name.value = holiday.name;
@@ -138,29 +137,23 @@ function Holiday() {
         {/* <h2>{holiday.name}</h2> */}
         <table className="tableholiday" key={index}>
           <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
           </thead>
           <tbody>
-            {holidays.map((holiday, index) => {
-              return (
+            {holidays.map((holiday, index)=>{
+              return(
                 <tr key={index}>
-                  <td>{holiday.holidayDate}</td>
-                  <td className="scrollable-cell">
-                    {holiday.holidayDescription}
-                  </td>
-                  <td>
-                    <button onClick={() => handleEdit(index)}>Edit</button>
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(index)}>Delete</button>
-                  </td>
-                </tr>
-              );
+                <td>{holiday.holidayDate}</td>
+                <td className="scrollable-cell">{holiday.holidayDescription}</td>
+                <td><button onClick={() => handleEdit(index)}>Edit</button></td>
+                <td><button onClick={() => handleDelete(index)}>Delete</button></td>
+              </tr>
+              )
             })}
           </tbody>
         </table>
@@ -180,36 +173,51 @@ function Holiday() {
           </div>
           <div className="form-holiday item6">
             <h2>Holiday Form</h2>
-            <form onSubmit={handleSubmit} className="holiday-label" method="post">
+            <form onSubmit={handleSubmit} className="holiday-label">
               <div className="user-box">
-                <input
-                  type="date"
-                  name="date"
-                  defaultValue={date}
-                  onChange={handledateChange}
-                />
+                <input type="date" name="date" defaultValue={date} onChange={handledateChange}/>
                 <label>Date</label>
               </div>
               <div className="user-box">
-                <textarea
-                  name="description"
-                  defaultValue={desc}
-                  onChange={descriptionChange}
-                />
+                <textarea name="description" defaultValue={desc} onChange={descriptionChange} />
                 <label> Description </label>
               </div>
               <button type="submit">
                 <span></span>
                 <span></span>
                 <span></span>
-                <span></span>
+                <span></span> 
                 {editingIndex === -1 ? "Add Holiday" : "Save Holiday"}
               </button>
             </form>
           </div>
         </div>
       </div>
-      {console.log(desc, date)}
+      {
+        console.log(desc,date)
+      }
+      {/* const token = 'exampleToken';
+const expirationTime = new Date().getTime() + 15 * 60 * 1000; // 15 minutes in milliseconds
+sessionStorage.setItem('token', token);
+sessionStorage.setItem('expirationTime', expirationTime.toString()); */}
+
+{/* function isTokenExpired() {
+  const expirationTime = sessionStorage.getItem('expirationTime');
+  return expirationTime !== null && parseInt(expirationTime) < new Date().getTime();
+} */}
+{/* 
+useEffect(() => {
+  const interval = setInterval(() => {
+    if (isTokenExpired()) {
+      // remove the token from session storage when it expires
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('expirationTime');
+      // do something else, like log the user out or redirect to the login page
+    }
+  }, 1000); // check every second
+  return () => clearInterval(interval); // clean up the interval when the component unmounts
+}, []); */}
+
     </div>
   );
 }

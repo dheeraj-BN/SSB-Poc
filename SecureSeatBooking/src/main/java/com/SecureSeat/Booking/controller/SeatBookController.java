@@ -107,5 +107,7 @@ public class SeatBookController {
 	public BookingDetails getbyid(@PathVariable int id) {
 		return seatBook.getlatestbookingdetailsofid(id);
 	}
+	
+	
 
 }
