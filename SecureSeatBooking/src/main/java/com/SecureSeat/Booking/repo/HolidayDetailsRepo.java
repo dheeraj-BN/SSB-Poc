@@ -13,4 +13,8 @@ public interface HolidayDetailsRepo extends JpaRepository<HolidayDetails, Intege
 	
 	HolidayDetails findByHolidayDate(LocalDate date);
 	
+	
+	
+	void deleteByHolidayDate(LocalDate holidayDate);
+	
 }

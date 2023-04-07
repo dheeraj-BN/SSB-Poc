@@ -35,12 +35,17 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 
 	List<BookingDetails> findByBookedDateBetween(LocalDate startDate, LocalDate endDate);
 
-	List<BookingDetails> findByUserDeatilsEmployeeIdAndBookedDateBetween(int employeeId, LocalDate startDate,
-			LocalDate endDate);
 
 
-	List<BookingDetails> findByUserDetailsUserIdAndBookedDateBetween(int userId, LocalDate startOfMonth,
-			LocalDate endOfMonth);
+	List<BookingDetails> findByUserDeatilsAndBookedDateBetween(UserDeatils userDeatils,  LocalDate startDate, LocalDate endDate);
+
+	List<BookingDetails> findByUserDeatils(UserDeatils userDeatils);
+
+	Long countByBookedDate(LocalDate date);
+
+	
+
+
 
 	
 	

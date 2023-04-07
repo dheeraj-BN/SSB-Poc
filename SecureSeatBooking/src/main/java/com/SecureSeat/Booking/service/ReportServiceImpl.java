@@ -6,13 +6,18 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SecureSeat.Booking.dao.ReportDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -23,6 +28,10 @@ public class ReportServiceImpl implements ReportService {
 	
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
+	
+	
+	@Autowired
+	private UserDetailsRepo detailsRepo;
 
 	
 	
@@ -81,26 +90,9 @@ public class ReportServiceImpl implements ReportService {
 	        return bookingDetailsList;
 	    }
 	   
-	   
-//	   @Override
-//	    public List<BookingDetails> getEmployeeBookings(int employeeId) {
-//	        LocalDate startDate = LocalDate.now().withDayOfMonth(1);
-//	        LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-//	        return bookingDetailsRepo.findByUserDeatilsEmployeeIdAndBookedDateBetween(employeeId, startDate, endDate);
-//	    }
+	
 
 
 
-	  
-	    
-	    
-	    
-	    
-	    @Override
-	    public List<BookingDetails> getEmployeeMonthlyBookingDetails(int userId, LocalDate month) {
-	        LocalDate startOfMonth = month.withDayOfMonth(1);
-	        LocalDate endOfMonth = month.withDayOfMonth(month.lengthOfMonth());
-	        return bookingDetailsRepo.findByUserDetailsUserIdAndBookedDateBetween(userId, startOfMonth, endOfMonth);
-	    }
 	   
 }

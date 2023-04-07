@@ -209,4 +209,19 @@ public class UserServiceImpl implements Userservice {
 	return userDetailDao.getemployee();
 	}
 
+	@Override
+	public String deleteHoliday(LocalDate holidayDetails) {
+		
+	HolidayDetails hDetails=	holidayDetailsRepo.findByHolidayDate(holidayDetails);
+		
+		holidayDetailsRepo.delete(hDetails);
+		
+		return "deleted";
+	}
+	@Override
+	public List<Employee> registeredEmployee() {
+		
+		return userDetailDao.getRegisteredemployee();
+		
+	}
 }

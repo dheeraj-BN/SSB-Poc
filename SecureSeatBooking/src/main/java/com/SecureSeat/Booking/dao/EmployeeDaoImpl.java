@@ -64,12 +64,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	@Override
 	public List<BookingDetails> getEmpBookedInfoBookedNext(int id , LocalDate date){
 		String sql="select * from booking_details  bd INNER JOIN shift_details sh ON sh.shift_id = bd.shift_id INNER JOIN employee em  \r\n"
-				+ " INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id \r\n"
-				+ " INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
+				+ "INNER JOIN user_deatils  ud  ON em.employee_id = ud.employee_id and ud.user_id = bd.user_id\r\n"
+				+ "INNER JOIN users_roles ur  ON ur.user_id=ud.user_id \r\n"
 				+ "INNER JOIN role r ON r.role_id = ur.role_id\r\n"
-				+ "ON ud.user_id=bd.user_id where ud.user_id=? AND booked_date>? AND booking_status='PENDING'";
+				+ "where booked_date>? and booking_status='PENDING' and bd.user_id=?";
 		List<BookingDetails> bookingdetails = new ArrayList<>();
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {id,date} );
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,new Object[] {date,id} );
 		for(Map row : rows) {
 			BookingDetails book  = new BookingDetails();
 			Time sqltime = (Time) row.get("BOOKED_TIMINGS");
@@ -88,7 +88,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
   		book.setDate(bookeddate);
 	book.setBookedTimings( bookedtime);
 			book.setBookingStatus((String) row.get("BOOKING_STATUS"));
-//			book.setFoodStatus((Boolean) row .get("FOODSTATUS"));
+		book.setFoodStatus((Boolean) row .get("FOOD_STATUS"));
 			book.setLoginTime(logintime);
 			book.setSeatNo((String) row.get("SEAT_NO"));
 			book.setToken((String) row.get("TOKEN"));

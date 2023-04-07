@@ -14,6 +14,7 @@ public interface ReportService {
 	List<BookingDetails> getBookingsByDateAndStatus(LocalDate bookingDate, String bookingStatus);
 
 	
+	///////////
 	
 	List<BookingDetails> findBookingByDateAndStatus(LocalDate date, String status);
 
@@ -23,12 +24,10 @@ public interface ReportService {
 
 	List<BookingDetails> getBookingBySpecificWeek(int week);
 
-	//List<BookingDetails> getEmployeeBookings(int employeeId);
 
-
-	List<BookingDetails> getEmployeeMonthlyBookingDetails(int userId, LocalDate month);
-
-
+	
+	
+	// List<BookingDetails> getEmployeeBookings(int userId);
 
 
 

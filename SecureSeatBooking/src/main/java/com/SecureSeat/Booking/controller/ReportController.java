@@ -3,24 +3,36 @@ package com.SecureSeat.Booking.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.SecureSeat.Booking.dao.ReportDao;
 import com.SecureSeat.Booking.entity.BookingDetails;
+import com.SecureSeat.Booking.entity.Employee;
+import com.SecureSeat.Booking.entity.UserDeatils;
 import com.SecureSeat.Booking.repo.BookingDetailsRepo;
+import com.SecureSeat.Booking.repo.EmployeeRepo;
+import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.ReportService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -33,6 +45,13 @@ public class ReportController {
 
 	@Autowired
 	private BookingDetailsRepo bookingDetailsRepo;
+	
+	
+	@Autowired
+	private UserDetailsRepo detailsRepo;
+	
+	@Autowired
+	private EmployeeRepo employeeRepo;
 	
 	
 	  @GetMapping("/bookingdetails/date/{bookingDateStr}")
@@ -72,6 +91,7 @@ public class ReportController {
 	    }
 	   
 	   
+
 	  
 	   @GetMapping("/date/{bookedDate}")
 		public List<BookingDetails> getBookingByDate(@PathVariable String bookedDate) {
@@ -80,18 +100,7 @@ public class ReportController {
 		}
 	  
 	   
-//	   @GetMapping("/bookings")
-//	    public List<BookingDetails> getBookingBySpecificMonth(
-//	            @RequestParam(name = "month") int month,
-//	            @RequestParam(name = "year") int year) {
-//
-//	        YearMonth yearMonth = YearMonth.of(year, month);
-//	        LocalDate startDate = yearMonth.atDay(1);
-//	        LocalDate endDate = yearMonth.atEndOfMonth();
-//
-//	        return bookingDetailsRepository.findByBookedDateBetween(startDate, endDate);
-//	    }
-	   
+
 	   
 	   @GetMapping("/bookings/month/{year}/{month}")
 		public List<BookingDetails> getBookingBySpecificMonth(
@@ -119,7 +128,85 @@ public class ReportController {
 	   }
 	   
 	   
-	
+	   
+
+	   @GetMapping("/bookings/employee/{emp_id}")
+	   public List<BookingDetails> getEmployeeBookings(@PathVariable int emp_id) {
+		   
+		   Employee employee = employeeRepo.findById(emp_id);
+		   
+		   UserDeatils userDetails = detailsRepo.findByEmployee(employee).get();
+		   
+		 List<BookingDetails> bookingDetails=  bookingDetailsRepo.findByUserDeatils(userDetails);
+		   
+		 return bookingDetails;
+	   }
+
 
 	   
+
+
+	   @GetMapping("/bookings/employee/{emp_id}/{year}/{month}")
+	   public List<BookingDetails> getEmployeeBookingsForMonth(@PathVariable int emp_id, @PathVariable int year, @PathVariable int month) {
+	       Employee employee = employeeRepo.findById(emp_id);
+	       UserDeatils userDetails = detailsRepo.findByEmployee(employee).orElseThrow(EntityNotFoundException::new);
+	       LocalDate startDate = LocalDate.of(year, month, 1);
+	       LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
+	       List<BookingDetails> bookings = bookingDetailsRepo.findByUserDeatilsAndBookedDateBetween(userDetails, startDate, endDate);
+	       return bookings;
+	   }
+
+
+
+
+    
+	   
+	   @GetMapping("/bookings/employee/{emp_id}/{year}/{month}/{week}")
+	   public List<BookingDetails> getEmployeeBookingsForWeek(@PathVariable int emp_id, @PathVariable int year, @PathVariable int month, @PathVariable int week) {
+	       Employee employee = employeeRepo.findById(emp_id);
+	       UserDeatils userDetails = detailsRepo.findByEmployee(employee).orElseThrow(EntityNotFoundException::new);
+	       LocalDate startDate = LocalDate.of(year, month, 1).with(TemporalAdjusters.firstDayOfMonth()).plusWeeks(week - 1);
+	       LocalDate endDate = startDate.plusDays(6);
+	       return bookingDetailsRepo.findByUserDeatilsAndBookedDateBetween(userDetails, startDate, endDate);
+	   }
+	   
+	   
+	   
+
+		@GetMapping("/booking-count")
+		public Long getTotalBookingCounts() {
+			return bookingDetailsRepo.count();
+		}
+		
+		
+//		
+//		@GetMapping("/bookings/count/{date}")
+//		public Long getBookingCountByDate(
+//		    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+//		) {
+//		    return bookingDetailsRepo.countByBookedDate(date);
+//		}
+
+	
+		
+		@GetMapping("/bookings/count/{date}")
+		public Long getBookingCountByDate(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+		    return bookingDetailsRepo.countByBookedDate(date);
+		}
+		
+		
+		@GetMapping("/employee-count/{date}/{foodStatus}")
+		public long getEmployeeCount(@PathVariable String date, @PathVariable boolean foodStatus) {
+		    LocalDate bookingDate = LocalDate.parse(date);
+		    List<BookingDetails> bookingDetailsList = bookingDetailsRepo.findByBookedDate(bookingDate);
+		    if (foodStatus) {
+		        return bookingDetailsList.stream().filter(bookingDetails -> bookingDetails.isFoodStatus()).count();
+		    } else {
+		        return bookingDetailsList.stream().filter(bookingDetails -> !bookingDetails.isFoodStatus()).count();
+		    }
+		}
+
+		
+		
+
 }
