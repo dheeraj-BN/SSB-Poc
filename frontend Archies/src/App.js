@@ -25,6 +25,7 @@ import Holiday from "./components/AdminDashboard/Holiday";
 import AddShift from "./components/AdminDashboard/AddShift";
 import React from "react";
 import Token from "./components/AdminDashboard/Token";
+import PastBookingForm from "./components/UserDashboard/pastBookingform";
 
 
 export const  TokenContext = React.createContext();
@@ -61,6 +62,7 @@ function App() {
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
           <Route path="/modify" element={<SeatModify/>}/>  
+          <Route path="/pastbooking" element={<PastBookingForm/>}/>
 
 
 

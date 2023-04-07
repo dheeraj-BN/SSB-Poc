@@ -41,7 +41,7 @@ function QRGenerator() {
 
       setImageQR(img);
     })
-        // console.log(qrcode.toDataURL(data.token));
+      
   },[data])
   return (
     <div className="">
@@ -51,6 +51,7 @@ function QRGenerator() {
               <img src={imgQR} width="20%" alt="qr code pic is here" />
             </a>
           )}
+         
         </div>
       </div>
    
