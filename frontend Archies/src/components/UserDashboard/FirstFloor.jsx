@@ -1,60 +1,120 @@
+import axios from 'axios';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import "../../css/userDashboard/Groundfloor.css";
 
-
-
 function SeatMatrix1() {
-  // const numDivs = 20;
   
-
-  // const divs = [];
-  // for (let i = 1; i <= numDivs; i++) {
-  //   const divId = `${"F"+i}`;
-  //   console.log(divId)
-
-  //   const newDiv = (
-  //     <div className='seat' key={divId} id={divId}>
-  //       FF-{i}
-  //     </div>
-  //   );
-
-  //   divs.push(newDiv);
-  // }
-
+ // Define state variables using the useState hook
   const [seats, setSeats] = useState([]);
- 
-  
+  const [data, setData] = useState([{}]);
+  const [Seatdata, setSeatData] = useState([{}]);
+
+  const [seatBooked,setSeatBooked] = useState([{}])
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+
+   const storedData = localStorage.getItem('from');
+
+
+// Use the useEffect hook to fetch data from the server 
+   useEffect(() => {
+     fetch("http://10.191.80.100:9090/api/employee/seatnumber/"+storedData, {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        setSeatBooked(JSON.parse(text))
+       
+        
+      });
+      
+  },[]);
+
   useEffect(() => {
-    const numSeats = 30; // Change this to the desired number of seats
+    // Fetching data from server using axios library
+    fetch("http://10.191.80.98:9090/api/employee/floors", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setSeatData(JSON.parse(text));
+      });
+  }, []);
+// Use another useEffect hook to create an array of seat objects
+  useEffect(()=>{
+    const numSeats =  30 ; 
+    // console.log(numSeats)
     const newSeats = [];
     for (let i = 1; i <= numSeats; i++) {
+      const seatName = `FF${i}`;
+      
+      const isBooked = seatBooked.some((seat) =>seat === seatName);
       newSeats.push({
         id: i,
-        name: `10${i}`,
-        booked: false,
+        name: seatName,
+        booked: isBooked,
         selected: false,
       });
     }
     setSeats(newSeats);
-  }, []);
+  },[seatBooked])
+ 
  
 
   const [selected, setSelected] = useState({});
-
+// Define a function to handle the click event on a seat
   const handleSeatClick = (name) => {
     console.log(name);
     //logic for deselection
     setSelected({
       seatId: name,
-      floorId: "GF",
+      floorId: "FF",
     });
   };
 
   const sendData = () => {
     if (selected.seatId != null) {
-      localStorage.setItem("seat_name", selected.seatId);
+      localStorage.setItem("seatNo", selected.seatId);
+
+      let foodStatus = localStorage.getItem("foodStatus")
+      let shiftTimings=localStorage.getItem("shiftTimings")
+      let userId=localStorage.getItem("userId")
+      let seatNo=localStorage.getItem("seatNo")
+      let todate=localStorage.getItem("to")
+      let fromdate=localStorage.getItem("from")
+      axios.post(`http://10.191.80.100:9090/api/employee/seatbookdetails?from=${fromdate}&to=${todate}`,{foodStatus,shiftDetails:{shiftTimings},
+      userDeatils:{userId},seatNo},
+      {headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      }}).then((res)=>{
+        alert(res.data)
+      }).catch((err)=>{
+        alert(err)
+            })
       window.location = "/";
     } else {
       alert("please select a seat");
@@ -62,23 +122,12 @@ function SeatMatrix1() {
   };
 
   return (
-    // <div className='seat-booking-app' >
-    //     { <h1>First Floor</h1> }
-    //     <div className='seat-map'>
-    //        {divs}
-    //   </div>
-    //   <div id='legend'>
-    //   <div class="seat"></div> <div class="txt">Available</div>
-    //   <div class="seat taken"></div> <div class="txt">Taken</div>
-    //   <div class="seat selected"></div> <div class="txt">Your Chosen Seats</div>
-
-    //   </div>
-    // </div>
+   
     <div className="seat-booking-app">
       <div>
         <h1>First Floor</h1>
       </div>
-
+       {/* Map over the seats array and render the seats */}
       <div className="seat-map">
         {seats.map((seat) =>
           seat.booked ? (
@@ -103,9 +152,7 @@ function SeatMatrix1() {
                 />
               </label>
             </div>
-          )
-
-          // }
+          )         
         )}
       </div>
       <br />
@@ -136,6 +183,7 @@ function SeatMatrix1() {
       <button onClick={sendData} className="btn btn-warning Nextbtn">
         submit
       </button>
+      
     </div>
   );
 }
