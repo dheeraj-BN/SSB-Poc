@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +54,7 @@ public class AdminController {
 	}
 	
 	
-	@PutMapping("/validateToken/")
+	@PutMapping("/validateToken")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		// Method to validate token
 		return userService.validateToken(token);
@@ -113,8 +114,17 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/deleteHoliday")
-	public void deleteHoliday(@RequestBody HolidayDetails holidayDetails) {
-		userService.deleteHoliday(holidayDetails);
+	public String deleteHoliday(@RequestParam LocalDate holidayDetails) {
 		
+		System.out.println(holidayDetails);
+		return userService.deleteHoliday(holidayDetails);
+	}
+		
+	@GetMapping("/employeeList")	
+	
+	public List<Employee> list(){
+		return userService.registeredEmployee();
+	
+	
 	}
 }

@@ -210,9 +210,18 @@ public class UserServiceImpl implements Userservice {
 	}
 
 	@Override
-	public void deleteHoliday(HolidayDetails holidayDetails) {
+	public String deleteHoliday(LocalDate holidayDetails) {
 		
-		holidayDetailsRepo.delete(holidayDetails);
+	HolidayDetails hDetails=	holidayDetailsRepo.findByHolidayDate(holidayDetails);
+		
+		holidayDetailsRepo.delete(hDetails);
+		
+		return "deleted";
+	}
+	@Override
+	public List<Employee> registeredEmployee() {
+		
+		return userDetailDao.getRegisteredemployee();
 		
 	}
 }
