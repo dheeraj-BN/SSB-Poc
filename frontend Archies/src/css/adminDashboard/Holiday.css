@@ -233,10 +233,10 @@
   border: none;
 }
 
-/* .scrollable-table{
+.scrollable-table{
   height: 200px;
   overflow: scroll;
-} */
+}
 
 @media only screen and (max-width : 1200px) {
   .holiday{
