@@ -34,7 +34,7 @@ function SeatModify() {
 
   // Function to cancel a booked seat
   const cancelBooking = (seattoken) => {
-    fetch("http://10.191.80.100:9090/api/employee/cancel/"+seattoken, {
+    fetch("http://40.88.23.186:9090/api/employee/cancel/"+seattoken, {
       method: "PUT",
 
       headers: {

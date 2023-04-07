@@ -49,7 +49,7 @@ function SeatBookingForm() {
  
 // Fetch shift timings from API
   useEffect(() => {
-    fetch("http://10.191.80.98:9090/api/employee/getshift", {
+    fetch("http://40.88.23.186:9090//api/employee/getshift", {
       method: "GET",
 
       headers: {

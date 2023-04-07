@@ -50,10 +50,14 @@ function Login() {
           window.location = "/developer";
           window.localStorage.setItem('token', token)
         }
-        else{
-          window.location = "/";
-          window.localStorage.setItem('token', token)
+        else if(role =="ROLE_EMPLOYEE"){
+          window.location="/employee";
+          window.localStorage.setItem('token',token)
         }
+        // else{
+        //   window.location = "/";
+        //   window.localStorage.setItem('token', token)
+        // }
       }
     }
     else{
