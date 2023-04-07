@@ -22,11 +22,15 @@ public class SendSMSImpl implements SendSMS {
 	public String SendSms(Employee employee,String body) throws AuthenticationException {
 		
 		Configuration sconfiguration=  smsConfigurationRepo.findById(1).get();
+		System.out.println(sconfiguration);
+		
 		Twilio.init(sconfiguration.getACCOUNT_SID(), sconfiguration.getAUTH_TOKEN());
 try {
 
 		Message message = Message.creator(new PhoneNumber("+91"+employee.getEmployeePhoneNo()),
 				new PhoneNumber(sconfiguration.getSMS_NUMBER()),body).create();
+		
+		
 }
 catch (Exception e) {
 	System.out.println("SMS not sent");

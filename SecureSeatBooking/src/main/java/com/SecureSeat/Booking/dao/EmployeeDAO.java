@@ -21,7 +21,6 @@ public interface EmployeeDAO {
 
 	void changePasswordAndMakeStatusTrue(String password, int id);
 
-	void otp(String Otp, int userid);
 
 	
 

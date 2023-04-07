@@ -7,6 +7,7 @@ function Login() {
   const [role, setRole] = useState();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [token, setToken] = useState();
+  const [id,setid]=useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ function Login() {
       console.log(response.data); // handle successful login
       setRole(response.data.roles);
       setToken(response.data.token);
+      setid(response.data.id)
       setFormSubmitted(true);
     } catch (error) {
       console.error(error); // handle error
@@ -40,6 +42,7 @@ function Login() {
       }
     }
   }, [role]);
+  localStorage.setItem("userId",id);
 
   return (
     <form onSubmit={handleSubmit}>

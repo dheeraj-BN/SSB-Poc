@@ -19,7 +19,6 @@ public class FloorServiceImpl implements FloorService {
 	private FloorDetailsRepo floorDetailsRepo;
 	
 	
-	
 
 	
 	
@@ -37,13 +36,26 @@ public class FloorServiceImpl implements FloorService {
 
 
 
+//
+//	@Override
+//	public FloorDetails addFloor(String floorName, int noOfSeats) {
+//		
+//		FloorDetails floorDetails = new FloorDetails(floorName, noOfSeats);
+//        return floorDetailsRepo.save(floorDetails);
+//		
+//	}
 
+	
+	
 	@Override
 	public FloorDetails addFloor(String floorName, int noOfSeats) {
-		
-		FloorDetails floorDetails = new FloorDetails(floorName, noOfSeats);
-        return floorDetailsRepo.save(floorDetails);
-		
+	    // Check if a floor with the given name already exists
+	    if (floorDetailsRepo.existsByFloorName(floorName)) {
+	        throw new RuntimeException("Floor name must be unique");
+	    }
+
+	    FloorDetails floorDetails = new FloorDetails(floorName, noOfSeats);
+	    return floorDetailsRepo.save(floorDetails);
 	}
 
 

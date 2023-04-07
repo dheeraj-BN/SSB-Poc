@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public interface Userservice {
 	 *         with employeeId is not found, and USER ALREADY EXIST if user with the
 	 *         given employee is already present
 	 */
-	ResponseEntity<Map<String, String>> addUser(int employeeId);
+	String addUser(int employeeId);
 
 	/**
 	 * Validates the token and returns the employee associated with the booking.
@@ -51,5 +52,9 @@ public interface Userservice {
 	List<Employee> listOfEmployeeNotRegistered();
 
 	List<HolidayDetails> allHolidays();
+
+	String deleteHoliday(LocalDate holidayDetails);
+
+	List<Employee> registeredEmployee();
 
 }

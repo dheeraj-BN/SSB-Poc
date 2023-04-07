@@ -16,9 +16,13 @@ public interface FloorDetailsRepo extends JpaRepository<FloorDetails ,Integer>{
 
 	List<FloorDetails> findAllByFloorName(String floorName);
 
-	
+	//boolean existsByName(String floorName);
+
+	boolean existsByFloorName(String floorName);
 
 	
+
+	//boolean existsByName(String floorName);
 	  
 	
 

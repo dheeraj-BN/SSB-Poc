@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-backend
+  name: react-frontend
 spec:
   replicas: 2
   selector:
      matchLabels:
-       app: java
+       app: react
   template:
     metadata:
       labels:
-        app: java
+        app: react
     spec:
 
       containers:
-      - name: java-app
-        image: ssbpoc.azurecr.io/java_backend:#{Build.BuildId}#
+      - name: react-app
+        image: ssbpoc.azurecr.io/react_backend:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
-        - containerPort: 9090
+        - containerPort: 3000
         
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-backend-public-exposure
+  name: react-frontend-public-exposure
 spec:
   selector:
-    app: java
+    app: react
   ports:
     - protocol: TCP
-      port: 9090
-      targetPort: 9090
+      port: 3000
+      targetPort: 3000
   type: LoadBalancer

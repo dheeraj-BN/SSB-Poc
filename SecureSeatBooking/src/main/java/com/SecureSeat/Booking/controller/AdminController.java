@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.event.PublicInvocationEvent;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,13 +48,13 @@ public class AdminController {
 	*/
 	
 	@PostMapping("/addUser/{id}")
-	public ResponseEntity<Map<String, String>> addUser(@PathVariable int id) {
+	public String addUser(@PathVariable int id) {
 		// Method to add a new user
 		return userService.addUser(id);
 	}
 	
 	
-	@PutMapping("/validateToken/")
+	@PutMapping("/validateToken")
 	public Employee validateTocken(@RequestParam String token) throws Exception {
 		// Method to validate token
 		return userService.validateToken(token);
@@ -71,11 +73,6 @@ public class AdminController {
 		// Method to save holiday details
 		String s= userService.addHolidays(holidayDetails);
 		return s;
-	}
-	
-	@PutMapping("/modifiHoliday")
-	public void editHoliday(@RequestParam LocalDate date, @RequestBody HolidayDetails holidayDetails) {
-		// Method to edit holiday details
 	}
 	
 	@GetMapping("/notRegistered")
@@ -108,11 +105,26 @@ public class AdminController {
 		// Method to send SMS to admin
 		Employee employee = userService.adminInfo();
 		
-		return smsImpl.SendSms(employee, "Checking the Token value experied");
+		return smsImpl.SendSms(employee, "Checking the Token value experied 1");
 	}
 
 	@GetMapping("/allHolidays")
 	public List<HolidayDetails> listofHolidays() {
 		return userService.allHolidays();
+	}
+	
+	@DeleteMapping("/deleteHoliday")
+	public String deleteHoliday(@RequestParam LocalDate holidayDetails) {
+		
+		System.out.println(holidayDetails);
+		return userService.deleteHoliday(holidayDetails);
+	}
+		
+	@GetMapping("/employeeList")	
+	
+	public List<Employee> list(){
+		return userService.registeredEmployee();
+	
+	
 	}
 }
