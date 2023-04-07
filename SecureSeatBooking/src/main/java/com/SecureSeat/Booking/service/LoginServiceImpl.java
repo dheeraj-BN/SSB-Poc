@@ -57,6 +57,14 @@ public class LoginServiceImpl implements LoginService, UserDetailsService {
 		// Retrieving all employee details from database
 		return empRepo.findAll();
 	}
+	
+	@Override
+	public Employee getUserInfo(int id ) {
+		UserDeatils user=userRepo.findById(id).get();
+		Employee employee=empRepo.findById(user.getEmployee().getEmployeeId());
+		return employee;
+	}
+	
 
 	// This method is currently not implemented. This i have implemented for test purpose
 	@Override
