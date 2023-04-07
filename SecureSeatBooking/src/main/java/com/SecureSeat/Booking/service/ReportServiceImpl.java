@@ -2,6 +2,8 @@ package com.SecureSeat.Booking.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -34,18 +36,21 @@ public class ReportServiceImpl implements ReportService {
 	private UserDetailsRepo detailsRepo;
 
 	
-	
+	 private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
+
 
 
 	
 	 @Override
 	    public List<BookingDetails> getBookingDetailsByDate(LocalDate bookingDate) {
+		 logger.debug("Getting booking details by date: {}", bookingDate);
 	        return reportDao.getBookingDetailsByDate(bookingDate);
 	    }
 	 
 	 
 	 @Override
 	    public List<BookingDetails> getBookingsByDateAndStatus(LocalDate bookingDate, String bookingStatus) {
+		 logger.debug("Getting bookings by date: {} and status: {}", bookingDate, bookingStatus);
 	        return reportDao.getBookingsByDateAndStatus(bookingDate,bookingStatus);
 	    }
 	 
@@ -57,6 +62,7 @@ public class ReportServiceImpl implements ReportService {
 	 
 	   @Override
 	    public List<BookingDetails> findBookingByDateAndStatus(LocalDate date, String status) {
+		   logger.debug("Finding booking by date: {} and status: {}", date, status);
 	        return bookingDetailsRepo.findByBookedDateAndBookingStatus(date, status);
 	    }
 	 
@@ -64,6 +70,7 @@ public class ReportServiceImpl implements ReportService {
 	 
 	   @Override
 	    public List<BookingDetails> getBookingByDate(LocalDate bookedDate) {
+		   logger.debug("Getting booking by date: {}", bookedDate);
 	        return bookingDetailsRepo.findByBookedDate(bookedDate);
 	    }
 
@@ -71,6 +78,7 @@ public class ReportServiceImpl implements ReportService {
 	 
 	   @Override
 		public List<BookingDetails> getBookingBySpecificMonth(int year, Month month) {
+		   logger.debug("Getting booking by specific month: {} {}", month, year);
 			LocalDate startDate = LocalDate.of(year, month, 1);
 			LocalDate endDate = startDate.plusMonths(1).minusDays(1);
 			return bookingDetailsRepo.findByBookedDateBetween(startDate, endDate);
@@ -81,6 +89,7 @@ public class ReportServiceImpl implements ReportService {
 	   
 	   @Override
 	    public List<BookingDetails> getBookingBySpecificWeek(int week) {
+		   logger.debug("Getting booking by specific week: {}", week);
 	        LocalDate currentDate = LocalDate.now();
 	        LocalDate startDateOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).plusWeeks(week);
 	        LocalDate endDateOfWeek = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusWeeks(week);
@@ -93,6 +102,5 @@ public class ReportServiceImpl implements ReportService {
 	
 
 
-
-	   
+  
 }
