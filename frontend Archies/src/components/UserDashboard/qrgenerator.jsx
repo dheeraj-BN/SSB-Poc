@@ -1,16 +1,48 @@
 import { useEffect, useState } from "react";
 import qrcode from "qrcode";
 
+
 import axios from "axios";
 function QRGenerator() {
   const [imgQR, setImageQR] = useState();
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [data, setData] = useState([{}]);
+  const [image, setImage]=useState()
+
+
+  const storedData = localStorage.getItem('userId');
 
   useEffect(() => {
-    axios.get("https://reqres.in/api/users").then(async (response) => {
-      const image = await qrcode.toDataURL(response.data.data[1].email);
-      setImageQR(image);
-    });
-  }, []);
+    fetch("http://10.191.80.100:9090/api/employee/booked/details/"+storedData, {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        
+        
+     
+        
+      });
+  },[]);
+  useEffect(()=>{
+    qrcode.toDataURL(data.token).then((img)=>{
+
+      setImageQR(img);
+    })
+        // console.log(qrcode.toDataURL(data.token));
+  },[data])
   return (
     <div className="">
         <div class="card-body text-center">
