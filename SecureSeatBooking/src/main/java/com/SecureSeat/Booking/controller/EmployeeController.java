@@ -56,8 +56,8 @@ public class EmployeeController {
 		
 	}
 	
-	// This method handles POST requests for saving new password.
-	@PostMapping("/api/new/password/{id}")
+	// This method handles PUT requests for saving new password.
+	@PutMapping("/api/new/password/{id}")
 	public String forgotPassword(@PathVariable int id,@RequestParam("newPassword")String newPassword) {
 		String message=	employeeService.forgotPasword( id,newPassword);
 		return message;
@@ -69,7 +69,6 @@ public class EmployeeController {
 	// This method handles POST requests getting OTP
 	@PostMapping("/api/forgot/password")
 	public String generateOtp(@RequestParam String phoneNo) {
-		System.out.println("hii");
 		employeeService.findUserIdByPhoneNo(phoneNo);
 		return employeeService.generateOtp(phoneNo);
 	}
@@ -111,21 +110,16 @@ public class EmployeeController {
 	// This method handles GET requests for retrieving the next booked details of an employee by ID.
 	@GetMapping("/api/employee/next/booked/details/{id}")
 	public List<BookingDetails> nextBookedInfo(@PathVariable int id){
-		System.out.println("hi");
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
 	
-//	@ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handleException(Exception e) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
-//    }
+
 	
 	
 	// This method handles GET requests for retrieving the employee details of an employee by ID.
 	@GetMapping("/api/employee/employee/{id}")
 	public Employee getEmployee(@PathVariable int id)throws NullPointerException {	
 		try {
-			System.out.println("hii");
 			return employeeService.getEmployee(id);
 	}catch (NullPointerException e) {
 		 throw new ResponseStatusException(HttpStatus.OK, "Employee not found", e);

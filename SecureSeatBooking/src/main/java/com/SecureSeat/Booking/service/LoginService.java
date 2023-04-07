@@ -14,4 +14,6 @@ public interface LoginService {
 
 	List<Employee> findAllEmployees();
 
+	Employee getUserInfo(int id);
+
 }
