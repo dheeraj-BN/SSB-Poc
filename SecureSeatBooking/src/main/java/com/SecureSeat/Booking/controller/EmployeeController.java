@@ -115,10 +115,7 @@ public class EmployeeController {
 		return employeeService.getEmpBookedInfoBookedNext(id);	
 	}
 	
-//	@ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handleException(Exception e) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving booking details.");
-//    }
+
 	
 	
 	// This method handles GET requests for retrieving the employee details of an employee by ID.
