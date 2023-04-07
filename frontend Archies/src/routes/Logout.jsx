@@ -6,7 +6,7 @@ function Logout(props) {
   const [token, setToken] = useState(window.localStorage.getItem("token"))
 
     useEffect(()=>{
-         fetch(`http://10.191.80.98:9090/logout`, {
+         fetch(`http://40.88.23.186:9090/logout`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,7 +33,19 @@ function Logout(props) {
     function handleSignout(){
 
         localStorage.removeItem("token")
-        // history.replace('/login')
+        localStorage.removeItem("id")
+        localStorage.removeItem("to date")
+        localStorage.removeItem("RaStore.users.listParams")
+        localStorage.removeItem("Meal")
+        localStorage.removeItem("HTML5_QRCODE_DATA")
+        localStorage.removeItem("username")
+        localStorage.removeItem("om date")
+        localStorage.removeItem("ShiftTiming")
+        localStorage.removeItem("userId")
+        localStorage.removeItem("floorid")
+        localStorage.removeItem("seat_name")
+        localStorage.removeItem("from date")
+        localStorage.removeItem("userId")
 
     }
 

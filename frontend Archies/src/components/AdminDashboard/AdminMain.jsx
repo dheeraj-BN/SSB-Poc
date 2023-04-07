@@ -13,7 +13,7 @@ function AdminMain(props) {
   const [food, setfood] = useState('')
 
   useEffect(()=>{
-    fetch(`http://10.191.80.98:9090/api/admin/bookings/count/${new Date().toISOString().substr(0,10)}`, {
+    fetch(`http://40.88.23.186:9090/api/admin/bookings/count/${new Date().toISOString().substr(0,10)}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -35,7 +35,7 @@ function AdminMain(props) {
   },[count])
 
   useEffect(()=>{
-    fetch(`http://10.191.80.98:9090/api/admin/employee-count/${new Date().toISOString().substr(0,10)}/true`, {
+    fetch(`http://40.88.23.186:9090/api/admin/employee-count/${new Date().toISOString().substr(0,10)}/true`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ function AdminMain(props) {
 
 
   useEffect(()=>{
-    fetch(`http://10.191.80.98:9090/api/admin/employee-count/${new Date().toISOString().substr(0,10)}/PENDING`, {
+    fetch(`http://40.88.23.186:9090/api/admin/employee-count/${new Date().toISOString().substr(0,10)}/PENDING`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
