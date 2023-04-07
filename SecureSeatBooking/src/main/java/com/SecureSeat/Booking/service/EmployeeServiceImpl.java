@@ -151,7 +151,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// retrieving the user details from the database using the user id
 		UserDeatils user = userDetailsRepo.findByUserId(id).get();
 		logger.info("employee " + user);
-		System.out.println(user);
 		// retrieving the booking details of the employee for today
 		BookingDetails info = bookingDetailsRepo.findByUserDeatilsAndBookedDateEquals(user, LocalDate.now());
 		return info;
