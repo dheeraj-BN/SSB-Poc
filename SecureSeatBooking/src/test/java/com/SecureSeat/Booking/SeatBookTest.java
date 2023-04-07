@@ -30,20 +30,14 @@ public class SeatBookTest {
 	@Autowired
 	private SeatBook seatBook;
 	
-	@Autowired
-	private MockMvc mockMvc;
+
 	
 	@Autowired
 	private UserDetailsRepo userDetailsRepo;
 	
 
 	
-//	@Test
-//	@WithAnonymous
-//	public void getuserdetails() throws Exception {
-//		mockMvc.perform(get("/getuser")).andExpect(status().isOk());
-//		
-//	}
+
 	
 //	@Test
 //	public void savedbookeddetailsforday() {
@@ -66,6 +60,15 @@ public class SeatBookTest {
 //		BookingDetails bookingDetails = new BookingDetails("G12",true,date1, null, null, null, null,userDeatils, shiftDetails);
 //        seatBook.savebookeddetails(bookingDetails, date1, date2);
 //		assertEquals("seat has been already booked for that week","seat has been already booked for that week");
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void updatefoodstatus() {
+//		String token ="040420236";
+//		Boolean foodstatus = true;
+//		seatBook.updatefoodstatus(token,foodstatus);
 //		
 //		
 //	}
