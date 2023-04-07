@@ -40,7 +40,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if(status){
+    // if(status){
       if (formSubmitted) {
         if (role === "ROLE_ADMIN") {
           window.localStorage.setItem("token", token);
@@ -53,13 +53,14 @@ function Login() {
           window.localStorage.setItem("id",id)
 
         }
-        else{
-          window.location = "/";
-          window.localStorage.setItem('token', token)
-          window.localStorage.setItem("id",id)
-
+        else if(role === "ROLE_EMPLOYEE"){
+            window.location = "/employee";
+            window.localStorage.setItem('token', token)
+            window.localStorage.setItem("id",id)
         }
-      }
+        // else{
+        // }
+      // }
     }
     else{
         // window.location = '/resetpass' 

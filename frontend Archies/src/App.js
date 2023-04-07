@@ -50,7 +50,7 @@ function App() {
           <Route path="/addshift" element={<AddShift/>}/>
           <Route path="/generatetoken" element={<Token/>}/>
           {/* user dash */}
-          <Route path="/"  element={<UserDashboard/>} />
+          <Route path="/employee"  element={<UserDashboard/>} />
           <Route path="/booking" element={<SeatBookingForm/>} />
           <Route path="/floorlist" element={<FloorList/>}/>
           <Route path="/floor0" element={<SeatMatrix/>}/>
