@@ -33,9 +33,6 @@ const Sidebar1 = () => {
             <Link  to="/admin" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
             </Link>
-            <Link  to="/qrcodescan" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
-              <CDBSidebarMenuItem icon="table"> QR Scan</CDBSidebarMenuItem>
-            </Link>
             <Link  to="/empdata" className={(navdata)=>(navdata.active ? "activeClicked" : 'none')}>
               <CDBSidebarMenuItem icon="table"> Data</CDBSidebarMenuItem>
             </Link>
