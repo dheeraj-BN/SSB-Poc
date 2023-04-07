@@ -10,7 +10,7 @@ function Holiday() {
   const [desc, setDesc] = useState();
 
   useEffect(() => {
-    fetch("http://10.191.80.98:9090/api/admin/allHolidays", {
+    fetch("http://40.88.23.186:9090/api/admin/allHolidays", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function Holiday() {
       description: formData.get("description"),
     };
 
-    fetch(`http://10.191.80.98:9090/api/admin/addholiday`, {
+    fetch(`http://40.88.23.186:9090/api/admin/addholiday`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function Holiday() {
     setEditingIndex(index);
     try {
       const response = fetch(
-        `http://10.191.80.98:9090/api/admin/modifiHoliday?date=$`
+        `http://40.88.23.186:9090/api/admin/modifiHoliday?date=$`
       );
       const holiday = response.json();
       const form = document.querySelector("form");

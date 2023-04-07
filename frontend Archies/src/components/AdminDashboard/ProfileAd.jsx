@@ -5,9 +5,10 @@ import { useEffect } from "react";
 function ProfileAd(props) {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [data, setdata] = useState([]);
-
+  const [id, setId] = useState(window.localStorage.getItem("id"))
+  
   useEffect(() => {
-    fetch("http://10.191.80.98:9090/userInfo/19", {
+    fetch(`http://40.88.23.186:9090/userInfo/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

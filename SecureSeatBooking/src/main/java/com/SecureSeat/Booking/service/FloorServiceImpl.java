@@ -105,20 +105,7 @@ public class FloorServiceImpl implements FloorService {
 
 
 
-//	@Override
-//	public FloorDetails updateFloorByFloorName(String floorName, FloorDetails floorDetails) {
-//		
-//		 FloorDetails existingFloor = floorDetailsRepo.findByFloorName(floorName);
-//	        if (existingFloor != null) {
-//	            ((FloorDetails) existingFloor).setFloorName(floorDetails.getFloorName());
-//	            ((FloorDetails) existingFloor).setNoOfSeats(floorDetails.getNoOfSeats());
-//	            return floorDetailsRepo.save(existingFloor);
-//	        } else {
-//	            // handle not found case
-//	            return null;
-//	        }
-//	    }
-	
+
 	
 	@Override
 	public FloorDetails updateFloorByFloorName(String floorName, FloorDetails floorDetails) {

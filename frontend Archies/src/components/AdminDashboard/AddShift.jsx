@@ -12,7 +12,7 @@ function AddShift(props) {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 
   useEffect(() => {
-    fetch("http://10.191.80.98:9090/api/admin/getAllShiftDetails", {
+    fetch("http://40.88.23.186:9090/api/admin/getAllShiftDetails", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ function AddShift(props) {
     };
     // console.log(shifttime.from+"-"+shifttime.to)
     fetch(
-      `http://10.191.80.98:9090/api/admin/addShiftTime?shiftTime=${
+      `http://40.88.23.186:9090/api/admin/addShiftTime?shiftTime=${
         shifttime.from + "-"
       }${shifttime.to}`,
       {
@@ -140,7 +140,7 @@ function AddShift(props) {
 
     const token = "your-token";
 
-    fetch(`https://your-api.com/shifts/${shiftId}`, {
+    fetch(`http://40.88.23.186:9090/shifts/${shiftId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

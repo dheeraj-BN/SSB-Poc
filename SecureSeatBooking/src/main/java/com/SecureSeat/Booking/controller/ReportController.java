@@ -188,6 +188,7 @@ public class ReportController {
 		
 		
 
+		
 	
 		
 		@GetMapping("/bookings/count/{date}")

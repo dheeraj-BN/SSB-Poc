@@ -116,7 +116,7 @@ function SeatMatrix() {
       }).catch((err)=>{
         alert(err)
             })
-      window.location = "/";
+      window.location = "/employee";
     } else {
       alert("please select a seat");
     }
