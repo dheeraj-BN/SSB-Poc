@@ -9,7 +9,7 @@ function AddUser() {
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch(`http://10.191.80.98:9090/api/admin/notRegistered`, {
+    fetch(`http://40.88.23.186:9090/api/admin/notRegistered`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ function AddUser() {
   }, []);
 
   function addData() {
-    fetch(`http://10.191.80.98:9090/api/admin/addUser/${empId}`, {
+    fetch(`http://40.88.23.186:9090/api/admin/addUser/${empId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

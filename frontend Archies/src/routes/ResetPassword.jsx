@@ -7,7 +7,7 @@ function ResetPassword() {
   const [token, setToken] = useState(window.localStorage.getItem("token"))
 
   function changePassword(){
-    fetch(`http://10.191.80.98:9090/api/new/password/19?newPassword=${input}`, {
+    fetch(`http://40.88.23.186:9090/api/new/password/19?newPassword=${input}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

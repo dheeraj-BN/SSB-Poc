@@ -24,7 +24,7 @@ function Login() {
 
     e.preventDefault();
     try {
-      const response = await axios.post("http://10.191.80.98:9090/login", {
+      const response = await axios.post("http://40.88.23.186:9090/login", {
         username,
         password,
       });
@@ -44,15 +44,20 @@ function Login() {
       if (formSubmitted) {
         if (role === "ROLE_ADMIN") {
           window.localStorage.setItem("token", token);
+          window.localStorage.setItem("id",id)
           window.location = "/admin";
         } 
         else if(role === "ROLE_DEVELOPER") {
           window.location = "/developer";
           window.localStorage.setItem('token', token)
+          window.localStorage.setItem("id",id)
+
         }
         else{
           window.location = "/";
           window.localStorage.setItem('token', token)
+          window.localStorage.setItem("id",id)
+
         }
       }
     }
