@@ -9,6 +9,9 @@ function AddUser() {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [data, setData] = useState(''); 
 
+  useEffect(()=>{
+    
+  },[])
 
   function addData() {
 
@@ -75,7 +78,6 @@ function AddUser() {
             <label htmlFor="exampleInputEmail1" className="form-label">
               Enter your Employee Id
             </label>
-            {console.log(token)}
             <input
               type="text"
               className="form-control"
@@ -83,6 +85,7 @@ function AddUser() {
               onBlur={(e) => setEmpId(Number(e.target.value))}
               aria-describedby="emailHelp"
             />
+            <p>{}</p>
             <button type="submit" onClick={addData} className="btn btn-primary">
               Submit
             </button>

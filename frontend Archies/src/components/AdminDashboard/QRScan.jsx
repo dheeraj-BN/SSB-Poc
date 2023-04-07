@@ -5,6 +5,7 @@ import Sidebar1 from "./Sidebar";
 
 function QRScan(props) {
   let [qr,setQr] = useState('')
+  let [empdata,setempData] = useState('')
   
   return (
     <div>
@@ -13,11 +14,13 @@ function QRScan(props) {
           <Sidebar1 />
         </div>
         <div className="qrreader">
-          <QrCodeScan data={setQr}/>
+          <QrCodeScan data={setQr} emp={setempData}/>
           <div className="qrdata">
-            <p>Id : <span>{qr}</span> </p>
-            <p>Name : <span>Archies Singh</span> </p>
-            <p>Time : <span>1:00pm</span> </p>
+            <p>Id : <span>{empdata.employeeId}</span> </p>
+            <p>Name : <span>{empdata.employeeName}</span> </p>
+            <p>Email : <span>{empdata.employeeEmail}</span> </p>
+            <p>Designation : <span>{empdata.employeeDesignation}</span> </p>
+            <p>Phone Number : <span>{empdata.employeePhoneNo}</span> </p>
           </div>
         </div>
       </div>    

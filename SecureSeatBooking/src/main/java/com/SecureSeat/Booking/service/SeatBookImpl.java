@@ -88,7 +88,6 @@ public class SeatBookImpl implements SeatBook {
 	@Override
 	public String saveBookedDetailsforday(BookingDetails bookingDetails, LocalDate from) {
 		logger.info("seat booking details for  date {}", from);
-		int flag = 0;
 		logger.info("checking holiday for date { }", from);
 		int checkholiday = checkholiday(from);
 		if (checkholiday == 0) {
