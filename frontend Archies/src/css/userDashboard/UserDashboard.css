@@ -1,3 +1,6 @@
 .qr{
   gap: 1rem;
 }
+.data1{
+  display: flex;
+}

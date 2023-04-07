@@ -24,6 +24,8 @@ public interface ReportService {
 
 	List<BookingDetails> getBookingBySpecificWeek(int week);
 
+	//long getEmployeeCountByBookingStatus(String date, String bookingStatus);
+
 
 	
 	

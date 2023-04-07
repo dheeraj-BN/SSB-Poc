@@ -54,6 +54,9 @@ public class ReportController {
 	private EmployeeRepo employeeRepo;
 	
 	
+	
+	
+	//specific date jdbbc
 	  @GetMapping("/bookingdetails/date/{bookingDateStr}")
 	    public ResponseEntity<List<BookingDetails>> getBookingDetailsByDate(@PathVariable("bookingDateStr") String bookingDateStr) {
 	        LocalDate bookingDate = LocalDate.parse(bookingDateStr); // convert the string to LocalDate object
@@ -62,7 +65,7 @@ public class ReportController {
 	    }
 	
 	  
-	  
+	  //date with status jdbc
 	  @GetMapping("/bookings/{bookingDate}/{bookingStatus}")
 	  public ResponseEntity<List<BookingDetails>> getBookingsByDateAndStatus(
 	      @PathVariable("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
@@ -92,6 +95,8 @@ public class ReportController {
 	   
 	   
 
+	   
+	   //date and booked date
 	  
 	   @GetMapping("/date/{bookedDate}")
 		public List<BookingDetails> getBookingByDate(@PathVariable String bookedDate) {
@@ -127,6 +132,9 @@ public class ReportController {
 	       return bookingDetailsList;
 	   }
 	   
+	   
+
+
 	   
 	   
 
@@ -179,14 +187,8 @@ public class ReportController {
 		}
 		
 		
-//		
-//		@GetMapping("/bookings/count/{date}")
-//		public Long getBookingCountByDate(
-//		    @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-//		) {
-//		    return bookingDetailsRepo.countByBookedDate(date);
-//		}
 
+		
 	
 		
 		@GetMapping("/bookings/count/{date}")
@@ -195,7 +197,7 @@ public class ReportController {
 		}
 		
 		
-		@GetMapping("/employee-count/{date}/{foodStatus}")
+		@GetMapping("/employee-count/food/{date}/{foodStatus}")
 		public long getEmployeeCount(@PathVariable String date, @PathVariable boolean foodStatus) {
 		    LocalDate bookingDate = LocalDate.parse(date);
 		    List<BookingDetails> bookingDetailsList = bookingDetailsRepo.findByBookedDate(bookingDate);
@@ -206,7 +208,18 @@ public class ReportController {
 		    }
 		}
 
+
+
 		
+
 		
+		@GetMapping("/employee-count/{date}/{booking_Status}")
+		public long countBookingsByDateAndStatus(@PathVariable("date") String date, @PathVariable("booking_Status") String bookingStatus) {
+		    LocalDate bookingDate = LocalDate.parse(date);
+		    List<BookingDetails> bookingDetailsList = bookingDetailsRepo.findByBookedDateAndBookingStatus(bookingDate, bookingStatus);
+		    return bookingDetailsList.size();
+		}
+
+	
 
 }

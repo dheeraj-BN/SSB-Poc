@@ -1,73 +1,105 @@
-// import React, { useState } from 'react';
- import "../../css/userDashboard/modifySeat.css";
+// Importing necessary modules
+import React, { useState ,useEffect} from 'react';
+import "../../css/userDashboard/modifySeat.css";
 
-
-
-
-// const SeatModify = () => {
-//   const [lists, setLists] = useState(['List 1', 'List 2', 'List 3', 'List 4', 'List 5', 'List 6', 'List 7']);
-
-//   const handleModify = (index) => {
-//     const newList = [...lists];
-//     newList[index] = prompt('Enter new list name:', newList[index]);
-//     setLists(newList);
-//   };
-
-//   const handleCancel = (index) => {
-//     const newList = [...lists];
-//     newList.splice(index, 1);
-//     setLists(newList);
-//   };
-
-
-//   return (
-//     <div className="list-ui-container">
-//       {lists.map((list, index) => (
-//         <div className="list-item" key={index}>
-//           <span>{list}</span>
-//           <div className="button-group">
-//             <button onClick={() => handleModify(index)}>Modify</button>
-//             <button onClick={() => handleCancel(index)}>Cancel</button>
-//             <button>Change</button>
-//           </div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default SeatModify;
-// Importing necessary modules and files
-import React from "react";
-import "../../css/userDashboard/navbar.css";
-
-// Defining the Navbar component
+// Defining the functional component
 function SeatModify() {
+  // Declaring state variables using useState hook
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [bookingToken, setBookingToken]=useState()
+  const [data, setData] = useState([{}]);
+  const storedData = localStorage.getItem('userId');
+
+  // Fetching the booked seat details for the current user using useEffect hook
+  useEffect(() => {
+    fetch("http://10.191.80.100:9090/api/employee/next/booked/details/"+storedData, {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+      });
+  },[]);
+
+  // Function to cancel a booked seat
+  const cancelBooking = (seattoken) => {
+    fetch("http://10.191.80.100:9090/api/employee/cancel/"+seattoken, {
+      method: "PUT",
+
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.text();
+      })
+      .then((text) => {
+        setData(JSON.parse(text));
+        window.location="/modify";        
+      });
+  };
   
+  // Rendering the component
   return (
     <div>
+      {/* Navbar */}
       <nav class="navbar navbar-dark bg-mynav">
-      <div class="container-fluid">
-        <a class="navbar-brand" >Modify Your Seat Booking</a>
-      </div>
-    </nav>
+        <div class="container-fluid">
+          <a class="navbar-brand" >Modify Your Seat Booking</a>
+        </div>
+      </nav>
       
+      {/* Table displaying booked seats */}
       <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Date</th>
+              <th scope="col" >Date</th>
               <th scope="col">Seat No</th>
               <th scope="col">Action</th>
             </tr>
-          </thead> 
+          </thead>
+          <tbody>
+            {/* Mapping over the seat data to display each booked seat */}
+            {
+              data && (
+                data.map((item,index)=>{
+                  const seattoken = item.token;
+                  console.log("seat              "+seattoken)
+                  return(
+                    <tr key={index}>
+                      <td scope="col" >{item.date}</td>
+                      <td scope="col">{item.seatNo}</td>
+                      <button>Edit</button>
+                      {/* Button to cancel a booked seat */}
+                      <button onClick={() =>cancelBooking(seattoken)}>Cancel</button>
+                    </tr>
+                  )
+                })
+              )
+            }
+          </tbody>
         </table>
       </div>
-    </div>
-    
+    </div>    
   );
 }
 
-// Exporting the Navbar component
+// Exporting the component
 export default SeatModify;
-
