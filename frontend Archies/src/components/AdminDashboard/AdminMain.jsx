@@ -17,6 +17,9 @@ function AdminMain(props) {
   const card3 = {
     color : "#D5D887"
   }
+  const card4 = {
+    color : "#2A1A1F"
+  }
   return (
       <div className="adminPage">
         <div>
@@ -38,8 +41,8 @@ function AdminMain(props) {
           <div className="fundata">
             <FCards img = "https://pocproject.000webhostapp.com/images/QRScan.png" title="QR Scan" address="/qrcodescan"  color={card1.color}/>
             <FCards img = "https://pocproject.000webhostapp.com/images/AddUser.png" title="ADD User" address="/adduser" color={card2.color} onclick={()=><AddUser/>}/>
-            <FCards img = "https://pocproject.000webhostapp.com/images/Employee_Data.png" title="Holiday" address="/holiday" color={card3.color}/>
-            <FCards img = "https://pocproject.000webhostapp.com/images/Employee_Data.png" title="Employee data" address="/empdata" color={card3.color}/>
+            <FCards img = "https://pocproject.000webhostapp.com/images/holidays.png" title="Holiday List" address="/holiday" color={card4.color}/>
+            <FCards img = "https://pocproject.000webhostapp.com/images/shift.png" title="Add Shifts" address="/addshift" color={card4.color}/>
             {/* Add holiday , add shift */}
           </div>
         </div>
