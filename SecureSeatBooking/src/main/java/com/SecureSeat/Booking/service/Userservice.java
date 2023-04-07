@@ -1,5 +1,6 @@
 package com.SecureSeat.Booking.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,8 @@ public interface Userservice {
 
 	List<HolidayDetails> allHolidays();
 
-	void deleteHoliday(HolidayDetails holidayDetails);
+	String deleteHoliday(LocalDate holidayDetails);
+
+	List<Employee> registeredEmployee();
 
 }

@@ -45,3 +45,9 @@
   }
 .taken {  color:#87ff96; }
 .selected { background: #87ff96; }
+
+@media only screen and (max-width: 768px) {
+  .seat-map {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

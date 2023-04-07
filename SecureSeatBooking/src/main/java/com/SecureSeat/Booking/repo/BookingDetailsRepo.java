@@ -41,6 +41,9 @@ public interface BookingDetailsRepo extends JpaRepository<BookingDetails, Intege
 
 	List<BookingDetails> findByUserDeatils(UserDeatils userDeatils);
 
+	Long countByBookedDate(LocalDate date);
+
+	
 
 
 
