@@ -14,7 +14,7 @@ function FloorList() {
   // useEffect hook to fetch data from server when the component mounts
   useEffect(() => {
     // Fetching data from server using axios library
-    fetch("http://10.191.80.98:9090/api/employee/floors", {
+    fetch("http://40.88.23.186:9090/api/employee/floors", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,

@@ -13,7 +13,7 @@ function QRGenerator() {
   const storedData = localStorage.getItem('userId');
 
   useEffect(() => {
-    fetch("http://10.191.80.100:9090/api/employee/booked/details/"+storedData, {
+    fetch("http://40.88.23.186:9090/api/employee/booked/details/"+storedData, {
       method: "GET",
 
       headers: {
@@ -41,7 +41,7 @@ function QRGenerator() {
 
       setImageQR(img);
     })
-        // console.log(qrcode.toDataURL(data.token));
+      
   },[data])
   return (
     <div className="">
@@ -51,6 +51,7 @@ function QRGenerator() {
               <img src={imgQR} width="20%" alt="qr code pic is here" />
             </a>
           )}
+         
         </div>
       </div>
    

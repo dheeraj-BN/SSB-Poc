@@ -1,7 +1,7 @@
 // Importing necessary modules and files
 import React from "react";
 import "../../css/userDashboard/navbar.css";
-
+import  Logout from "../../routes/Logout"
 // Defining the Navbar component
 function NavBar() {
   
@@ -38,7 +38,9 @@ function NavBar() {
         <ul>
           <li>
             {/* Button to sign out */}
-            <i class="bi bi-box-arrow-right">Sign Out</i>
+            <i class="bi bi-box-arrow-right">
+              <button><Logout/></button>
+            </i>
           </li>
         </ul>
       </nav>

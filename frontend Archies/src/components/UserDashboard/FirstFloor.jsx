@@ -19,7 +19,7 @@ function SeatMatrix1() {
 
 // Use the useEffect hook to fetch data from the server 
    useEffect(() => {
-     fetch("http://10.191.80.100:9090/api/employee/seatnumber/"+storedData, {
+     fetch("http://40.88.23.186:9090/api/employee/seatnumber/"+storedData, {
       method: "GET",
 
       headers: {
@@ -45,7 +45,7 @@ function SeatMatrix1() {
 
   useEffect(() => {
     // Fetching data from server using axios library
-    fetch("http://10.191.80.98:9090/api/employee/floors", {
+    fetch("http://40.88.23.186:9090/api/employee/floors", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -105,7 +105,7 @@ function SeatMatrix1() {
       let seatNo=localStorage.getItem("seatNo")
       let todate=localStorage.getItem("to")
       let fromdate=localStorage.getItem("from")
-      axios.post(`http://10.191.80.100:9090/api/employee/seatbookdetails?from=${fromdate}&to=${todate}`,{foodStatus,shiftDetails:{shiftTimings},
+      axios.post(`http://40.88.23.186:9090/api/employee/seatbookdetails?from=${fromdate}&to=${todate}`,{foodStatus,shiftDetails:{shiftTimings},
       userDeatils:{userId},seatNo},
       {headers: {
         Authorization: "Bearer " + token,
@@ -115,7 +115,7 @@ function SeatMatrix1() {
       }).catch((err)=>{
         alert(err)
             })
-      window.location = "/";
+      window.location = "/employee";
     } else {
       alert("please select a seat");
     }

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "../../css/userDashboard/Bookingform.css";
+import "../../css/userDashboard/pastBookingform.css";
 import NavBar  from "./NavBar.jsx";
 
-function SeatBookingForm() {
+import axios from "axios";
+import { DatagridCell } from "react-admin";
+
+function PastBookingForm() {
    // Set initial state values
   const [branchName, setBranchName] = useState("");
   const [buildingName, setBuildingName] = useState("");
@@ -10,6 +13,7 @@ function SeatBookingForm() {
   const [toDate, setToDate] = useState("");
   const [firstDate, setFirstDate] = useState("");
   const [meal, setMeal] = useState("");
+  const [seat, setSeat] =useState("");
 
   const [shiftTiming, setShiftTiming] = useState("");
   const [request, setRequest] = useState("");
@@ -46,10 +50,8 @@ function SeatBookingForm() {
     }
     setToDate(e.target.value)
   }
- 
-// Fetch shift timings from API
   useEffect(() => {
-    fetch("http://40.88.23.186:9090/api/employee/getshift", {
+    fetch("http://10.191.80.100:9090/api/employee/lastbookingdetails/22", {
       method: "GET",
 
       headers: {
@@ -66,9 +68,9 @@ function SeatBookingForm() {
       })
       .then((text) => {
         setData(JSON.parse(text));
-        // console.log(text)
+         console.log(text)
         
-      });
+      })
   },[]);
 // Save form data to local storage
   const savedata=()=>{
@@ -92,14 +94,14 @@ function SeatBookingForm() {
           <NavBar/>
         </div> 
         <div>
-        <form onSubmit={handleSubmit} className="seat-booking-form">
+        <form onSubmit={handleSubmit} className="seat-booking-form1">
             {/* Branch name selection */}
       <label htmlFor="branch-name-input ">Branch Name:</label>
       <select
         id="branch-name-input"
         value={branchName}
         onChange={(e) => setBranchName(e.target.value)}
-        className="form-input1"
+        className="form-input11"
 
       >
         <option value="Bangalore">Bangalore</option>
@@ -110,7 +112,7 @@ function SeatBookingForm() {
         id="building-name-input"
         value={buildingName}
         onChange={(e) => setBuildingName(e.target.value)}
-        className="form-input1"
+        className="form-input11"
       >
         <option value="JP Nagar">JP Nagar</option>
       </select>
@@ -120,7 +122,7 @@ function SeatBookingForm() {
         id="request-input"
         value={request}
         onChange={(e) => setRequest(e.target.value)}
-        className="form-input1"
+        className="form-input11"
         required
       >
         <option value="" disabled>
@@ -135,17 +137,13 @@ function SeatBookingForm() {
         id="shift-timing-input"
         value={shiftTiming}
         onChange={(e) => setShiftTiming(e.target.value)}
-        className="form-input1"
+        className="form-input11"
         required
       >
         <option value="" disabled>
-          Select
+            Select
         </option>
-        {
-          data.map((val,idx)=>{
-            return <option value={val.shiftTimings}>{val.shiftTimings}</option>
-          })
-        }
+       
     
       </select>
         {/* Meal preference selection */}
@@ -154,14 +152,24 @@ function SeatBookingForm() {
         id="meal-name-input"
         value={meal}
         onChange={(e) => setMeal(e.target.value)}
-        className="form-input1"
+        className="form-input11"
         required
       >
         <option value="" disabled>
           Select
         </option>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+      </select>
+      <label htmlFor="seat-name-input">Seat:</label>
+      <select
+        id="seat-name-input"
+        value={seat}
+        onChange={(e) => setSeat(e.target.value)}
+        className="form-input11"
+        required
+      >
+        <option value="" disabled>
+          Select
+        </option>
       </select>
 
       {request === "Daily" && (
@@ -173,7 +181,6 @@ function SeatBookingForm() {
             type="date"
             value={firstDate}
             min={todayDate()}
-
             onChange={(e) => setFirstDate(e.target.value)}
             className="form-input1"
             required
@@ -184,7 +191,7 @@ function SeatBookingForm() {
             type="date"
             value={firstDate}
             min={todayDate()}
-            className="form-input1"
+            className="form-input11"
           />
         </>
       )}
@@ -199,7 +206,7 @@ function SeatBookingForm() {
             value={firstDate}
             min={todayDate()}
             onChange={(e) => setFirstDate(e.target.value)}
-            className="form-input1"
+            className="form-input11"
           />
           <label htmlFor="to-date-input">To Date:</label>
           <input
@@ -208,13 +215,13 @@ function SeatBookingForm() {
             min={todayDate()}
             val={toDate}
             onChange={(e) => weeklydate(e)}
-            className="form-input1"
+            className="form-input11"
           />
         </>
       )}
 
-      <button type="submit" onClick={savedata} className="btn btn-primary booking-btn">
-        Next
+      <button type="submit" onClick={savedata} className="btn btn-primary booking-btn1">
+        Submit
       </button>
     </form>
     
@@ -224,4 +231,4 @@ function SeatBookingForm() {
   );
 }
 
-export default SeatBookingForm;
+export default PastBookingForm;
