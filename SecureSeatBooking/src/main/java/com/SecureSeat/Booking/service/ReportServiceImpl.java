@@ -93,6 +93,12 @@ public class ReportServiceImpl implements ReportService {
 	
 
 
-
-	   
+//
+//	   @Override
+//	   public long getEmployeeCountByBookingStatus(String date, String bookingStatus) {
+//	        LocalDate bookingDate = LocalDate.parse(date);
+//	        List<BookingDetails> bookingDetailsList = bookingDetailsRepo.findByBookedDateAndBookingStatus(bookingDate, bookingStatus);
+//	        return bookingDetailsList.size();
+//	    }
+//	   
 }
