@@ -50,12 +50,7 @@ public class FloorController {
 	    
  
 	    
-//	    @PostMapping("/addfloor")
-//	    public ResponseEntity<FloorDetails> addFloorWithdetails(@RequestBody FloorDetails floorDetails) {
-//	        FloorDetails newFloorDetails = floorService.addFloor(floorDetails.getFloorName(), floorDetails.getNoOfSeats());
-//	        return ResponseEntity.status(HttpStatus.CREATED).body(newFloorDetails);
-//	    }
-//	    
+    
 	    
 	    @PostMapping("/addfloor")
 	    public ResponseEntity<FloorDetails> addFloorWithdetails(@RequestBody FloorDetails floorDetails) {
