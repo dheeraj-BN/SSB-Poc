@@ -65,7 +65,7 @@ public class UserServiceImpl implements Userservice {
 	public void init() {
 		LOGGER.info("Initializing UserServiceImpl class");
 		Employee employee = userDetailDao.getAdminInfo();
-		ResponseEntity<Map<String, String>> result = addUser(employee.getEmployeeId());
+		String result = addUser(employee.getEmployeeId());
 		
 		
 		LOGGER.info("User Added with the result: " + result);
@@ -80,37 +80,31 @@ public class UserServiceImpl implements Userservice {
 	 *         given employee is already present
 	 */
 	@Override
-	public ResponseEntity<Map<String, String>> addUser(int employeeId) {
-	    LOGGER.info("Adding user with employeeId: " + employeeId);
-	    Employee employee = employeeRepo.findById(employeeId);
+	public String addUser(int employeeId) {
+		LOGGER.info("Adding user with employeeId: " + employeeId);
+		Employee employee = employeeRepo.findById(employeeId);
 
-	    if (employee == null) {
-	        LOGGER.error("Employee not found with employeeId: " + employeeId);
-	        Map<String, String> response = new HashMap<>();
-	        response.put("message", "USER NOT FOUND");
-	        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-	    }
+		if (employee == null) {
+			LOGGER.error("Employee not found with employeeId: " + employeeId);
+			return "USER NOT FOUND";
+		}
+		if (userDetailsRepo.findByEmployee(employee).isPresent()) {
+			LOGGER.error("User already exist with employeeId: " + employeeId);
+			return "USER ALREADY EXIST";
+		} else {
+			LOGGER.info("Creating a new user for employee: " + employee.toString());
+			Role role = roleRepo.findById(2).get();
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(role);
+			UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee, true);
+			user.setRoles(roles);
+			userDetailsRepo.save(user);
+			LOGGER.info("User added successfully for employeeId: " + employeeId);
+			 mailTemplatesImpl.registrationMail(user,"Alpha@2022");
+		}
 
-	    if (userDetailsRepo.findByEmployee(employee).isPresent()) {
-	        LOGGER.error("User already exist with employeeId: " + employeeId);
-	        Map<String, String> response = new HashMap<>();
-	        response.put("message", "USER ALREADY EXIST");
-	        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-	    } else {
-	        LOGGER.info("Creating a new user for employee: " + employee.toString());
-	        Role role = roleRepo.findById(2).get();
-	        Set<Role> roles = new HashSet<Role>();
-	        roles.add(role);
-	        UserDeatils user = new UserDeatils(securityConfig.passwordEncoder().encode("Alpha@2022"), employee, true);
-	        user.setRoles(roles);
-	        userDetailsRepo.save(user);
-	        LOGGER.info("User added successfully for employeeId: " + employeeId);
-	        mailTemplatesImpl.registrationMail(user,"Alpha@2022");
+		return "SUCCESS";
 
-	        Map<String, String> response = new HashMap<>();
-	        response.put("message", "SUCCESS");
-	        return new ResponseEntity<>(response, HttpStatus.CREATED);
-	    }
 	}
 
 	/**
@@ -210,9 +204,18 @@ public class UserServiceImpl implements Userservice {
 	}
 
 	@Override
-	public void deleteHoliday(HolidayDetails holidayDetails) {
+	public String deleteHoliday(LocalDate holidayDetails) {
 		
-		holidayDetailsRepo.delete(holidayDetails);
+	HolidayDetails hDetails=	holidayDetailsRepo.findByHolidayDate(holidayDetails);
+		
+		holidayDetailsRepo.delete(hDetails);
+		
+		return "deleted";
+	}
+	@Override
+	public List<Employee> registeredEmployee() {
+		
+		return userDetailDao.getRegisteredemployee();
 		
 	}
 }

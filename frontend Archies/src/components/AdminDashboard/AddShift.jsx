@@ -6,30 +6,30 @@ import axios from "axios";
 function AddShift(props) {
   const [shifts, setShifts] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
-  const [time, setTime] = useState(new Date().toLocaleTimeString([],{hour:'2-digit', minute:'2-digit'}))
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+  );
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 
-
-  useEffect(()=>{
+  useEffect(() => {
     fetch("http://10.191.80.98:9090/api/admin/getAllShiftDetails", {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    },
-  })
-  .then(response => {
-    if(!response.ok){
-      throw new Error(`HTTP error: ${response.status}`)
-    }
-    return response.text()
-  })
-  .then((data)=>{
-    setShifts(JSON.parse(data))
-  })
-  .catch(error => console.log(error));
-  },[token])
-
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then((data) => {
+        setShifts(JSON.parse(data));
+      })
+      .catch((error) => console.log(error));
+  }, [token]);
 
   // function handleSubmit(event) {
   //   event.preventDefault();
@@ -60,15 +60,19 @@ function AddShift(props) {
       to: formData.get("time_to"),
     };
     // console.log(shifttime.from+"-"+shifttime.to)
-    console.log(`http://10.191.80.98:9090/api/admin/addShiftDetails?shiftTime=${shifttime.from+"-"}${shifttime.to}`)
-    fetch(`http://10.191.80.98:9090/api/admin/addShiftTime?shiftTime=${shifttime.from+"-"}${shifttime.to}`, {
-      method: "POST",
-      headers: {  
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(shifttime),
-    })
+    fetch(
+      `http://10.191.80.98:9090/api/admin/addShiftTime?shiftTime=${
+        shifttime.from + "-"
+      }${shifttime.to}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(shifttime),
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -81,11 +85,10 @@ function AddShift(props) {
       })
       .catch((error) => console.log(error));
   }
-  
 
-  const handleTimeChange= (event)=>{
-    setTime(event.target.value)
-  }
+  const handleTimeChange = (event) => {
+    setTime(event.target.value);
+  };
 
   function handleEdit(index) {
     setEditingIndex(index);
@@ -95,14 +98,69 @@ function AddShift(props) {
     form.elements.time_from.value = shiftime.from;
     form.elements.time_to.value = shiftime.to;
   }
+  // function handleEdit(index) {
+  //   setEditingIndex(index);
+  //   const shiftime = shifts[index];
+  //   const form = document.querySelector("form");
+  //   // form.elements.name.value = holiday.name;
+  //   form.elements.time_from.value = shiftime.from;
+  //   form.elements.time_to.value = shiftime.to;
 
+  //   fetch(
+  //     `http://10.191.80.98:9090/api/admin/updateShiftTime/1?shift_timings=${
+  //       shiftime.from + "-"}${shiftime.to}`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Update the form fields with the fetched data
+  //       form.elements.time_from.value = data.time_from;
+  //       form.elements.time_to.value = data.time_to;
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }
+
+  // function handleDelete(index) {
+  //   const newShifts = [...shifts];
+  //   newShifts.splice(index, 1);
+  //   setShifts(newShifts);
+  // }
   function handleDelete(index) {
+    const shiftId = shifts[index].id;
     const newShifts = [...shifts];
     newShifts.splice(index, 1);
-    setShifts(newShifts);
+
+    const token = "your-token";
+
+    fetch(`https://your-api.com/shifts/${shiftId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setShifts(newShifts);
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the shift:", error);
+      });
   }
 
-  function HolidayItem({ holiday, index }) {
+  function ShiftItem({ shift, index }) {
     return (
       <div className="scrollable-table">
         {/* <h2>{holiday.name}</h2> */}
@@ -112,20 +170,18 @@ function AddShift(props) {
               <th>From</th>
               <th>To</th>
               <th>Edit</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             {shifts.map((shifttime, index) => {
               return (
                 <tr key={index}>
-                  <td>{shifttime.shiftTimings.split('-')[0]}</td>
-                  <td className="scrollable-cell">{shifttime.shiftTimings.split('-')[1]}</td>
-                  <td>
-                    <button onClick={() => handleEdit(index)}>Edit</button>
+                  <td>{shifttime.shiftTimings.split("-")[0]}</td>
+                  <td className="scrollable-cell">
+                    {shifttime.shiftTimings.split("-")[1]}
                   </td>
                   <td>
-                    <button onClick={() => handleDelete(index)}>Delete</button>
+                    <button onClick={() => handleEdit(index)}>Edit</button>
                   </td>
                 </tr>
               );
@@ -144,7 +200,7 @@ function AddShift(props) {
       <div>
         <div className="dataform">
           <div className="item5">
-            <HolidayItem />
+            <ShiftItem />
           </div>
           <div className="form-shift item6">
             <h2>Shifts</h2>
@@ -155,24 +211,24 @@ function AddShift(props) {
           </label> */}
               {/* <br /> */}
               <div className="user-box">
-              <input
-                    type="time"
-                    id="time-input"
-                    name="time_from"
-                    step="3600"
-                    defaultValue={`${time.split(':')[0]}:00`}
-                    onChange={handleTimeChange}
+                <input
+                  type="time"
+                  id="time-input"
+                  name="time_from"
+                  step="3600"
+                  defaultValue={`${time.split(":")[0]}:00`}
+                  onChange={handleTimeChange}
                 />
                 <label>From</label>
               </div>
               <div className="user-box">
-              <input
-                    type="time"
-                    id="time-input"
-                    name="time_to"
-                    step="3600"
-                    defaultValue={`${time.split(':')[0]}:00`}
-                    onChange={handleTimeChange}
+                <input
+                  type="time"
+                  id="time-input"
+                  name="time_to"
+                  step="3600"
+                  defaultValue={`${time.split(":")[0]}:00`}
+                  onChange={handleTimeChange}
                 />
                 <label>To</label>
               </div>

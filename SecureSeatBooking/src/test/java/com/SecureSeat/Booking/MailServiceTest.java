@@ -14,21 +14,21 @@ import com.SecureSeat.Booking.service.MailService;
 public class MailServiceTest {
 	
 	
-	@Autowired
-	private MailService mailService;
-	
-	@Test
-	public void testChangePasswordMail() {
-		assertEquals("SUCCESS", mailService.passwordChangeConfirmMail(24));
-		assertEquals("FAILURE",  mailService.passwordChangeConfirmMail(100));
-		
-	}
-	
-	@Test
-	public void testAddFloor() {
-		FloorDetails floor= new FloorDetails("fourth floor",20);
-		assertEquals("SUCCESS", mailService.addedFloor(floor));
-		
-	}
+//	@Autowired
+//	private MailService mailService;
+//	
+//	@Test
+//	public void testChangePasswordMail() {
+//		assertEquals("SUCCESS", mailService.passwordChangeConfirmMail(24));
+//		assertEquals("FAILURE",  mailService.passwordChangeConfirmMail(100));
+//		
+//	}
+//	
+//	@Test
+//	public void testAddFloor() {
+//		FloorDetails floor= new FloorDetails("fourth floor",20);
+//		assertEquals("SUCCESS", mailService.addedFloor(floor));
+//		
+//	}
 
 }

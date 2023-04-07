@@ -5,6 +5,7 @@ import NavBar  from "./NavBar.jsx";
 import axios from "axios";
 
 function SeatBookingForm() {
+   // Set initial state values
   const [branchName, setBranchName] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [differenceDay, setDifferenceDay] = useState(0);
@@ -19,13 +20,13 @@ function SeatBookingForm() {
   
   
 
-
+ // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     window.location = "/floorlist";
   };
   
-
+ // Get today's date
   function todayDate() {
     const now = new window.Date();
     const year = now.getFullYear();
@@ -35,7 +36,7 @@ function SeatBookingForm() {
       .toString()
       .padStart(2, "0")}`;
   }
-
+  // Calculate number of days between two dates
   function weeklydate(e) {
     let startDate = new window.Date(firstDate);
     let lastDate = new window.Date(e.target.value);
@@ -45,8 +46,21 @@ function SeatBookingForm() {
     if (diffDays > 7) {
       alert("Not allowed to book for more than 7 days");
     }
+    setToDate(e.target.value)
   }
-
+  // const nextPage=()=>{
+  //   if(request=='Daily'){
+  //     localStorage.setItem('from_date',firstDate);
+  //     localStorage.setItem("to_date",firstDate);
+  //     window.location="/floorlist"
+  //   }
+  //   else if(request==="Weekly"){
+  //         localStorage.setItem("from_date",firstDate);
+  //         localStorage.setItem("to_date",toDate);
+  //         window.location="/floorlist"     
+  //   }
+  // }
+// Fetch shift timings from API
   useEffect(() => {
     fetch("http://10.191.80.98:9090/api/employee/getshift", {
       method: "GET",
@@ -69,12 +83,22 @@ function SeatBookingForm() {
         
       });
   },[]);
-
+// Save form data to local storage
   const savedata=()=>{
-    localStorage.setItem("from date",toDate)
-    localStorage.setItem("to date",toDate)
-    localStorage.setItem("Meal",meal)
-    localStorage.setItem("ShiftTiming",shiftTiming)
+    // localStorage.setItem("from",toDate)
+    // localStorage.setItem("to",toDate)
+    localStorage.setItem("foodStatus",meal)
+    localStorage.setItem("shiftTimings",shiftTiming)
+    if(request=='Daily'){
+      localStorage.setItem('from',firstDate);
+      localStorage.setItem("to",firstDate);
+      window.location="/floorlist"
+    }
+    else if(request==="Weekly"){
+          localStorage.setItem("from",firstDate);
+          localStorage.setItem("to",toDate);
+          window.location="/floorlist"     
+    }
   }
 
   return (
@@ -84,6 +108,7 @@ function SeatBookingForm() {
         </div> 
         <div>
         <form onSubmit={handleSubmit} className="seat-booking-form">
+            {/* Branch name selection */}
       <label htmlFor="branch-name-input ">Branch Name:</label>
       <select
         id="branch-name-input"
@@ -94,7 +119,7 @@ function SeatBookingForm() {
       >
         <option value="Bangalore">Bangalore</option>
       </select>
-
+        {/* Building name selection */}
       <label htmlFor="building-name-input">Building Name:</label>
       <select
         id="building-name-input"
@@ -104,6 +129,7 @@ function SeatBookingForm() {
       >
         <option value="JP Nagar">JP Nagar</option>
       </select>
+        {/* Daily Dates and custom Dates  selection */}
       <label htmlFor="request-input">Select type Of Requests:</label>
       <select
         id="request-input"
@@ -118,6 +144,7 @@ function SeatBookingForm() {
         <option value="Daily">Daily</option>
         <option value="Weekly">Custom Dates</option>
       </select>
+        {/* Shift Timing selection */}
       <label htmlFor="shift-timing-input">Shift Timing:</label>
       <select
         id="shift-timing-input"
@@ -134,11 +161,9 @@ function SeatBookingForm() {
             return <option value={val.shiftTimings}>{val.shiftTimings}</option>
           })
         }
-        {/* <option value="Morning">Morning</option>
-        <option value="Afternoon">Afternoon</option>
-        <option value="Evening">Evening</option>
-        <option value="Night">Night</option> */}
+    
       </select>
+        {/* Meal preference selection */}
       <label htmlFor="meal-name-input">Meal:</label>
       <select
         id="meal-name-input"
@@ -150,8 +175,8 @@ function SeatBookingForm() {
         <option value="" disabled>
           Select
         </option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
       </select>
 
       {request === "Daily" && (
@@ -161,9 +186,9 @@ function SeatBookingForm() {
           <input
             id="from-date-input"
             type="date"
-            value={toDate}
+            value={firstDate}
             min={todayDate()}
-            onChange={(e) => setToDate(e.target.value)}
+            onChange={(e) => setFirstDate(e.target.value)}
             className="form-input1"
             required
           />
@@ -171,10 +196,8 @@ function SeatBookingForm() {
           <input
             id="to-date-input"
             type="date"
-            value={toDate}
+            value={firstDate}
             min={todayDate()}
-            // onChange={(e) => setToDate(e.target.value)}
-            onChange={(e) => setToDate(e.target.value)}
             className="form-input1"
           />
         </>
@@ -187,6 +210,7 @@ function SeatBookingForm() {
           <input
             id="from-date-input"
             type="date"
+            value={firstDate}
             min={todayDate()}
             onChange={(e) => setFirstDate(e.target.value)}
             className="form-input1"
@@ -196,6 +220,7 @@ function SeatBookingForm() {
             id="to-date-input"
             type="date"
             min={todayDate()}
+            val={toDate}
             onChange={(e) => weeklydate(e)}
             className="form-input1"
           />
