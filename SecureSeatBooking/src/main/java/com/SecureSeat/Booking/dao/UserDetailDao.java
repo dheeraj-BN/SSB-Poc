@@ -15,4 +15,6 @@ public interface UserDetailDao {
 
 	List<Employee> getemployee();
 
+	List<Employee> getRegisteredemployee();
+
 }

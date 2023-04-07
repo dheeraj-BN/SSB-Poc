@@ -167,5 +167,37 @@ public class UserDetailDaoImpl implements UserDetailDao {
 	    // Log the success of the update operation
 	    LOGGER.info("Booking details updated for holiday");
 	}
+	
+	@Override
+	public List<Employee> getRegisteredemployee() {
+	    String sql = "SELECT em.* FROM seatsb.employee em INNER JOIN user_deatils ud ON ud.employee_id = em.employee_id";
+
+	    // Log the query being executed
+	    LOGGER.info("Executing query to get all employees with no user details");
+
+	    // Execute the SQL query and get the result as a list of maps
+	    List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+	    // Create a list to hold the Employee objects to be returned
+	    List<Employee> employeeList = new ArrayList<>();
+
+	    // Loop through each row in the result set and create a new Employee object for each row
+	    for (Map<String, Object> row : rows) {
+	        Employee employee = new Employee();
+	        employee.setEmployeeId((Integer) row.get("EMPLOYEE_ID"));
+	        employee.setEmployeeName((String) row.get("EMPLOYEE_NAME"));
+	        employee.setEmployeeDesignation((String) row.get("EMPLOYEE_DESIGNATION"));
+	        employee.setEmployeeEmail((String) row.get("EMPLOYEE_EMAIL"));
+	        employee.setEmployeeGender((String) row.get("EMPLOYEE_GENDER"));
+	        employee.setEmployeePersonalEmail((String) row.get("EMPLOYEE_PERSONAL_EMAIL"));
+	        employee.setEmployeePhoneNo((String) row.get("EMPLOYEE_PHONE_NO"));
+	        employeeList.add(employee);
+	    }
+
+	    // Log the number of employees returned by the query
+	    LOGGER.info("Found {} employees with no user details", employeeList.size());
+
+	    return employeeList;
+	}
 
 }
