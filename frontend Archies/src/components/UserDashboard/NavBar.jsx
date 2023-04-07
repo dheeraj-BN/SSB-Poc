@@ -38,7 +38,9 @@ function NavBar() {
         <ul>
           <li>
             {/* Button to sign out */}
-            <i class="bi bi-box-arrow-right">Sign Out</i>
+            <i class="bi bi-box-arrow-right">
+              {/* <button><Logout/></button> */}
+            </i>
           </li>
         </ul>
       </nav>

@@ -22,7 +22,6 @@ public interface FloorDetailsRepo extends JpaRepository<FloorDetails ,Integer>{
 
 	
 
-	//boolean existsByName(String floorName);
 	  
 	
 

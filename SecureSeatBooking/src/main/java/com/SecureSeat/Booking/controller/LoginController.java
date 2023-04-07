@@ -31,7 +31,6 @@ import com.SecureSeat.Booking.repo.UserDetailsRepo;
 import com.SecureSeat.Booking.service.LoginService;
 
 @RestController
-//@CrossOrigin("http://10.191.80.118:3001")
 public class LoginController {
 
 	@Autowired
@@ -105,6 +104,13 @@ public class LoginController {
 	
 
 
+		@GetMapping("/userInfo/{id}")
+		public Employee getUserInfo(@PathVariable ("id") int userId) {
+			return loginService.getUserInfo(userId);
+		}
+		
+		
+		
 	//test api for checking authorization for admin
 	@GetMapping("/api/admin/test/{userId}")
 	public String adminHome(@PathVariable int userId) {
