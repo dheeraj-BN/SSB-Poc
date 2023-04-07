@@ -23,7 +23,7 @@ public interface Userservice {
 	 *         with employeeId is not found, and USER ALREADY EXIST if user with the
 	 *         given employee is already present
 	 */
-	ResponseEntity<Map<String, String>> addUser(int employeeId);
+	String addUser(int employeeId);
 
 	/**
 	 * Validates the token and returns the employee associated with the booking.
