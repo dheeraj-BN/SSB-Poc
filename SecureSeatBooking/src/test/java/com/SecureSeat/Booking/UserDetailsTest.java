@@ -61,10 +61,9 @@ public class UserDetailsTest {
 	public void testAddUser_UserNotFound() {
 		int employeeId = 99999;
 		
-		ResponseEntity<Map<String, String>> response = userService.addUser(employeeId);
+		String response = userService.addUser(employeeId);
 		
-		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-		assertEquals("USER NOT FOUND", response.getBody().get("message"));
+		assertEquals("USER NOT FOUND", response);
 	}
 	
 //	@Test

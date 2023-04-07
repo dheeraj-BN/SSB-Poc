@@ -48,7 +48,7 @@ public class AdminController {
 	*/
 	
 	@PostMapping("/addUser/{id}")
-	public ResponseEntity<Map<String, String>> addUser(@PathVariable int id) {
+	public String addUser(@PathVariable int id) {
 		// Method to add a new user
 		return userService.addUser(id);
 	}

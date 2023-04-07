@@ -52,12 +52,6 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		jdbcTemplate.update(sql,password,userid);
 	}
 	
-	@Override
-	public void otp(String Otp,int userid) {
-		String sql="Update user_deatils  set password=? where user_id =?";
-		jdbcTemplate.update(sql,Otp,userid);
-	}
-   
 	
 	
 	
