@@ -15,7 +15,7 @@ spec:
 
       containers:
       - name: java-app
-        image: ssbpoc.azurecr.io/java_backend:#{Build.BuildId}#
+        image: ssbpoc1.azurecr.io/java_backend:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
         - containerPort: 9090
