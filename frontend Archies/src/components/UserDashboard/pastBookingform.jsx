@@ -50,7 +50,7 @@ function PastBookingForm() {
   }
   // const storedData = localStorage.getItem('userId');
   useEffect(() => {
-    fetch("http://10.191.80.100:9090/api/employee/lastbookingdetails/"+22, {
+    fetch("http://40.88.23.186:9090/api/employee/lastbookingdetails/"+22, {
       method: "GET",
 
       headers: {

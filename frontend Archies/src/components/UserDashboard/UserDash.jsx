@@ -18,7 +18,7 @@ function UserDashboard() {
 
   useEffect(() => {
     fetch(
-      "http://10.191.80.100:9090/api/employee/booked/details/" + storedData1,
+      "http://40.88.23.186:9090/api/employee/booked/details/" + storedData1,
       {
         method: "GET",
 

@@ -53,14 +53,14 @@ function Login() {
           window.localStorage.setItem("id",id)
 
         }
+
         else if(role === "ROLE_EMPLOYEE"){
             window.location = "/employee";
             window.localStorage.setItem('token', token)
             window.localStorage.setItem("id",id)
         }
-        // else{
-        // }
-      // }
+
+
     }
     else{
         // window.location = '/resetpass' 

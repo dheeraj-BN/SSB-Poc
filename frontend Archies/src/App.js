@@ -57,7 +57,7 @@ function App() {
           <Route path="/floor1" element={<SeatMatrix1/>}/>
           <Route path="/floor2" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
-          <Route path="/profileuser" element={<Profile/>}/>  
+          <Route path="/profileuser" element={<ProfileAdmin/>}/>  
           {/*Developer dash */}
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
