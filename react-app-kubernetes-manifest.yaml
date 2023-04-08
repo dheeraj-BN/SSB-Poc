@@ -15,7 +15,7 @@ spec:
 
       containers:
       - name: react-app
-        image: ssbpoc.azurecr.io/react_backend:#{Build.BuildId}#
+        image: ssbpoc1.azurecr.io/react_frontend:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
