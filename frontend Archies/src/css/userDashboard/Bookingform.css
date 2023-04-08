@@ -73,7 +73,7 @@ a{
 }
 
 /* Styles for screens between 768px and 991px */
-@media (min-width: 768px) and (max-width: 991px) {
+ @media (min-width: 768px) and (max-width: 991px) {
   .seat-booking-form {
     margin: 75px auto;
     width: 60%;
@@ -92,5 +92,5 @@ a{
   .form-input1 {
     width: 300px;
   }
-}
+} 
 
