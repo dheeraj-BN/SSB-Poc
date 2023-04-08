@@ -1,9 +1,14 @@
-FROM openjdk:17
+FROM node:19-alpine
 
-WORKDIR /javaApp
+WORKDIR /reactApp
 
-COPY target/SecureSeatBooking-0.0.1-SNAPSHOT.jar SecureSeatBooking-0.0.1-SNAPSHOT.jar
+ADD build /reactApp/build
 
-EXPOSE 9090
+COPY ["package.json", "/reactApp"]
 
-CMD ["java", "-jar", "SecureSeatBooking-0.0.1-SNAPSHOT.jar"]
+RUN /bin/sh  -c 'npm install -g serve'
+
+EXPOSE 3000
+
+CMD /bin/sh -c 'serve -s build'
+
