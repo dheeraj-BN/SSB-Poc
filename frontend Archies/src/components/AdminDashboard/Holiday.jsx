@@ -34,11 +34,10 @@ function Holiday() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const holiday = {
-      //   name: formData.get("name"),
       date: formData.get("date"),
       description: formData.get("description"),
     };
-
+  
     fetch(`http://40.88.23.186:9090/api/admin/addholiday`, {
       method: "POST",
       headers: {
@@ -51,26 +50,17 @@ function Holiday() {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
         }
-
         return response.text();
       })
       .then((data) => {
-        // setHolidays([...holidays, JSON.parse(data)]);
-        // event.target.reset();
-        console.log(data)
+        console.log(data);
+        setHolidays([...holidays, holiday]); // add new holiday to state
+        setDate(""); // clear date field
+        setDesc(""); // clear description field
       })
       .catch((error) => console.log(error));
-
-    // if (editingIndex === -1) {
-    //   setHolidays([...holidays, holiday]);
-    // } else {
-    //   const newHolidays = [...holidays];
-    //   newHolidays[editingIndex] = holiday;
-    //   setHolidays(newHolidays);
-    //   setEditingIndex(-1);
-    // }
-    // event.target.reset();
   }
+  
 
   const handledateChange = (event) => {
     setDate(event.target.value);
@@ -90,47 +80,43 @@ function Holiday() {
   //   form.elements.description.value = holiday.description;
 
   // }
-  function handleEdit(index) {
-    setEditingIndex(index);
-    try {
-      const response = fetch(
-        `http://40.88.23.186:9090/api/admin/modifiHoliday?date=$`
-      );
-      const holiday = response.json();
-      const form = document.querySelector("form");
-      form.elements.date.value = holiday.date;
-      form.elements.description.value = holiday.description;
-    } catch (error) {
-      console.error(error);
-    }
-    // const holiday = holidays[index];
-    // form.elements.name.value = holiday.name;
-  }
-
-  function handleDelete(index) {
-    const newHolidays = [...holidays];
-    newHolidays.splice(index, 1);
-    setHolidays(newHolidays);
-  }
-  // function handleDelete(index) {
-  //   const holidayToDelete = holidays[index];
-  //   fetch(`http://10.191.80.98:9090/api/admin/deleteholiday/${holidayToDelete.id}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + token,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error: ${response.status}`);
-  //       }
-  //       const newHolidays = [...holidays];
-  //       newHolidays.splice(index, 1);
-  //       setHolidays(newHolidays);
-  //     })
-  //     .catch((error) => console.log(error));
+  // function handleEdit(index) {
+  //   setEditingIndex(index);
+  //   try {
+  //     const response = fetch(
+  //       `http://40.88.23.186:9090/api/admin/modifiHoliday?date=$`
+  //     );
+  //     const holiday = response.json();
+  //     const form = document.querySelector("form");
+  //     form.elements.date.value = holiday.date;
+  //     form.elements.description.value = holiday.description;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
   // }
+
+  // function handleDelete(index) {
+  //   const newHolidays = [...holidays];
+  //   newHolidays.splice(index, 1);
+  //   setHolidays(newHolidays);
+  // }
+  function handleDelete(index) {
+    const date = holidays[index].holidayDate; // Assuming each holiday has a unique ID
+    fetch(`http://40.88.23.186:9090/api/admin/deleteHoliday?holidayDetails=${date}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (response.ok) {
+        const newHolidays = [...holidays];
+        newHolidays.splice(index, 1); 
+        setHolidays(newHolidays);
+      } else {
+        throw new Error('Failed to delete holiday.');
+      }
+    })
+    .catch(error => console.error(error));
+  }
+  
 
   function HolidayItem({ holiday, index }) {
     return (
@@ -141,7 +127,6 @@ function Holiday() {
             <tr>
               <th>Date</th>
               <th>Description</th>
-              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -153,9 +138,7 @@ function Holiday() {
                   <td className="scrollable-cell">
                     {holiday.holidayDescription}
                   </td>
-                  <td>
-                    <button onClick={() => handleEdit(index)}>Edit</button>
-                  </td>
+            
                   <td>
                     <button onClick={() => handleDelete(index)}>Delete</button>
                   </td>

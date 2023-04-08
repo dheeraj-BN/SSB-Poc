@@ -16,6 +16,7 @@ function QRScan(props) {
         <div className="qrreader">
           <QrCodeScan data={setQr} emp={setempData}/>
           <div className="qrdata">
+            <h2 style={{color:"blue"}}>Employee Details</h2>
             <p>Id : <span>{empdata.employeeId}</span> </p>
             <p>Name : <span>{empdata.employeeName}</span> </p>
             <p>Email : <span>{empdata.employeeEmail}</span> </p>

@@ -8,7 +8,7 @@ function QrCodeScan(props) {
   const [token, setToken] = useState(window.localStorage.getItem("token"))
   useEffect(()=>{
     props.data(webcamResult)
-    fetch(`http://40.88.23.186:9090/api/admin/validateToken/?token=${webcamResult}`, {
+    fetch(`http://40.88.23.186:9090/api/admin/validateToken?token=${webcamResult}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,8 +21,6 @@ function QrCodeScan(props) {
         return response.json();
       })
       .then((data) => {
-        // setShifts(newShifts);
-        // console.log(data)
         setqrdata(data)
         
       })

@@ -88,6 +88,29 @@
     gap: 0rem;
   }
 }
+@media only screen and (max-width: 370px) {
+  .admincard {
+    width: 8rem;
+    height: 6rem;
+  }
+  .fonttitle {
+    font-size: 16px;
+  }
+
+  .empData{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+  .parentempdata{
+    /* margin: auto; */
+    margin: -89px auto;
+
+  }
+}
 
 /* Fncards css */
 .fncards {
