@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import "../css/adminDashboard/employee.css";
 import axios from 'axios'
+import _ from "lodash"
 
 function EmployeeData(props) {
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState()
   const [token, setToken] = useState(window.localStorage.getItem("token"))
   const [date,setDate] = useState('')
+  
+ 
   const columns = [
     {
       name: "bookingId",
@@ -50,15 +53,15 @@ function EmployeeData(props) {
       },
     },
     {
-      name: "userDeatils.employee.employeeName",
+      name: "userDetails.employee.employeeName",
       label: "NAME",
       options: {
         filter: true,
-        sort: false,
+        sort: true,
       },
     },
     {
-      name: 'userDeatils["employee"]["employeeEmail"]',
+      name: 'employeeEmail',
       label: "Email",
       options: {
         filter: true,
@@ -74,7 +77,7 @@ function EmployeeData(props) {
       },
     },
     {
-      name: "shift timings",
+      name: "shiftDetails.shiftTimings",
       label: "SHIFT TIMING",
       options: {
         filter: true,
@@ -88,17 +91,20 @@ function EmployeeData(props) {
         filter: true,
         sort: false,
       },
+      
     },
   ];
 
   const options = {
     filterType: "checkbox",
   };
-  // http://10.191.80.98:9090/api/admin/bookings/count/2023-03-28
+  
+  
+
 
   // important
   useEffect(()=>{
-    fetch(`http://10.191.80.98:9090/api/admin/date/${new Date().toISOString().substr(0,10)}`, {
+    fetch(`http://40.88.23.186:9090/api/admin/date/${new Date().toISOString().substr(0,10)}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -111,9 +117,7 @@ function EmployeeData(props) {
         return response.json();
       })
       .then((data) => {
-        // setShifts(newShifts);
-        // console.log(data)
-        setData(data)
+        setData(data.flat().flat())
         console.log(data)
         
       })
@@ -122,61 +126,7 @@ function EmployeeData(props) {
       });
   },[])
 
-  // useEffect(()=>{
-  //   // axios.get("https://jsonplaceholder.typicode.com/users").then(
-  //   //     response=>{
-  //   //         setData(response.data)
-  //   //     })
-  //   //     .catch(error=>{
-  //   //         console.log(error)
-  //   //     })
-      
-  //     fetch(`http://10.191.80.98:9090/api/admin/bookings/count/${date}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       } 
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       // setShifts(newShifts);
-  //       // console.log(data)
-  //       setData(data)
-        
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was an error deleting the shift:", error);
-  //     });
-      
-  // },[date])
 
-
-  // fetch(`http://10.191.80.98:9090/api/admin/validateToken/?token=${webcamResult}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       } 
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       // setShifts(newShifts);
-  //       // console.log(data)
-  //       setqrdata(data)
-        
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was an error deleting the shift:", error);
-  //     });
   return(
     <div>
       <MUIDataTable

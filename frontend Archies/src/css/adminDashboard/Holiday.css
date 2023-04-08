@@ -262,14 +262,26 @@
     width: 100%;
   }
 }
-@media only screen and (max-width : 400px){
-  
-  .form-holiday h2 {
-    margin-bottom: 1px;
+@media only screen and (max-width : 370px){
+  .form-holiday{
+    width: 70%;
+  }
+
+  .item5{
+    width: 80%;
+  }
+  .holiday{
+    overflow: auto;
   }
   .item5{
     height: 100px;
   }
+  .dataform{
+    gap: 2rem;
+    padding: 0px;
+    overflow: auto;
+  }
+  
 }
 
 
