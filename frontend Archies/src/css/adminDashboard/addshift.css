@@ -183,7 +183,7 @@
 }
 
   
-.dataform{
+.dataform1{
   display: flex;
   gap: 10rem;
   justify-content: center;
@@ -248,7 +248,7 @@
   .form-shift h2 {
     margin-bottom: 20px;
   }
-  .dataform{
+  .dataform1{
     flex-wrap: wrap;
     gap: 1rem;
     margin: 15px auto;
@@ -257,7 +257,7 @@
 }
 
 @media only screen and (max-width : 450px){
-  .dataform{
+  .dataform1{
     overflow: hidden;
     width: 100%;
   }
@@ -272,5 +272,10 @@
   }
 }
 
+@media only screen and (max-width : 370px){
+  .dataform1{
+    gap: 13rem;
+  }
+}
 
 

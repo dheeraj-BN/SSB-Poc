@@ -59,7 +59,35 @@ body {
 
 
 
+@media only screen and (max-width : 370px){
+  .card-body{
+    height: 50%;
+  }
 
+  hr{
+    display: none;
+  }
+
+  .card .card-header {
+    font-weight: 800;
+  }
+
+  .card{
+    margin-top: -12px;
+  }
+
+  .profilepage{
+    overflow: auto;
+    grid-template-areas:"sidebar1  profile profile" ;
+
+  }
+
+  .item4{
+    margin-top: -10px;
+  }
+
+
+}
 
 
 

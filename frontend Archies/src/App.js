@@ -26,6 +26,10 @@ import AddShift from "./components/AdminDashboard/AddShift";
 import React from "react";
 import Token from "./components/AdminDashboard/Token";
 import PastBookingForm from "./components/UserDashboard/pastBookingform";
+import ProfileAd from "./components/AdminDashboard/ProfileAd";
+import ProfileUser from "./components/UserDashboard/uerprofile";
+import ProfileDeveloper from "./components/DeveloperDashboard/developerProfile";
+
 
 
 export const  TokenContext = React.createContext();
@@ -57,7 +61,11 @@ function App() {
           <Route path="/floor1" element={<SeatMatrix1/>}/>
           <Route path="/floor2" element={<SeatMatrix2/>}/>
           <Route path="/modify" element={<SeatModify/>}/>
-          <Route path="/profileuser" element={<ProfileAdmin/>}/>  
+          <Route path="/profileuser" element={<ProfileUser/>}/> 
+          {/* <Route path="/profiledeveloper" element={<ProfileAd/>}/>   */}
+          <Route path="/profiledeveloper" element={<ProfileDeveloper/>}/>  
+
+ 
           {/*Developer dash */}
           <Route path="/developer" element={<Developer/>}/>
           <Route path="/addfloor" element={<AddFloor/>}/>
