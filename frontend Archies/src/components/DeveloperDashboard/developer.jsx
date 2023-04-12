@@ -23,6 +23,7 @@ function Developer() {
     <div>
       {/* Navigation bar */}
       <nav className="nav1">
+        <h1>Secure Seat Booking</h1>
         <ul>
           {/* Button to view developer profile */}
           <li>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // Importing CSS files for styling
 import "../../css/userDashboard/navbar.css";
 import "../../css/userDashboard/navbar.css";
+import Footer from "./footer";
 
 // Importing the NavBar and QRGenerator components
 import NavBar from "./NavBar";
@@ -43,11 +44,12 @@ function UserDashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="main">
       <div>
         {/* Rendering the NavBar component */}
         <NavBar />
       </div>
+      <div className="main-container"> 
       <h1>Your QR Code for Date {data.date}</h1>
       {/* <a href="/qr">
         <button className="btn btn-primary">View Booked Seat</button>
@@ -63,10 +65,10 @@ function UserDashboard() {
           <h2>Your Seat Number is {data.seatNo} </h2>
         </div>
       </div>
-
-      {/* <div>
-       <p2>{storedData}</p2>
-      </div> */}
+      </div>
+       {/* <div className="footer">
+      <Footer/>
+      </div>  */}
     </div>
   );
 }

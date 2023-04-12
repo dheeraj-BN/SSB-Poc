@@ -1,6 +1,9 @@
 // Importing necessary modules
 import React, { useState ,useEffect} from 'react';
 import "../../css/userDashboard/modifySeat.css";
+import NavBar  from "./NavBar.jsx";
+
+
 
 // Defining the functional component
 function SeatModify() {
@@ -12,7 +15,7 @@ function SeatModify() {
 
   // Fetching the booked seat details for the current user using useEffect hook
   useEffect(() => {
-    fetch("http://10.191.80.100:9090/api/employee/next/booked/details/"+storedData, {
+    fetch("http://40.88.23.186:9090/api/employee/next/booked/details/"+storedData, {
       method: "GET",
 
       headers: {
@@ -58,12 +61,14 @@ function SeatModify() {
   // Rendering the component
   return (
     <div>
-      {/* Navbar */}
-      <nav class="navbar navbar-dark bg-mynav">
+     <div>
+     <NavBar/>
+     </div>
+      {/* <nav class="navbar navbar-dark bg-mynav">
         <div class="container-fluid">
           <a class="navbar-brand" >Modify Your Seat Booking</a>
         </div>
-      </nav>
+      </nav> */}
       
       {/* Table displaying booked seats */}
       <div class="table-responsive">
@@ -81,7 +86,7 @@ function SeatModify() {
               data && (
                 data.map((item,index)=>{
                   const seattoken = item.token;
-                  console.log("seat              "+seattoken)
+                  console.log("seat  "+seattoken)
                   return(
                     <tr key={index}>
                       <td scope="col" >{item.date}</td>

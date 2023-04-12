@@ -2,6 +2,7 @@
 import React from "react";
 import "../../css/userDashboard/navbar.css";
 import  Logout from "../../routes/Logout"
+import Footer from "./footer";
 // Defining the Navbar component
 function NavBar() {
   
@@ -9,6 +10,7 @@ function NavBar() {
     <div>
       {/* Navbar HTML structure */}
       <nav className="nav2">
+        <h1>Secure Seat Booking</h1>
         <ul>
           <li>
             {/* Button to navigate to seat booking page */}
@@ -44,6 +46,8 @@ function NavBar() {
           </li>
         </ul>
       </nav>
+      
+        {/* <Footer/> */}
     </div>
   );
 }

@@ -4,3 +4,13 @@
 .data1{
   display: flex;
 }
+.main{
+  display:flex;
+}
+/* .main-container{
+  flex-grow: 1;
+}
+.footer{
+  position: fixed;
+  bottom:0px;
+} */

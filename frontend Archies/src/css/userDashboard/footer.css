@@ -1,0 +1,24 @@
+/* Style for the navigation bar */
+.nav3 {
+    background-color: #0069d9;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+  }
+   
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    .nav3 {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+  
+  
+   
+  }
+  
